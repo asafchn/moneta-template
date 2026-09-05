@@ -1,11 +1,13 @@
 ---
 name: evolve-evaluate
-description: Review a proposed agent-guidance change using existing deterministic tools, recorded metrics and separate judgments about user intent and applicable standards.
+description: Review guidance changes with tool evidence and attributed judgments, or look up prior assessments for message deduplication.
 ---
 
 Read the workspace connection and active domain/agent binding; access `evaluation-root/<domain>/<agent>/` directly. During init before connection, accept those explicit paths and identities from the parent. Evaluation files are not ordinary graph-search nodes. Use the existing host's tools; this skill supplies the review procedure, not a custom runner.
 
-1. **Fix the subject.** Record the baseline Git revision, candidate branch/revision or exact diff, original request, relevant role-file revisions, source evidence and intended improvement. Treat any later candidate change as a new assessment subject.
+For `mode: lookup`, follow [assessment lookup](references/message-lookup.md) and return its result; the review sequence below does not run. Otherwise use the review sequence.
+
+1. **Fix the subject.** Record the baseline Git revision, candidate branch/revision or exact diff, original request, relevant role-file revisions, source evidence and intended improvement. Record `source-mode` and its evidence boundary in the Markdown body. Treat any later candidate change as a new assessment subject.
 2. **Read the criterion.** Use existing active criteria and the task's original acceptance conditions. Record criterion revision. If no criterion exists, derive a proposed rubric from the original request and applicable standards, label it draft, and keep any numeric proposal score uncalibrated. Never rewrite criteria in response to a failing candidate. Without an explicit scale, leave scores empty and provide the qualitative findings.
 3. **Check deterministic properties with existing tools.** Validate node frontmatter against the local JSON Schemas using an available validator. Check edge target existence, allowed endpoints, inverse symmetry, unique slugs and exact node/agent index descriptions and domain-local relation targets. Use Git diff/status to verify scope. For a coding correction, use the project's applicable tests, compiler, type checker or linter; for calculations, use a calculator or symbolic checker. Read actual output and exit status. Record command, working directory, subject revision and evidence location. Unavailable or unrun checks remain so.
 4. **Review task fulfillment.** Compare the deliverable with the original request, relevant agent responsibilities, API documentation and standards. Separate executed checks from agent/human judgments. A passing test may miss the actual requirement. Verify that each alleged defect exists and that the recommendation follows from its evidence. Read [the metric guidance](references/metrics.md) when choosing or interpreting measures.
