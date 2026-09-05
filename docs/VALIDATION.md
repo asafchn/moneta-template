@@ -1,30 +1,32 @@
 # Validation record
 
-2026-09-05. Source package validation, not a measured improvement in agent performance.
+2026-09-05, native packages 0.2.0. This records source checks, not measured agent improvement.
 
-| Check | Actual result |
+| Check | Result |
 |---|---|
-| Existing Python `jsonschema` Draft 2020-12 validator; local `$id` registry | 24 schema definitions valid; references resolved offline. |
-| Existing YAML parser plus graph consistency checks | Seven nodes valid, one per type; 16 mirrored relation entries; eleven edge definitions with compatible inverses/endpoints. |
-| Index and local Markdown links | Seven exact slug/description entries; 50 local links resolved before adding this report link. |
-| Workspace, criterion and result templates | All three frontmatters validated. |
-| Invalid-record probes | Seven rejected: missing summary, evaluation type in operational search, extra field, empty typed payload, unknown edge, score without criterion, unrun check with successful exit code. |
-| Codex plugin validator, skill quick validator, `claude plugin validate` | Both manifests and all five skills passed. |
-| Local Git clone retrieval smoke | Schema/index read; task query; headers inspected; direct edge definitions followed; four selected bodies read. No evaluation records retrieved. |
-| Narrow HTML | Seven sections, unique IDs, local link and JavaScript syntax passed. Earlier desktop/mobile visual checks covered all steps; this revision changes text only. |
+| Draft 2020-12 schemas and local registry | 24 valid definitions; references resolved offline. |
+| Domain nodes and indexes | Eight nodes across seven types; two agent roles; 20 mirrored relation entries; exact node/agent catalogs. |
+| Templates and negative probes | Workspace/criterion/result valid; ten malformed records rejected, including missing binding/domain/agent identity. |
+| Local links | 165 Markdown links resolved across source and both packages. |
+| Native packaging | Two self-contained packages, 65 files each, match authoring sources byte-for-byte. |
+| Native manifests and skills | Codex plugin validator, six skill validators, Claude plugin and marketplace validators passed. Both Codex agent TOML definitions parse. |
+| Hook tests | Eight tests passed: four lifecycle contexts, malformed/unsupported input, unconfigured workspace and nested-repository isolation. Tests first failed with the missing hook implementation. |
+| Packaged hook commands | Both host commands emitted structured context through PowerShell and cmd, including package paths containing spaces. |
+| Init bootstrap | Real local Git empty-base and candidate commits produced a reviewable enrollment diff; no hosted mutation. |
+| TOML role guidance | Marked guidance serialized and parsed inside developer_instructions; unrelated fields preserved. |
 
-Validation used existing installed tools and temporary local scripts; no validator, server or runtime was added to the package.
+Run `node --test tests/native-hooks.test.cjs` and `python tools/package_plugins.py --check` for the committed executable checks. Graph/template/link checks used existing Python jsonschema, YAML and TOML tools through temporary local validation scripts; no graph validator/runtime is distributed.
 
-## Standards review
+## Review
 
-One documented-standard violation found: ordinary retrieval could consume an unmerged candidate left in the configured checkout. Fixed with verified reviewed-base retrieval, safe refresh, separate candidate worktrees and explicitly experimental candidate evaluation. Focused rereview confirmed resolution; no residual standards finding.
+Standards found two instruction inconsistencies: ambiguous exclusion of searchable skills/schema nodes, and reading the agent index before reviewed-state verification. Both corrected; focused rereview confirmed resolution.
 
-## Spec review
+Spec found one native-role issue: Markdown guidance could have been appended at TOML top level. Init now branches on role format, updates the TOML instruction string and verifies parsing/field preservation. Focused rereview confirmed resolution.
 
-Two findings found: the same unmerged-candidate activation gap, and initialization instructions that attempted an MR without any base commit. Both fixed. An empty base precedes the seed proposal, and protected initialization remains a reported limitation. Focused rereview found no new workflow contradiction. No additional scope creep found.
+Current unresolved review findings: Standards 0; Spec 0.
 
-Final review totals: Standards 0 unresolved; Spec 0 unresolved. The original findings were one Standards P1 and two Spec findings (P1/P2).
+## Limits and prior evidence
 
-## Unexercised integration
+No plugin installation, real GitHub repository creation, remote PR/MR, native delegated model run or paired performance experiment was exercised. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
 
-No plugin installation, hosted graph connection, real session delegation, remote MR/PR, executable hook or paired agent-performance experiment was exercised. Manifest validity and this agent's file-access smoke do not establish those outcomes. Remaining host/scope limits are tracked in [REQUIREMENTS.md](REQUIREMENTS.md).
+Earlier 0.1.0 validation covered the flat seven-node graph, separate evaluation, local-clone retrieval and the narrow HTML on desktop/mobile. Earlier review fixed candidate activation and empty-base initialization. The current domain layout supersedes that flat layout; native hooks supersede their earlier omission. See Git history for that validation record.

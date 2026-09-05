@@ -6,7 +6,7 @@ The graph is a local Git checkout. Agents use existing file, search, validation 
 
 Resolve the current agent/domain binding. Read this file, [agent-index.md](agent-index.md) and [node-index.md](node-index.md). Form a query from the current task and the descriptions. `find` inspects node frontmatter; `walk` inspects direct relations and connected headers; `read` loads selected bodies. Repeat when the task reveals new needs.
 
-Only Markdown nodes directly inside the directories listed in `schemas/node-types.json` belong to ordinary search. Evaluation criteria/results, source transcripts, skills, schemas and supporting documents are reached explicitly by their respective procedures. Domain knowledge stays in the configured outside source.
+Only Markdown nodes directly inside the directories listed in `schemas/node-types.json` belong to ordinary search. Evaluation criteria/results, source transcripts, native SKILL.md procedures, JSON schema definitions and supporting documents are reached explicitly by their respective procedures. Operational Markdown nodes of type `skills` or `schemas` remain searchable. Domain knowledge stays in the configured outside source.
 
 ## Node frontmatter
 

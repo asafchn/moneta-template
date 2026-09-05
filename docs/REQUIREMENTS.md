@@ -6,7 +6,7 @@ Current authority: the user's conversation, including the corrections to deliver
 |---|---|---|
 | R01 | Native Claude Code/Codex; no Pi | Both plugin manifests; native skills and Markdown roles. |
 | R02 | Graph remains schemas/Markdown with existing tools | Native hook glue and package materialization added by the later full-plugin request; no graph server/runtime. |
-| R03 | Work against a local clone | `evolve-setup`, `.agent-evolve.md` connection, existing Git/file tools. |
+| R03 | Work against a local clone | `evolve-init`, `.agent-evolve.md` connection, existing Git/file tools. |
 | R04 | Evolve a current session or captured `.txt`, including outside runs | `evolve` captures available evidence and marks coverage; `evolve-agent` reads the supplied source. |
 | R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
 | R06 | Skill invocation in each relevant agent instruction file | Setup plus AGENTS/CLAUDE/role templates; preserve unrelated instructions. |
@@ -17,7 +17,7 @@ Current authority: the user's conversation, including the corrections to deliver
 | R11 | Schema definition and slug-description index | Per-domain `indexes/schema-definition.md`, `node-index.md`, `agent-index.md`; updated with node changes. |
 | R12 | Index-informed query, tokenize, find headers, walk direct relations, read selected bodies | `knowledge-search`; repeat when new needs emerge. |
 | R13 | Hook before action | Native session/prompt/subagent/tool context hooks request retrieval; they do not certify completion or block a pending tool. |
-| R14 | Domain knowledge external | Connection source pointer; no domain nodes. |
+| R14 | Domain knowledge external | Connection source pointer; no domain-knowledge node type. |
 | R15 | Evaluation criteria/results outside ordinary search; separate skill | `evolve-evaluate`, separate schemas, templates and configured directory. |
 | R16 | Improve request/role fulfillment, API usage and coding standards | Analysis and evaluation prioritize those outcomes; tool errors are secondary evidence. |
 | R17 | Agent review with deterministic tools/metrics | Existing validators, tests, linters, calculators; record command, revision, exit status and evidence. Separate agent/human judgments. |
