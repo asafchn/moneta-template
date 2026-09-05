@@ -51,7 +51,7 @@ Ordinary retrieval now verifies and refreshes the configured reviewed `base-bran
 
 | ID | Requirement | Delivery |
 |---|---|---|
-| R23 | Init asks new GitHub repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
+| R23 | Init asks new GitHub/GitLab repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
 | R24 | Revised: memory area -> indexes, node-type folders, schemas -> nodes | Bundled general template; personal `memory/general/` or `memory/<agent-slug>/`. Type registry controls placement. |
 | R25 | Revised: multiple isolated agent areas in one personal repository | No slug selects general; an explicit slug selects only its area. No cross-agent reads, general fallback or cross-area edges. |
 | R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/moneta-codex` and `plugins/moneta-claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
@@ -82,3 +82,21 @@ The project is Moneta. Native plugin names are `moneta`, distributed through `mo
 | R33 | Add domain-knowledge | Eighth type with required sources, subject/applicability, mirrored permitted edges and a sourced starter example. |
 
 These are user-approved revisions to R14/R24/R25, not lecture-prescribed storage rules. The bootstrap keeps plugin authoring sources and generated packages; the user's repository adds memory areas. Shared native instruction changes require separate scope because they affect all agents. Existing shared graphs require explicit ownership mapping before migration; nodes are not silently copied between agents.
+
+## One entry point for learning
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R34 | Evolve chooses the flow from context or asks | The evolve skill routes setup, one selected message, current-run analysis or a supplied transcript. Ambiguous intent/source gets one focused question before capture or edits. Missing setup retains the intended learning source through initialization. |
+| R35 | Getting started is easy to follow | README gives clone/install steps, one evolve entry point, plain-language examples and the human-merge activation step. Specialist skills remain available internally. |
+
+Workflow inference does not change memory routing: absent agent-slug still means general. Automatic message hooks stay bounded and cannot bootstrap repositories. The router is an agent procedure, not a deterministic classifier or new runtime.
+
+## Guided initialization
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R36 | Init is a wizard with gh/glab preference and authentication | One unanswered question at a time; explicit provider/host, selected CLI auth verification, retry state retained. Missing authentication pauses dependent creation. |
+| R37 | Choose personal or organization/group repository and privacy | New-repository owner/namespace, name and visibility are distinct choices. Private is suggested for either owner type. Existing repositories retain their owner/visibility. GitHub and GitLab creation have provider-specific references. |
+
+New GitLab creation supersedes the earlier new-GitHub-only branch. It copies a verified bootstrap into the user's new project, then proposes memory enrollment in an MR. It requires glab plus Git access to the bootstrap, not both provider CLIs. No shell wizard, graph server or deterministic workflow classifier is introduced.

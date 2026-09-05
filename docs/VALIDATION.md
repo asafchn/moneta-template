@@ -1,14 +1,14 @@
 # Validation record
 
-2026-09-05, native packages 0.5.0. This records source checks, not measured agent improvement.
+2026-09-05, native packages 0.6.0. This records source checks, not measured agent improvement.
 
 | Check | Result |
 |---|---|
 | Draft 2020-12 schemas and local registry | 26 valid definitions; references resolved offline. |
 | Memory template and indexes | Nine starter nodes across eight types; two illustrative role formats; 22 mirrored relation entries; exact node/agent catalogs. Init retains only actual enrollments. |
 | Templates and negative probes | Workspace/criterion/result valid; 19 malformed records rejected across graph, routing, sources and legacy identity probes. Three routing examples and two enrollment examples validated; empty general bindings are valid. |
-| Local links | 210 Markdown links resolved across source and both packages. |
-| Native packaging | Two self-contained packages, 76 files each, match authoring sources byte-for-byte. |
+| Local links | 240 Markdown links resolved across source and both packages. |
+| Native packaging | Two self-contained packages, 80 files each, match authoring sources byte-for-byte. |
 | Native manifests and skills | Codex plugin validator, eight skill validators, Claude plugin and marketplace validators passed. Both Codex agent TOML definitions parse. |
 | Hook tests | 36 tests passed: feedback routing, routine/explicit/opt-out cases, mixed messages, bounded scan, four lifecycle contexts, prompt-content isolation and workspace boundaries. New gate tests first failed before implementation; regression cases failed before fixes. |
 | Packaged hook commands | Both host commands emitted structured context through PowerShell and cmd, including package paths containing spaces. |
@@ -46,3 +46,11 @@ Version 0.4.0 renames both native plugins to `moneta`, the marketplace to `monet
 Version 0.5.0 adds the init entry point, personal bootstrap workflow, general/agent routing contract and sourced domain-knowledge. Scope selection is an agent procedure; JSON Schema validates arguments but does not enforce file access. Cross-agent read isolation requires actual access evidence and remains unverified in live delegated runs. Git checks establish changed-file scope only.
 
 Review found an obsolete agent/domain instruction and an overclaim that Git could verify reads. Both were corrected and focused Standards/Spec rereviews reported zero remaining actionable findings. Existing-repository init now proposes missing bootstrap files through review with collision preservation.
+
+## Getting started, flow selection and setup wizard
+
+Version 0.6.0 makes evolve select setup, one-message learning or run/transcript analysis from explicit intent and context, with a focused question for ambiguity. Init asks provider preference and checks the chosen CLI authentication, then collects a new/existing destination and separates ownership from visibility. New GitLab creation uses documented glab flags; GitLab access to the memory destination does not replace Git access to the private bootstrap.
+
+Skill, plugin, marketplace, package-parity and local schema/link checks passed. The executable hook runtime is unchanged from the 36-test validation above. Router decisions and wizard conversations are agent instructions, not a tested deterministic classifier. Neither provider's end-to-end wizard nor a live personal repository creation was exercised in this revision; glab is absent locally. GitLab CLI semantics were checked against official documentation linked in the provider reference.
+
+Standards and Spec review identified a deferred-source gap. Evolve now freezes evidence and saves a private pending receipt before setup; resume verifies and consumes that source rather than capturing a later run. Focused rereviews found no remaining actionable issue.

@@ -7,7 +7,7 @@ The repository provides two complete, self-contained package directories. Their 
 | Codex | `plugins/moneta-codex` | Codex manifest, skills/assets, hooks, custom-agent TOML definitions registered into the project by init. |
 | Claude Code | `plugins/moneta-claude-code` | Claude manifest, skills/assets, hooks and automatically discovered Markdown agents. |
 
-The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `moneta` from `moneta-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/moneta-claude-code>` loads the package directly. Invoke discovered skills: normally `$evolve-init` / `$evolve` in Codex, `/moneta:evolve-init` / `/moneta:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
+The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `moneta` from `moneta-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/moneta-claude-code>` loads the package directly. Invoke discovered skills: normally `$init` / `$evolve` in Codex, `/moneta:init` / `/moneta:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
 
 ## Hooks
 
@@ -34,3 +34,11 @@ Sources: [Codex packaging](https://developers.openai.com/plugins/build/plugins),
 This is a cheap routing heuristic, not a semantic relevance score. It can miss paraphrases, other languages or feedback beyond the scan bound, and can nominate quoted or task-specific instructions. The skill's initial no-tool triage uses visible context to reject those before graph work. Explicit invocation bypasses missed routing; current and prior applicable user opt-outs still govern execution. The existing 5-second hook timeout is a fail-open ceiling, not the intended processing latency.
 
 One-message mode retains one source occurrence plus necessary local context, preserves the primary task, deduplicates pending proposals by occurrence/lesson, and uses the same independent evaluation and human merge process as full-session evolution. It never turns a hook candidate signal directly into approved memory.
+
+## Setup and workflow selection
+
+Init is an agent-led wizard: provider/host, chosen CLI authentication, new/existing destination, and (for new repositories) personal versus organization/group ownership, repository name and visibility. Private is a suggested visibility, not an alternative to organization ownership. Only the chosen provider CLI is required; obtaining the private bootstrap also requires Git access to GitHub.
+
+Evolve chooses a flow from explicit intent and visible context, asking one focused question when ambiguous. Missing setup retains the requested source through the init wizard. Automatic message hooks still use their bounded one-message flow and cannot create a repository. Context never overrides the explicit agent-slug/general memory rule.
+
+GitLab creation uses the [documented glab create flags](https://docs.gitlab.com/cli/repo/create/) with explicit host, namespace and visibility, then copies the bootstrap before a separate enrollment MR. The local environment has no glab installation; GitLab execution remains unverified.

@@ -10,6 +10,66 @@ Native plugins for **Codex** and **Claude Code**. Moneta is the bootstrap for yo
 >
 > A correction today can become scoped guidance for tomorrow's coding agent, with its source, evaluation, and review history attached.
 
+**Get started**
+
+You need Git, Node.js, Codex or Claude Code, and **either gh or glab installed and authenticated** for the host where you will store memories.
+
+| Your host | Log in if needed | Check authentication |
+|---|---|---|
+| GitHub | `gh auth login` | `gh auth status` |
+| GitLab | `glab auth login` | `glab auth status` |
+
+For self-hosted GitLab, use your host when logging in. You also need Git access to this private Moneta bootstrap; GitLab authentication alone does not grant GitHub access.
+
+**1. Clone Moneta and install your plugin.** In your terminal:
+
+```sh
+git clone https://github.com/asafchn/Moneta.git
+cd Moneta
+```
+
+Then run **one** installation block, from that directory.
+
+Codex:
+
+```sh
+codex plugin marketplace add .
+codex plugin add moneta@moneta-native
+```
+
+Claude Code:
+
+```sh
+claude plugin marketplace add .
+claude plugin install moneta@moneta-native
+```
+
+**2. Run the setup wizard.** Open a fresh agent session in your working project. Enter `$init` in Codex chat or `/moneta:init` in Claude Code chat. These are agent-chat commands, not terminal commands.
+
+Init asks one question at a time:
+
+- GitHub (`gh`) or GitLab (`glab`)? It checks the chosen CLI's authentication.
+- Create a repository or use an existing URL?
+- For new: your personal account or an organization/group, then its name and repository visibility. **Private is recommended for either owner type.**
+- The agent's role file, if you want to enroll one and its path is not already known.
+
+Init creates your own Moneta repository or proposes additions to the existing one. It returns the URL, local checkout and setup PR/MR, and writes `.moneta.md` in your working project. **Review and merge the setup proposal**, then tell the agent: "Setup is merged. Refresh memory and verify retrieval." Setup is ready when it reports the reviewed revision and successful retrieval.
+
+Enable plugin/hooks through your host's trust controls if prompted. If commands are missing, see [installation help](docs/NATIVE-COMPATIBILITY.md).
+
+**3. Use evolve. Let it pick the flow.** You describe what you want; Moneta uses context or asks a short question when the choice is unclear.
+
+| What you want | Codex chat example |
+|---|---|
+| Learn from the last correction | `$evolve Learn from my last correction.` |
+| Review the current run | `$evolve Review this whole run.` |
+| Analyze a saved run | `$evolve Analyze the run in "path/to/session.txt".` |
+| Set up missing memory | `$evolve Set up Moneta for this project.` |
+
+In Claude Code, replace `$evolve` with `/moneta:evolve`. Moneta handles analysis, evaluation and the PR/MR when a useful change is supported. Merge accepted proposals so later retrieval can use them. A supported no-change result is also valid.
+
+**General or one agent.** Without `agent-slug`, init and evolve use `memory/general/` only. For a named agent, use `$init agent-slug: coding-agent` and `$evolve agent-slug: coding-agent Learn from my last correction.` Claude accepts the same arguments after `/moneta:init` or `/moneta:evolve`. There is no cross-agent search or fallback to general; context selects the flow, never a different memory area.
+
 **From feedback to memory**
 
 ```mermaid
@@ -22,47 +82,8 @@ flowchart LR
 ```
 
 - **One correction:** a fast local hook screens user feedback. The agent decides whether a reusable lesson warrants `evolve-message`.
-- **One run:** invoke `evolve` on the current session or a captured `.txt` transcript. An `evolve-agent` analyzes the request, actual work, responsibilities, and human corrections.
+- **One entry point:** `evolve` chooses setup, one-message learning, current-run analysis or a captured `.txt` transcript. An `evolve-agent` analyzes the request, actual work, responsibilities, and human corrections.
 - **One reviewable change:** a separate evaluator combines agent judgment with available deterministic checks and recorded metrics. Useful candidates become proposals; human merge makes them eligible for ordinary retrieval.
-
-**Install**
-
-Use an account with access to this private repository. Git and Node.js must be on PATH; repository workflows use authenticated `gh` for GitHub or `glab` for GitLab.
-
-Codex:
-
-```sh
-codex plugin marketplace add asafchn/Moneta
-codex plugin add moneta@moneta-native
-```
-
-Claude Code:
-
-```sh
-claude plugin marketplace add asafchn/Moneta
-claude plugin install moneta@moneta-native
-```
-
-Run initialization on the agent you want to connect:
-
-| Action | Codex | Claude Code |
-|---|---|---|
-| Bootstrap your repository | `$init` | `/moneta:init` |
-| Learn from a run or transcript | `$evolve` | `/moneta:evolve` |
-| Analyze one correction | `$evolve-message` | `/moneta:evolve-message` |
-
-Clone Moneta to work on the bootstrap locally, or install the plugin directly as above. In a local clone, each host can register the current directory with `plugin marketplace add .` before installing `moneta@moneta-native`.
-
-**Init creates your Moneta.** Choose a new personal GitHub repository from this template, or use an existing GitHub/GitLab repository. You own that repository and can commit and push it normally. Initialization proposes your first memory area through review, writes `.moneta.md`, and connects any enrolled role's skill invocations. A template copy is independent; a linked GitHub fork is available when explicitly requested.
-
-| Invocation | Reads and writes |
-|---|---|
-| `init` / `evolve` / `knowledge-search`, no agent-slug | `memory/general/` only |
-| Same skill with `agent-slug: coding-agent` | `memory/coding-agent/` only |
-
-**One area per operation.** Agent-specific retrieval never also reads general or another agent. Missing knowledge stays a gap. The current role name does not implicitly select an area; explicitly enrolled role instructions pass their selected slug through analysis and evaluation.
-
-Host discovery and hook trust controls apply. Codex agent roles are registered by init. The underlying `evolve-init` workflow remains available. See [native installation and compatibility](docs/NATIVE-COMPATIBILITY.md).
 
 **Memory the agent can navigate**
 
