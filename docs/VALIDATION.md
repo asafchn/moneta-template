@@ -33,7 +33,7 @@ Current unresolved review findings: Standards 0; Spec 0.
 
 ## Limits and prior evidence
 
-No live plugin installation, initialization of a hosted knowledge repository, remote PR/MR, native delegated model run or paired performance experiment was exercised. Creating the Moneta source repository does not validate those workflows. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
+No complete initialization of a hosted knowledge repository, remote PR/MR, native delegated evolution run or paired performance experiment was exercised. The 0.7.0 installation and bounded live init test are recorded below. Creating the Moneta source repository does not validate those workflows. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
 
 Earlier 0.1.0 validation covered the flat seven-node graph, separate evaluation, local-clone retrieval and the narrow HTML on desktop/mobile. Earlier review fixed candidate activation and empty-base initialization. The current isolated memory-area layout supersedes that flat layout; native hooks supersede their earlier omission. See Git history for that validation record.
 
@@ -62,3 +62,6 @@ Version 0.7.0 consolidates setup under init and adds a bounded provider-output w
 The live GitHub helper probe returned login-required in the isolated context and authenticated asafchn with approved user/network access. Init now retries in that context before deciding login is needed. No credentials were replaced. Browser login launch and GitLab remain untested; glab is absent. Source/package, schema/link, skill and both host manifest validators passed.
 
 Security review found lowercase URL escapes and alternate API argument order bypasses. Both were corrected with failing-then-passing regression tests. Generic API output is now withheld; repository/PR/MR operations remain supported. Protection limits and research sources are recorded in [SECURITY.md](SECURITY.md).
+
+
+Installed Moneta 0.7.0 through the Codex marketplace CLI and verified enabled status. A fresh ephemeral Codex conversation loaded the installed init skill, received network-blocked from its first account probe, retried through approved access, verified asafchn, then asked new versus existing repository. It neither invoked raw auth status nor requested reauthentication. This validates the reported authentication failure path and wizard continuation, not repository creation or full enrollment. Native SessionStart/UserPromptSubmit/PreToolUse hooks completed during this bounded run.
