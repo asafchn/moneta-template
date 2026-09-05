@@ -6,7 +6,7 @@ const os = require('node:os');
 const { spawnSync } = require('node:child_process');
 const hook = path.resolve(__dirname, '../native/shared/hooks/context.cjs');
 const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'evolve-hook-'));
-fs.writeFileSync(path.join(workspace, '.agent-evolve.md'), '---\nbindings: []\n---\n');
+fs.writeFileSync(path.join(workspace, '.moneta.md'), '---\nbindings: []\n---\n');
 fs.mkdirSync(path.join(workspace, 'nested'));
 function run(input) {
   const result = spawnSync(process.execPath, [hook], { input: typeof input === 'string' ? input : JSON.stringify(input), encoding: 'utf8' });

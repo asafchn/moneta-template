@@ -4,10 +4,10 @@ The repository provides two complete, self-contained package directories. Their 
 
 | Host | Package | Components |
 |---|---|---|
-| Codex | `plugins/codex` | Codex manifest, skills/assets, hooks, custom-agent TOML definitions registered into the project by init. |
-| Claude Code | `plugins/claude-code` | Claude manifest, skills/assets, hooks and automatically discovered Markdown agents. |
+| Codex | `plugins/moneta-codex` | Codex manifest, skills/assets, hooks, custom-agent TOML definitions registered into the project by init. |
+| Claude Code | `plugins/moneta-claude-code` | Claude manifest, skills/assets, hooks and automatically discovered Markdown agents. |
 
-The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `agent-evolve` from `agent-evolve-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/claude-code>` loads the package directly. Invoke discovered skills: normally `$evolve-init` / `$evolve` in Codex, `/agent-evolve:evolve-init` / `/agent-evolve:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
+The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `moneta` from `moneta-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/moneta-claude-code>` loads the package directly. Invoke discovered skills: normally `$evolve-init` / `$evolve` in Codex, `/moneta:evolve-init` / `/moneta:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
 
 ## Hooks
 
@@ -23,7 +23,7 @@ Claude loads `agents/*.md`. Codex loads project `.codex/agents/*.toml`; init cop
 
 Graph-node edits activate after human merge and safe refresh. Native skill/hook edits require updating/reloading the owning plugin. A graph clone refresh does not update installed plugin files. A fresh install still needs the user's repository choice and role/domain enrollment.
 
-The request to use Vercel skills.sh was superseded by the request for two full native plugins. Its skill installer does not establish native hooks/agent registration. No live installation, GitHub repository creation or remote PR/MR was performed during source implementation.
+The request to use Vercel skills.sh was superseded by the request for two full native plugins. Its skill installer does not establish native hooks/agent registration. Live plugin installation and an end-to-end initialization PR/MR have not been validated. The plugin source is hosted at [asafchn/Moneta](https://github.com/asafchn/Moneta); each user chooses a separate knowledge repository during init.
 
 Sources: [Codex packaging](https://developers.openai.com/plugins/build/plugins), [Codex hooks](https://learn.chatgpt.com/docs/hooks), [Codex agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [Claude plugin reference](https://code.claude.com/docs/en/plugins-reference), [Claude hooks](https://code.claude.com/docs/en/hooks).
 

@@ -6,7 +6,7 @@ Current authority: the user's conversation, including the corrections to deliver
 |---|---|---|
 | R01 | Native Claude Code/Codex; no Pi | Both plugin manifests; native skills and Markdown roles. |
 | R02 | Graph remains schemas/Markdown with existing tools | Native hook glue and package materialization added by the later full-plugin request; no graph server/runtime. |
-| R03 | Work against a local clone | `evolve-init`, `.agent-evolve.md` connection, existing Git/file tools. |
+| R03 | Work against a local clone | `evolve-init`, `.moneta.md` connection, existing Git/file tools. |
 | R04 | Evolve a current session or captured `.txt`, including outside runs | `evolve` captures available evidence and marks coverage; `evolve-agent` reads the supplied source. |
 | R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
 | R06 | Skill invocation in each relevant agent instruction file | Setup plus AGENTS/CLAUDE/role templates; preserve unrelated instructions. |
@@ -54,7 +54,7 @@ Ordinary retrieval now verifies and refreshes the configured reviewed `base-bran
 | R23 | Init asks new GitHub repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
 | R24 | Domain -> indexes, node-type folders, schemas -> Markdown nodes | Bundled engineering domain, eight nodes illustrating two agents; exact folder mapping in each domain's type registry. |
 | R25 | Multiple agents in one repository/domain | Agent index, explicit bindings, domain-local slugs/edges, shared guidance and separate role responsibilities. |
-| R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/codex` and `plugins/claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
+| R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/moneta-codex` and `plugins/moneta-claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
 | R27 | Apply writing-for-agents | Short init steps with completion criteria; new/existing/enrollment/connection details disclosed by branch; shared definitions have one authoring source. |
 
 The native-plugin request supersedes the earlier omission of executable hooks. The new runtime code only emits native lifecycle context; the packaging tool copies source into installable artifacts. No custom graph search, evaluation engine or provider service was reintroduced. Domain grouping is organizational; external domain knowledge remains external. Cross-domain edges remain outside the current schema.
@@ -67,3 +67,7 @@ The native-plugin request supersedes the earlier omission of executable hooks. T
 | R29 | Evolve only one user message | `evolve-message`, bounded evidence and analysis scope; existing-knowledge/deduplication check before drafting; shared independent review and human merge. |
 
 The fast gate is deliberately heuristic, not a Stanford-trained verifier or a universal admission score. Its language/scan limits are explicit. Full-session evolve remains available separately. The selected message may need its referenced artifact/current role to be interpreted, but this mode does not sweep the session for other lessons.
+
+## Project identity
+
+The project is Moneta. Native plugin names are `moneta`, distributed through `moneta-native` from `asafchn/Moneta`. Authoring sources generate `plugins/moneta-codex` and `plugins/moneta-claude-code`. Connections use `.moneta.md`; local graph/evidence defaults use `.moneta-local/`. The user-facing evolution workflow retains the `evolve` name.

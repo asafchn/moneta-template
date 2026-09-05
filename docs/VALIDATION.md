@@ -1,13 +1,13 @@
 # Validation record
 
-2026-09-05, native packages 0.3.0. This records source checks, not measured agent improvement.
+2026-09-05, native packages 0.4.0. This records source checks, not measured agent improvement.
 
 | Check | Result |
 |---|---|
 | Draft 2020-12 schemas and local registry | 24 valid definitions; references resolved offline. |
 | Domain nodes and indexes | Eight nodes across seven types; two agent roles; 20 mirrored relation entries; exact node/agent catalogs. |
 | Templates and negative probes | Workspace/criterion/result valid; ten malformed records rejected, including missing binding/domain/agent identity. |
-| Local links | 183 Markdown links resolved across source and both packages. |
+| Local links | 181 Markdown links resolved across source and both packages. |
 | Native packaging | Two self-contained packages, 71 files each, match authoring sources byte-for-byte. |
 | Native manifests and skills | Codex plugin validator, seven skill validators, Claude plugin and marketplace validators passed. Both Codex agent TOML definitions parse. |
 | Hook tests | 36 tests passed: feedback routing, routine/explicit/opt-out cases, mixed messages, bounded scan, four lifecycle contexts, prompt-content isolation and workspace boundaries. New gate tests first failed before implementation; regression cases failed before fixes. |
@@ -33,6 +33,10 @@ Current unresolved review findings: Standards 0; Spec 0.
 
 ## Limits and prior evidence
 
-No plugin installation, real GitHub repository creation, remote PR/MR, native delegated model run or paired performance experiment was exercised. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
+No live plugin installation, initialization of a hosted knowledge repository, remote PR/MR, native delegated model run or paired performance experiment was exercised. Creating the Moneta source repository does not validate those workflows. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
 
 Earlier 0.1.0 validation covered the flat seven-node graph, separate evaluation, local-clone retrieval and the narrow HTML on desktop/mobile. Earlier review fixed candidate activation and empty-base initialization. The current domain layout supersedes that flat layout; native hooks supersede their earlier omission. See Git history for that validation record.
+
+## Moneta branding validation
+
+Version 0.4.0 renames both native plugins to `moneta`, the marketplace to `moneta-native`, generated package directories to `plugins/moneta-codex` and `plugins/moneta-claude-code`, and workspace connections to `.moneta.md`. Existing workflow names, including `evolve`, are retained. The 36 hook tests, seven skill validators, both plugin validators and Claude marketplace validation passed after the rename. Both 71-file packages match their authoring sources.

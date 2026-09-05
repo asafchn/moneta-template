@@ -18,7 +18,7 @@ const candidates = [
 for (const [message,reason] of candidates) test(`routes ${reason}: ${message}`,()=>{
   assert.deepEqual(decide(message),{route:'inspect',reason});
 });
-for (const message of ['', 'thanks', 'continue implementing', 'What is the status?', 'Add a settings page.', 'Please review this PR.', 'How do I use gh?', 'Change the button to blue for this demo.', '/agent-evolve:evolve', '$evolve-message this correction', 'Do not evolve this message. Always validate input.', "Don't remember this: always validate input."]) {
+for (const message of ['', 'thanks', 'continue implementing', 'What is the status?', 'Add a settings page.', 'Please review this PR.', 'How do I use gh?', 'Change the button to blue for this demo.', '/moneta:evolve', '$evolve-message this correction', 'Do not evolve this message. Always validate input.', "Don't remember this: always validate input."]) {
   test(`skips routine/explicit/opt-out: ${message}`,()=>assert.equal(decide(message).route,'skip'));
 }
 test('non-string payload stays out of message evolution',()=>assert.equal(decide({prompt:'guideline'}).route,'skip'));

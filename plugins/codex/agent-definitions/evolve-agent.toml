@@ -1,3 +1,0 @@
-name = "evolve-agent"
-description = "Agent Evolve evolve-agent role."
-developer_instructions = "Locate the installed evolve-agent skill and read its references/role.md. Follow that role, receiving the exact domain/agent identity, source and candidate from the parent. Return the result to the parent."

@@ -1,11 +1,11 @@
 {
-  "name": "agent-evolve-native",
+  "name": "moneta-native",
   "plugins": [
     {
-      "name": "agent-evolve",
+      "name": "moneta",
       "source": {
         "source": "local",
-        "path": "./plugins/codex"
+        "path": "./plugins/moneta-codex"
       },
       "policy": {
         "installation": "AVAILABLE",

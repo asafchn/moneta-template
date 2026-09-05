@@ -1,17 +1,17 @@
 {
-  "name": "agent-evolve-native",
+  "name": "moneta-native",
   "owner": {
-    "name": "Local developer"
+    "name": "asafchn"
   },
   "plugins": [
     {
-      "name": "agent-evolve",
-      "source": "./plugins/claude-code",
+      "name": "moneta",
+      "source": "./plugins/moneta-claude-code",
       "description": "Initialize shared agent domains and evolve reviewed knowledge.",
-      "version": "0.3.0"
+      "version": "0.4.0"
     }
   ],
   "metadata": {
-    "description": "Native Agent Evolve plugins for domain-scoped knowledge and reviewed improvement."
+    "description": "Native Moneta plugins for domain-scoped knowledge and reviewed improvement."
   }
 }

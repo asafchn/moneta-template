@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--check', action='store_true', help='Check committed packages match sources without writing.')
 args = parser.parse_args()
 for host in ('codex', 'claude-code'):
-    target = ROOT / 'plugins' / host
+    target = ROOT / 'plugins' / f'moneta-{host}'
     expected = {}
     for source, prefix in ((ROOT / 'skills', Path('skills')), (ROOT / 'native' / 'shared', Path()), (ROOT / 'native' / host, Path())):
         for file in source.rglob('*'):
