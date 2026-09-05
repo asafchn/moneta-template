@@ -26,3 +26,11 @@ Graph-node edits activate after human merge and safe refresh. Native skill/hook 
 The request to use Vercel skills.sh was superseded by the request for two full native plugins. Its skill installer does not establish native hooks/agent registration. No live installation, GitHub repository creation or remote PR/MR was performed during source implementation.
 
 Sources: [Codex packaging](https://developers.openai.com/plugins/build/plugins), [Codex hooks](https://learn.chatgpt.com/docs/hooks), [Codex agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [Claude plugin reference](https://code.claude.com/docs/en/plugins-reference), [Claude hooks](https://code.claude.com/docs/en/hooks).
+
+## Single-message trigger
+
+`UserPromptSubmit` screens only its `prompt` field: up to 16,384 characters, with local English phrase patterns for corrections, review changes, guidelines and tool instructions. It adds an `evolve-message` pointer for candidates. Other lifecycle events retain retrieval guidance only. The hook performs no model call, transcript/graph scan, network request or evidence write, and never echoes the source message.
+
+This is a cheap routing heuristic, not a semantic relevance score. It can miss paraphrases, other languages or feedback beyond the scan bound, and can nominate quoted or task-specific instructions. The skill's initial no-tool triage uses visible context to reject those before graph work. Explicit invocation bypasses missed routing; current and prior applicable user opt-outs still govern execution. The existing 5-second hook timeout is a fail-open ceiling, not the intended processing latency.
+
+One-message mode retains one source occurrence plus necessary local context, preserves the primary task, deduplicates pending proposals by occurrence/lesson, and uses the same independent evaluation and human merge process as full-session evolution. It never turns a hook candidate signal directly into approved memory.

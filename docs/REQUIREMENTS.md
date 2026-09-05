@@ -58,3 +58,12 @@ Ordinary retrieval now verifies and refreshes the configured reviewed `base-bran
 | R27 | Apply writing-for-agents | Short init steps with completion criteria; new/existing/enrollment/connection details disclosed by branch; shared definitions have one authoring source. |
 
 The native-plugin request supersedes the earlier omission of executable hooks. The new runtime code only emits native lifecycle context; the packaging tool copies source into installable artifacts. No custom graph search, evaluation engine or provider service was reintroduced. Domain grouping is organizational; external domain knowledge remains external. Cross-domain edges remain outside the current schema.
+
+## Single-message feedback
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R28 | Decide quickly whether user feedback merits evolution | UserPromptSubmit local bounded candidate screen, followed by no-tool contextual triage. Corrections, code-review changes, guidelines and tool explanations are candidate signals. |
+| R29 | Evolve only one user message | `evolve-message`, bounded evidence and analysis scope; existing-knowledge/deduplication check before drafting; shared independent review and human merge. |
+
+The fast gate is deliberately heuristic, not a Stanford-trained verifier or a universal admission score. Its language/scan limits are explicit. Full-session evolve remains available separately. The selected message may need its referenced artifact/current role to be interpreted, but this mode does not sweep the session for other lessons.

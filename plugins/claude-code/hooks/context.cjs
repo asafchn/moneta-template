@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { decide } = require('./message-gate.cjs');
 
 // Lifecycle glue only: emit context; the agent performs retrieval with its tools.
 try {
@@ -20,7 +21,11 @@ try {
     directory = parent;
   }
   if (!connection) process.exit(0);
-  const additionalContext = `Agent Evolve connection: ${JSON.stringify(connection)}. Resolve the assigned agent/domain binding. Before task work, invoke knowledge-search: domain indexes -> task query -> frontmatter find -> direct walk -> selected bodies. Re-query for new needs; apply each node within its scope. An assigned eval-agent uses evolve-evaluate for evaluation records. This reminder supplies context, not a retrieval-completion check.`;
+  let additionalContext = `Agent Evolve connection: ${JSON.stringify(connection)}. Resolve the assigned agent/domain binding. Before task work, invoke knowledge-search: domain indexes -> task query -> frontmatter find -> direct walk -> selected bodies. Re-query for new needs; apply each node within its scope. An assigned eval-agent uses evolve-evaluate for evaluation records. This reminder supplies context, not a retrieval-completion check.`;
+  if (event === 'UserPromptSubmit') {
+    const gate = decide(input.prompt);
+    if (gate.route === 'inspect') additionalContext += ` Message gate: ${gate.reason}. Invoke evolve-message for this submitted user message only, starting with its brief no-tool triage. Keep fulfilling the current request; a candidate signal is not approval to add a permanent rule.`;
+  }
   process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext } }));
 } catch {
   // Optional guidance cannot interrupt the user's work or expose captured input.

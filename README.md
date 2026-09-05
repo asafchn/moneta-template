@@ -1,6 +1,6 @@
 # Agent Evolve
 
-Two native plugins: [Codex](plugins/codex) and [Claude Code](plugins/claude-code). Each includes initialization, six skills, agent roles, graph/schema templates and lifecycle hooks. Agents operate on locally cloned knowledge with existing tools.
+Two native plugins: [Codex](plugins/codex) and [Claude Code](plugins/claude-code). Each includes initialization, seven skills, agent roles, graph/schema templates and lifecycle hooks. Agents operate on locally cloned knowledge with existing tools.
 
 Run `evolve-init` on the target agent. It asks **new GitHub repository or existing repository**, then enrolls the agent in a domain, opens the initialization review and connects its role instructions. New repository creation uses the selected owner/name and visibility; GitLab remains supported for existing repositories.
 
@@ -19,6 +19,8 @@ knowledge-repository/
 ```
 
 Each agent has a responsibility node and an explicit domain/role-file binding. Guidance can be shared within the domain. Retrieval: indexes, task query, frontmatter find, direct walk, selected bodies. External domain facts and separate evaluation records retain their own access paths.
+
+User-message hooks screen corrections, review changes, guidelines and tool explanations. A candidate routes to `evolve-message`: brief no-tool triage, one-message evidence, existing-knowledge check, then scoped drafting and independent review. Routine/one-off feedback can stop without a proposal. The local screen is heuristic; direct `evolve-message` invocation handles missed wording.
 
 Run `evolve` on a current session or captured `.txt`. Analysis and a separate evaluator compare the request, responsibilities, actual artifacts and human corrections. Existing deterministic tools supply check evidence; judgments remain attributed. Proposed knowledge changes go through a GitHub PR or GitLab MR. Ordinary retrieval uses reviewed state; candidates stay in separate worktrees.
 

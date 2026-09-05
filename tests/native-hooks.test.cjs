@@ -30,3 +30,17 @@ test('nested repository does not inherit another repository connection',()=>{
   const inner=path.join(workspace,'inner');fs.mkdirSync(inner);fs.mkdirSync(path.join(inner,'.git'));
   assert.equal(run({hook_event_name:'UserPromptSubmit',cwd:inner}),'');
 });
+
+test('user correction routes one-message triage without echoing the message',()=>{
+  const output=JSON.parse(run({hook_event_name:'UserPromptSubmit',cwd:workspace,prompt:'You used the wrong API. SECRET_CORRECTION_TEXT'}));
+  assert.match(output.hookSpecificOutput.additionalContext,/evolve-message/);
+  assert.ok(!JSON.stringify(output).includes('SECRET_CORRECTION_TEXT'));
+});
+test('ordinary prompt keeps retrieval context without an evolution trigger',()=>{
+  const output=JSON.parse(run({hook_event_name:'UserPromptSubmit',cwd:workspace,prompt:'What is the status?'}));
+  assert.ok(!output.hookSpecificOutput.additionalContext.includes('evolve-message'));
+});
+test('other lifecycle events do not route message evolution',()=>{
+  const output=JSON.parse(run({hook_event_name:'PreToolUse',cwd:workspace,prompt:'Coding guideline: validate input.'}));
+  assert.ok(!output.hookSpecificOutput.additionalContext.includes('evolve-message'));
+});
