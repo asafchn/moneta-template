@@ -24,3 +24,5 @@ Claude uses `/agent-evolve:evolve`; Codex uses its discovered `evolve` skill, no
 Learning means reviewed external knowledge changes, retrieved in later runs. It does not train model weights. Merge controls shared activation; agents refresh the reviewed base branch safely. A proposal assessment is distinct from measured improvement on later tasks.
 
 Start with [the narrow walkthrough](docs/schema-proposal.html), [graph format](schema-definition.md), [requirements and remaining gaps](docs/REQUIREMENTS.md), and [course grounding](docs/course-grounding.md). The seven starter nodes describe this plugin's procedures; they are not company knowledge.
+
+[Validation and review record](docs/VALIDATION.md).

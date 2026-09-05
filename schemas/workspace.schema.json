@@ -57,6 +57,12 @@
           "additionalProperties": false
         }
       ]
+    },
+    "base-branch": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "description": "Reviewed branch used for ordinary retrieval; discovered from the supplied repository."
     }
   },
   "required": [
@@ -65,7 +71,8 @@
     "checkout",
     "graph-root",
     "evaluation-root",
-    "domain-source"
+    "domain-source",
+    "base-branch"
   ],
   "additionalProperties": false
 }

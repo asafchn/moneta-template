@@ -42,3 +42,7 @@ No automatic promotion from criticism to permanent instruction. First distinguis
 - No paired agent experiment has measured future performance gains. Structural validation cannot substitute for that evidence.
 
 Historical runtime files were preserved in `C:/Users/asafu/Downloads/excluded/agent-evolve-runtime-archive-20260905`. The active source is this repository.
+
+## Review corrections
+
+Ordinary retrieval now verifies and refreshes the configured reviewed `base-branch`. Candidates use a separate worktree/checkout; explicit evaluation of candidate retrieval is labeled experimental. An empty remote receives only an empty base commit before the seed knowledge is proposed through MR/PR. Protected initialization is reported as unavailable. Native plugin skill/role changes require their host's update/reload process; a graph refresh alone does not activate installed plugin changes.
