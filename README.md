@@ -21,26 +21,19 @@ You need Git, Node.js, Codex or Claude Code, and **either gh or glab installed a
 
 For self-hosted GitLab, use your host when logging in. You also need Git access to this private Moneta bootstrap; GitLab authentication alone does not grant GitHub access.
 
-**1. Clone Moneta and install your plugin.** In your terminal:
-
-```sh
-git clone https://github.com/asafchn/Moneta.git
-cd Moneta
-```
-
-Then run **one** installation block, from that directory.
+**1. Install your plugin directly.** Run one block in your terminal. The plugin manager downloads Moneta; no manual source clone is needed.
 
 Codex:
 
 ```sh
-codex plugin marketplace add .
+codex plugin marketplace add asafchn/Moneta
 codex plugin add moneta@moneta-native
 ```
 
 Claude Code:
 
 ```sh
-claude plugin marketplace add .
+claude plugin marketplace add asafchn/Moneta
 claude plugin install moneta@moneta-native
 ```
 
@@ -53,7 +46,7 @@ Init asks one question at a time:
 - For new: your personal account or an organization/group, then its name and repository visibility. **Private is recommended for either owner type.**
 - The agent's role file, if you want to enroll one and its path is not already known.
 
-Init creates your own Moneta repository or proposes additions to the existing one. It returns the URL, local checkout and setup PR/MR, and writes `.moneta.md` in your working project. **Review and merge the setup proposal**, then tell the agent: "Setup is merged. Refresh memory and verify retrieval." Setup is ready when it reports the reviewed revision and successful retrieval.
+Init creates your own Moneta repository or proposes additions to the existing one. It automatically clones your memory repository locally for retrieval, returns its URL and setup PR/MR, and writes `.moneta.md` in your working project. **Review and merge the setup proposal**, then tell the agent: "Setup is merged. Refresh memory and verify retrieval." Setup is ready when it reports the reviewed revision and successful retrieval.
 
 Enable plugin/hooks through your host's trust controls if prompted. If commands are missing, see [installation help](docs/NATIVE-COMPATIBILITY.md).
 

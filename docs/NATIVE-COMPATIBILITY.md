@@ -7,7 +7,7 @@ The repository provides two complete, self-contained package directories. Their 
 | Codex | `plugins/moneta-codex` | Codex manifest, skills/assets, hooks, custom-agent TOML definitions registered into the project by init. |
 | Claude Code | `plugins/moneta-claude-code` | Claude manifest, skills/assets, hooks and automatically discovered Markdown agents. |
 
-The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `moneta` from `moneta-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/moneta-claude-code>` loads the package directly. Invoke discovered skills: normally `$init` / `$evolve` in Codex, `/moneta:init` / `/moneta:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
+The repository includes each host's marketplace metadata. Add `asafchn/Moneta` as a marketplace using the host CLI, then install `moneta` from `moneta-native`. The host downloads the plugin; users do not need to manually clone its source. A local source path remains available for plugin development. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/moneta-claude-code>` loads the package directly. Invoke discovered skills: normally `$init` / `$evolve` in Codex, `/moneta:init` / `/moneta:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
 
 ## Hooks
 
