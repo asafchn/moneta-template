@@ -1,6 +1,9 @@
-# Connect personal memory
+# Legacy or explicit workspace connection
 
-1. Write `.moneta.md` from `assets/templates/workspace.md` relative to init. Record the personal repository URL, hosting, reviewed base, checkout, `<checkout>/memory` graph-root and separate evaluation-root. Preserve other bindings. Keep local clones, candidates and raw evidence under ignored `.moneta-local/`. A general connection with no enrolled role has `bindings: []`.
-2. If a role was enrolled, add its `{agent, memory-scope, role-file}` binding. Follow `assets/templates/role-agent-addition.md` for Markdown versus Codex TOML. For an explicitly selected agent area, put `agent-slug: <selected-slug>` in the role's retrieval/evolution invocations. For general, omit it. The role's name alone never selects storage. Preserve existing responsibilities; hosted role edits follow their owning repository's review flow.
-3. Verify actual skill discovery. Claude discovers the plugin's named roles. Codex role registration copies bundled `agent-definitions/*.toml` into the consuming project's `.codex/agents/`, preserving existing files and reporting conflicts. Until registered, pass the bundled role Markdown to a native child explicitly. See [distribution](distribution.md) when components are missing.
-4. Report pending merge without reading the candidate as approved memory. After merge, refresh and invoke knowledge-search with the same optional agent-slug. Check index/query, frontmatter find, direct walk and selected-body reads in exactly that area. Completion: personal destination, selected area and reviewed revision are reported, or the pending activation step is explicit.
+Organization targets use the generated runtime profile and [private runtime connection](../../knowledge-search/references/connection.md); no per-codebase file is required. Reach this branch only for an explicitly requested local override or existing .moneta.md.
+
+Preserve existing bindings and responsibilities. Same destination resumes missing steps. A different destination requires an explicit switch decision; retain the original until the replacement is ready. Distinct destinations use distinct verified clone paths. Populate the workspace template with the actual repository, reviewed base, checkout and evaluation directory, then validate its frontmatter.
+
+Only explicitly enrolled roles receive instruction additions. Replace template invocation placeholders with the actual installed runtime's qualified skill identifier. Pass originating runtime root/profile, resolved connection and explicit agent-slug through analysis/evaluation. Preserve Markdown/TOML format as described in the role template. Hosted role edits use their owning repository's review flow.
+
+Verify skill discovery through [distribution](distribution.md) and report pending graph merge or host reload accurately. Registration does not authorize candidate retrieval as approved memory.

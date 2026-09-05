@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/nodes/domain-knowledge.schema.json",
+  "title": "domain-knowledge",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "domain-knowledge"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "applies-when": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "subject",
+            "applies-when"
+          ],
+          "additionalProperties": false
+        },
+        "sources": {
+          "minItems": 1
+        }
+      },
+      "required": [
+        "sources"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

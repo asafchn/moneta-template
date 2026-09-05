@@ -1,0 +1,17 @@
+{
+  "name": "moneta-personal",
+  "plugins": [
+    {
+      "name": "moneta-personal",
+      "source": {
+        "source": "local",
+        "path": "./plugins/moneta-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

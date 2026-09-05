@@ -97,3 +97,18 @@ test('generic account API spellings cannot bypass fixed-output probe',()=>{
   assert.equal(main(['run','gh',...args]).status,'use-probe-mode');
  }
 });
+
+
+test('repository lookup failures are not transport failures',()=>{
+ for(const error of ["GraphQL: Could not resolve to a Repository with the name 'example/missing'. (repository)","HTTP 404: Not Found"]) {
+  assert.equal(inspectAccount({status:1,stderr:Buffer.from(error)},'gh',{}).status,'not-found-or-inaccessible');
+ }
+ assert.equal(inspectAccount({status:1,stderr:Buffer.from('Could not resolve host: github.com')},'gh',{}).status,'network-blocked');
+});
+
+
+test('generated runtime identifiers remain usable while known credentials always redact',()=>{
+ const identity='moneta-internal-agent-12345678';
+ assert.equal(redact(identity,{}),identity);
+ assert.equal(redact(identity,{API_KEY:identity}),'[REDACTED]');
+});

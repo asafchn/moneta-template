@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/nodes/guard-rails.schema.json",
+  "title": "guard-rails",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "guard-rails"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "constraint": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "applies-when": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "constraint",
+            "applies-when"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

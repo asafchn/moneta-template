@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/nodes/coding-guidelines.schema.json",
+  "title": "coding-guidelines",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "coding-guidelines"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "rule": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "applies-when": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "rule",
+            "applies-when"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

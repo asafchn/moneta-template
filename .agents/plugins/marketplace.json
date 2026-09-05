@@ -1,11 +1,11 @@
 {
-  "name": "moneta-native",
+  "name": "moneta-setup",
   "plugins": [
     {
-      "name": "moneta",
+      "name": "moneta-setup",
       "source": {
         "source": "local",
-        "path": "./plugins/moneta-codex"
+        "path": "./plugins/moneta-setup-codex"
       },
       "policy": {
         "installation": "AVAILABLE",

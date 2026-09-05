@@ -1,14 +1,14 @@
 {
-  "name": "moneta-native",
+  "name": "moneta-setup",
   "owner": {
     "name": "asafchn"
   },
   "plugins": [
     {
-      "name": "moneta",
-      "source": "./plugins/moneta-claude-code",
+      "name": "moneta-setup",
+      "source": "./plugins/moneta-setup-claude-code",
       "description": "Bootstrap personal agent memory and evolve reviewed knowledge.",
-      "version": "0.7.0"
+      "version": "0.8.0"
     }
   ],
   "metadata": {

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/edges/owns.schema.json",
+  "title": "owns",
+  "description": "This agent responsibility includes carrying out the target skill, invocation or flow.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "owns"
+    },
+    "target": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "type",
+    "target"
+  ],
+  "additionalProperties": false
+}

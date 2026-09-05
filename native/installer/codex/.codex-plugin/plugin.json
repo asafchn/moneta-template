@@ -1,0 +1,16 @@
+{
+  "name": "moneta-setup",
+  "version": "0.8.0",
+  "description": "Create and install a personal Moneta runtime plugin in your own repository.",
+  "author": { "name": "asafchn" },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Moneta Setup",
+    "shortDescription": "Create your personal agent memory plugin.",
+    "longDescription": "A setup wizard that creates your repository, personal native plugins and reviewed memory, then connects the generated runtime.",
+    "developerName": "asafchn",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Set up my personal Moneta plugin."
+  }
+}

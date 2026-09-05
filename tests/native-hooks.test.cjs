@@ -4,8 +4,16 @@ const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
 const { spawnSync } = require('node:child_process');
-const hook = path.resolve(__dirname, '../native/shared/hooks/context.cjs');
 const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'evolve-hook-'));
+const runtime = fs.mkdtempSync(path.join(os.tmpdir(), 'evolve-unprofiled-runtime-'));
+const shared = path.resolve(__dirname, '../native/shared');
+fs.cpSync(path.join(shared,'hooks'),path.join(runtime,'hooks'),{recursive:true});
+fs.cpSync(path.join(shared,'scripts'),path.join(runtime,'scripts'),{recursive:true});
+const hook = path.join(runtime,'hooks','context.cjs');
+test.after(() => {
+  fs.rmSync(workspace,{recursive:true,force:true});
+  fs.rmSync(runtime,{recursive:true,force:true});
+});
 fs.writeFileSync(path.join(workspace, '.moneta.md'), '---\nbindings: []\n---\n');
 fs.mkdirSync(path.join(workspace, 'nested'));
 function run(input) {

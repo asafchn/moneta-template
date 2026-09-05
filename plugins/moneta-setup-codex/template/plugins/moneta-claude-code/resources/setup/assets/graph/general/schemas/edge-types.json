@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "edges": {
+    "guides": {
+      "inverse": "guided-by",
+      "source-types": [
+        "coding-guidelines"
+      ],
+      "target-types": [
+        "tool-calls",
+        "skills",
+        "agentic-flow context"
+      ],
+      "description": "This guideline governs use of the target invocation, skill or flow.",
+      "schema": "edges/guides.schema.json"
+    },
+    "guided-by": {
+      "inverse": "guides",
+      "source-types": [
+        "tool-calls",
+        "skills",
+        "agentic-flow context"
+      ],
+      "target-types": [
+        "coding-guidelines"
+      ],
+      "description": "Use of this invocation, skill or flow is governed by the target guideline.",
+      "schema": "edges/guided-by.schema.json"
+    },
+    "owns": {
+      "inverse": "owned-by",
+      "source-types": [
+        "agent-responsibility"
+      ],
+      "target-types": [
+        "skills",
+        "tool-calls",
+        "agentic-flow context"
+      ],
+      "description": "This agent responsibility includes carrying out the target skill, invocation or flow.",
+      "schema": "edges/owns.schema.json"
+    },
+    "owned-by": {
+      "inverse": "owns",
+      "source-types": [
+        "skills",
+        "tool-calls",
+        "agentic-flow context"
+      ],
+      "target-types": [
+        "agent-responsibility"
+      ],
+      "description": "The target agent is responsible for this skill, invocation or flow.",
+      "schema": "edges/owned-by.schema.json"
+    },
+    "uses": {
+      "inverse": "used-by",
+      "source-types": [
+        "skills",
+        "agentic-flow context"
+      ],
+      "target-types": [
+        "skills",
+        "tool-calls",
+        "schemas"
+      ],
+      "description": "This skill or flow uses the target capability or schema.",
+      "schema": "edges/uses.schema.json"
+    },
+    "used-by": {
+      "inverse": "uses",
+      "source-types": [
+        "skills",
+        "tool-calls",
+        "schemas"
+      ],
+      "target-types": [
+        "skills",
+        "agentic-flow context"
+      ],
+      "description": "The target skill or flow uses this capability or schema.",
+      "schema": "edges/used-by.schema.json"
+    },
+    "constrains": {
+      "inverse": "constrained-by",
+      "source-types": [
+        "guard-rails"
+      ],
+      "target-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "description": "This guardrail constrains the behavior described by the target node.",
+      "schema": "edges/constrains.schema.json"
+    },
+    "constrained-by": {
+      "inverse": "constrains",
+      "source-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "target-types": [
+        "guard-rails"
+      ],
+      "description": "The target guardrail constrains the behavior described by this node.",
+      "schema": "edges/constrained-by.schema.json"
+    },
+    "conforms-to": {
+      "inverse": "schema-for",
+      "source-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "target-types": [
+        "schemas"
+      ],
+      "description": "This node follows the data or interface contract described by the target schema node.",
+      "schema": "edges/conforms-to.schema.json"
+    },
+    "schema-for": {
+      "inverse": "conforms-to",
+      "source-types": [
+        "schemas"
+      ],
+      "target-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "description": "This schema node describes a contract followed by the target node.",
+      "schema": "edges/schema-for.schema.json"
+    },
+    "related-to": {
+      "inverse": "related-to",
+      "source-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "target-types": [
+        "tool-calls",
+        "coding-guidelines",
+        "agent-responsibility",
+        "skills",
+        "guard-rails",
+        "agentic-flow context",
+        "schemas",
+        "domain-knowledge"
+      ],
+      "description": "These nodes provide related context; the relation implies no dependency or authority.",
+      "schema": "edges/related-to.schema.json"
+    }
+  }
+}

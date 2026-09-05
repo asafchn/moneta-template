@@ -1,0 +1,16 @@
+# Generate the user's plugin repository
+
+The installer bundles a complete template/ directory. Copy its contents using filesystem operations into a clean preparation directory, including hidden marketplace directories. Compare relative file names and SHA-256 hashes before personalization. Never reconstruct the template from printed tool output. Work from absolute paths inside the user's preparation directory; installed assets are read-only.
+
+The generated repository contains .agents/plugins/marketplace.json, .claude-plugin/marketplace.json, plugins/moneta-codex/, plugins/moneta-claude-code/, README.md and memory/. It includes runtime skills, hooks, scripts and schemas. It excludes Moneta's development source tree, tests, transcript archives and the exposed installer skill. Each runtime's resources/setup/ contains supporting templates/references, not another discovered init command.
+
+Personalize with a JSON serializer:
+
+- Choose a stable plugin/marketplace identifier: moneta-<normalized-repository-name>-<first-8-hex-of-SHA256-canonical-repository-URL>. It prevents similarly named repositories colliding. Use lowercase letters, digits and hyphens; truncate only the normalized repository-name portion to at most 48 characters and trim trailing hyphens. Validate the final identifier against ^[a-z][a-z0-9-]{0,63}$ before publishing/installing, retaining the hash. Reuse an existing generated identity on repeat init.
+- Replace moneta-personal in both runtime manifests and marketplace entries (including plugin author/display details where appropriate), retaining their relative source paths. New generated runtimes start at their bundled version; subsequent runtime edits need a version update before reinstall.
+- In BOTH plugins' moneta.json, set repository-url, hosting, base-branch and the user-supplied targets. Organization targets use {kind: organization, host, namespace}; repository targets use {kind: repository, url}. Validate each against moneta.schema.json. Keep credentials and machine-specific paths outside this profile. Host and namespace must be exact, with no wildcard.
+- Write the purpose-specific README following [repository README](repository-readme.md). It describes this user's agents, knowledge and matching rules. State graph setup pending until the memory review merges.
+
+Create the runtime/README base first, then add the selected memory area through one review. Future memory changes and runtime updates are separate: changing a hook or skill can affect every connected agent and needs its own explicitly scoped review. A generic profile containing example.invalid is a placeholder and must not be installed as a ready connection.
+
+For a legacy full-source copy, preserve user files and propose the generated runtime/profile changes without mass deletion. Never clone asafchn/Moneta again: the installer already has the distribution assets. Reuse existing destination/plugin identities instead of creating duplicates.

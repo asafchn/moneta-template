@@ -1,6 +1,6 @@
 # Validation record
 
-2026-09-05, native packages 0.7.0. This records source checks, not measured agent improvement.
+Current release: moneta-setup 0.8.0 with generated runtime templates 0.1.0. The 0.8.0 section below is authoritative for current packaging; earlier tables are historical evidence. These checks do not measure agent improvement.
 
 | Check | Result |
 |---|---|
@@ -65,3 +65,20 @@ Security review found lowercase URL escapes and alternate API argument order byp
 
 
 Installed Moneta 0.7.0 through the Codex marketplace CLI and verified enabled status. A fresh ephemeral Codex conversation loaded the installed init skill, received network-blocked from its first account probe, retried through approved access, verified asafchn, then asked new versus existing repository. It neither invoked raw auth status nor requested reauthentication. This validates the reported authentication failure path and wizard continuation, not repository creation or full enrollment. Native SessionStart/UserPromptSubmit/PreToolUse hooks completed during this bounded run.
+
+
+## Installer 0.8.0 and generated runtime 0.1.0
+
+The final user decision creates personalized runtime distributions with reviewed memory, rather than copying the development tree. The installer exposes init only. Both native installers and the standalone skills.sh entry contain both runtime templates; generated runtimes expose six skills including extend, plus local connection hooks/scripts. moneta-setup replaces the previous moneta installer identity; the source repository is moneta-template.
+
+- 68 Node tests pass: feedback/legacy hooks, 21 provider/redaction cases, and 11 organization-connection cases. Cases include exact host/namespace boundaries, subgroups/future repos, worktrees, explicit repository targets, conflicting origins, legacy overrides, local-only Git calls and secret suppression.
+- Five packaging tests pass: only init exposed, no installer hooks, both complete runtimes, contained rewritten links, standalone self-containment and byte-drift detection.
+- Three graph-contract tests pass: the documented Registry/Resource recipe runs offline against the actual seven-node seed; indexes and 12 mirrored relations agree; a new type validates only after updating the common discriminator and selector, while old nodes remain valid and malformed examples fail.
+- Seven authoring skills, both installer manifests, both runtime manifests and the root Claude marketplace validate. Generated package parity passes.
+- Live GitHub rename verified private asafchn/moneta-template. No organization inventory or repository discovery was used.
+- A temporary generated local repository was registered and its Codex runtime installed successfully through the output wrapper. A fresh read-only Codex run discovered evolve/extend, ran the installed connection helper and obtained matched using only local origin. The extension question correctly favored an existing representation. Test installation/marketplace were then removed.
+- The first fresh-chat test request was rejected by automatic approval review for broad automatic tool approval. The replacement used enforced read-only sandboxing and approval_policy=never and passed.
+
+Telemetry-derived regressions first failed and then passed: repository-not-found classification, legacy resolver reproduction with remote access denied, and generated-identifier redaction. Host wrapper installation was exercised against the actual Windows CLI; positional quoting fixed an observed argument-forwarding failure. Generic output filtering can still mask unrelated opaque metadata; native Windows paths and known generated identities remain usable without exempting known credentials.
+
+Limits: the revised full hosted init/conversation, read-only-provider manual handoff, GitLab creation/login, Claude live installation and paired agent-effectiveness experiments are not established by these checks. The read-only-init branch and instance-bound delegation were reviewed; overlapping targets require an explicit choice. Host trust, reload and graph-review activation remain separate states. Source telemetry findings are recorded in [INIT-TELEMETRY.md](INIT-TELEMETRY.md).

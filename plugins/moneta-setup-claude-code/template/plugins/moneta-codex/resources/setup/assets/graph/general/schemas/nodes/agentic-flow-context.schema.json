@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/nodes/agentic-flow-context.schema.json",
+  "title": "agentic-flow context",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "agentic-flow context"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "trigger",
+            "steps"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

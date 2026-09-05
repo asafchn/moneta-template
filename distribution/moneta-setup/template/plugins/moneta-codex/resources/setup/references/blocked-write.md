@@ -1,0 +1,11 @@
+# Continue with limited permissions
+
+Read-only gh/glab credentials are valid. An intentional write restriction does not require reauthentication, a broader token, repeated denied commands or abandoning setup. Use existing host approval mechanisms only within the user's stated permissions; a refusal is a boundary, not an error to bypass.
+
+Finish independent authorized work locally: retain wizard answers, generate/personalize the runtime and README, prepare the graph, validate it, and write the setup PR/MR text. Keep base and candidate separate. If repository creation is blocked, preserve the exact intended URL and local preparation directory. If push is blocked, retain local commits. If only PR/MR creation is blocked, retain the pushed branch and prepared review text. Check exact destination state before retrying an operation whose outcome is unknown.
+
+For each blocked stage return: what is ready, which specific operation was denied and why (only supported safe diagnostics), local artifact/commit, and the exact command or provider-UI action the user can perform manually. Do not suggest adding permissions unless the user asks. No tokens or raw authentication diagnostics in the handoff. Continue any independent permitted installation/validation steps; do not run dependent operations that require unpublished state.
+
+A prepared runtime base can be installed from its stable local marketplace when remote publication is blocked and host installation remains authorized. Record that local source and enabled state separately from unpublished repository/memory. Never install a graph candidate as approved memory. Later switch the registration to the published destination only through the host's supported marketplace commands and verified identity, preserving other plugins.
+
+Save a private setup receipt containing destination, target rules, purpose or skip, generated identity, selected area, preparation/checkout paths, completed stage results, and remaining manual steps. Store no credentials. On resume, verify actual state and continue the first incomplete dependent stage; never recreate the repository, reset completed answers or require another login because writes are forbidden.

@@ -1,0 +1,14 @@
+{
+  "name": "moneta-personal",
+  "owner": {
+    "name": "moneta-personal"
+  },
+  "plugins": [
+    {
+      "name": "moneta-personal",
+      "source": "./plugins/moneta-claude-code",
+      "version": "0.1.0",
+      "description": "Personal agent guidance and reviewed learning."
+    }
+  ]
+}

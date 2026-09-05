@@ -1,0 +1,18 @@
+{
+  "name": "moneta-personal",
+  "version": "0.1.0",
+  "description": "Bootstrap personal agent memory, retrieve local graph knowledge, and propose evaluated improvements with native hooks.",
+  "author": {
+    "name": "asafchn"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Moneta",
+    "shortDescription": "Retrieve guidance and evolve it through review.",
+    "longDescription": "JSON schemas, Markdown knowledge nodes and skills for local graph retrieval, separate evaluation and Git review. Uses the agent's existing tools.",
+    "developerName": "asafchn",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Help me evolve agent guidance from a reviewed run."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "moneta-setup",
+  "version": "0.8.0",
+  "description": "Create and install a personal Moneta runtime plugin in your own repository.",
+  "author": { "name": "asafchn" }
+}

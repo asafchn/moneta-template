@@ -1,0 +1,11 @@
+# Resolve this runtime's connection
+
+Use the originating generated plugin's moneta.json (the hook supplies its absolute path). An explicit skill invocation uses that skill's own plugin root. Before selecting it, run the local connection helper against the current codebase: `node <runtime-root>/scripts/connection.cjs <absolute-cwd>`. It reads only local Git origin and matches the user-supplied targets; it performs no network or organization discovery. An unmatched target does not authorize using this runtime's memories. Multiple matching plugin contexts require the user to select one; never combine their graphs.
+
+The profile supplies repository-url, hosting and base-branch. Resolve this plugin's manifest identity and use a private user directory `~/.moneta/<plugin-id>/`: repository/ for reviewed checkout, candidates/ for proposals, evaluation/ for assessments, pending/ for saved source and connection.md for machine-local paths/bindings. Use the actual user's home, not an isolated sandbox account's home. A child receives the explicit resolved connection; it never infers another runtime from its worker name. Agent-slug selection remains separate.
+
+Reuse the connection only after verifying its repository identity. If absent, initialize it from the profile with graph-root `<checkout>/memory` and `bindings: []`, preserving any known enrollments. Clone only the chosen knowledge repository, using existing authenticated Git access, then follow reviewed-state verification. A candidate graph or plugin installation cache is never the ordinary graph checkout. Do not recreate repositories for a missing local cache.
+
+A legacy .moneta.md in this workspace is an explicit local override. Preserve it; if it identifies a different knowledge repository, ask which connection to use rather than silently switching. No local file is required for organization targets. Workspaces without a matching runtime can use the installed moneta-setup:init installer or standalone moneta-setup to configure one after explicit user intent; automatic feedback hooks cannot initialize repositories.
+
+Evaluation and raw telemetry remain in the private user directory, outside the published graph. A purpose statement does not change targets, grant access or permit reading another agent's area.
