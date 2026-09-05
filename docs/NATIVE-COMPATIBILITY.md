@@ -21,7 +21,7 @@ Node.js must be available on PATH. Hook commands resolve the exported plugin-roo
 
 Claude loads `agents/*.md`. Codex loads project `.codex/agents/*.toml`; init copies its bundled role definitions there, preserves conflicting files and verifies discovery. Until that registration is available, explicit native-child delegation uses the bundled role Markdown. Plugin installation alone is not claimed to register Codex custom agents.
 
-Graph-node edits activate after human merge and safe refresh. Native skill/hook edits require updating/reloading the owning plugin. A graph clone refresh does not update installed plugin files. A fresh install still needs the user's repository choice and role/domain enrollment.
+Graph-node edits activate after human merge and safe refresh. Native skill/hook edits require updating/reloading the owning plugin. A graph clone refresh does not update installed plugin files. A fresh install still needs the user's repository choice and memory-area initialization.
 
 The request to use Vercel skills.sh was superseded by the request for two full native plugins. Its skill installer does not establish native hooks/agent registration. Live plugin installation and an end-to-end initialization PR/MR have not been validated. The plugin source is hosted at [asafchn/Moneta](https://github.com/asafchn/Moneta); each user chooses a separate knowledge repository during init.
 

@@ -1,6 +1,6 @@
 # Prior-message assessment lookup
 
-Use this branch for `mode: lookup`, with the active domain/agent, source occurrence locator and candidate lesson/scope.
+Use this branch for `mode: lookup`, with the active memory-scope/agent, source occurrence locator and candidate lesson/scope.
 
 1. Inspect only that agent's configured evaluation records for this occurrence or lesson. Compare retained occurrence IDs/locators and scope; repeated wording in a later turn is not automatically a duplicate.
 2. Return `no-match` or a bounded summary: matching assessment path, source occurrence, recommendation, assessed revision and pending review reference when recorded. Keep unrelated records and raw messages outside the response. A caller can inspect the returned PR/MR through existing provider tools to confirm its current state.

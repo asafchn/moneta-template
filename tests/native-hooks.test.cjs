@@ -18,7 +18,7 @@ for (const event of ['SessionStart','UserPromptSubmit','SubagentStart','PreToolU
     const output = JSON.parse(run({hook_event_name:event,cwd:path.join(workspace,'nested'),tool_input:{command:'SECRET_MARKER'}}));
     assert.equal(output.hookSpecificOutput.hookEventName,event);
     assert.match(output.hookSpecificOutput.additionalContext,/knowledge-search/);
-    assert.match(output.hookSpecificOutput.additionalContext,/domain/);
+    assert.match(output.hookSpecificOutput.additionalContext,/Memory-scope/);
     assert.ok(!JSON.stringify(output).includes('SECRET_MARKER'));
     assert.ok(!('permissionDecision' in output.hookSpecificOutput));
   });

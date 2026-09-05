@@ -1,3 +1,3 @@
 name = "eval-agent"
 description = "Moneta eval-agent role."
-developer_instructions = "Locate the installed evolve-evaluate skill and read its references/role.md. Follow that role, receiving the exact domain/agent identity, source and candidate from the parent. Return the result to the parent."
+developer_instructions = "Locate the installed evolve-evaluate skill and read its references/role.md. Follow that role, receiving the exact memory-scope/agent identity, source and candidate from the parent. Return the result to the parent."

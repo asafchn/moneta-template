@@ -21,7 +21,7 @@ try {
     directory = parent;
   }
   if (!connection) process.exit(0);
-  let additionalContext = `Moneta connection: ${JSON.stringify(connection)}. Resolve the assigned agent/domain binding. Before task work, invoke knowledge-search: domain indexes -> task query -> frontmatter find -> direct walk -> selected bodies. Re-query for new needs; apply each node within its scope. An assigned eval-agent uses evolve-evaluate for evaluation records. This reminder supplies context, not a retrieval-completion check.`;
+  let additionalContext = `Moneta connection: ${JSON.stringify(connection)}. Memory-scope: omitted agent-slug selects general; an explicit agent-slug selects only that area. Never infer storage from a worker or role name, search another agent, or fall back to general. Retain the same selection through evolution and evaluation. Before task work, invoke knowledge-search: selected-area indexes -> task query -> frontmatter find -> direct walk -> selected bodies. Re-query for new needs; apply each node within its scope. An assigned eval-agent uses evolve-evaluate for evaluation records. This reminder supplies context, not a retrieval-completion check.`;
   if (event === 'UserPromptSubmit') {
     const gate = decide(input.prompt);
     if (gate.route === 'inspect') additionalContext += ` Message gate: ${gate.reason}. Invoke evolve-message for this submitted user message only, starting with its brief no-tool triage. Keep fulfilling the current request; a candidate signal is not approval to add a permanent rule.`;

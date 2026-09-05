@@ -1,18 +1,18 @@
 # Validation record
 
-2026-09-05, native packages 0.4.0. This records source checks, not measured agent improvement.
+2026-09-05, native packages 0.5.0. This records source checks, not measured agent improvement.
 
 | Check | Result |
 |---|---|
-| Draft 2020-12 schemas and local registry | 24 valid definitions; references resolved offline. |
-| Domain nodes and indexes | Eight nodes across seven types; two agent roles; 20 mirrored relation entries; exact node/agent catalogs. |
-| Templates and negative probes | Workspace/criterion/result valid; ten malformed records rejected, including missing binding/domain/agent identity. |
-| Local links | 181 Markdown links resolved across source and both packages. |
-| Native packaging | Two self-contained packages, 71 files each, match authoring sources byte-for-byte. |
-| Native manifests and skills | Codex plugin validator, seven skill validators, Claude plugin and marketplace validators passed. Both Codex agent TOML definitions parse. |
+| Draft 2020-12 schemas and local registry | 26 valid definitions; references resolved offline. |
+| Memory template and indexes | Nine starter nodes across eight types; two illustrative role formats; 22 mirrored relation entries; exact node/agent catalogs. Init retains only actual enrollments. |
+| Templates and negative probes | Workspace/criterion/result valid; 19 malformed records rejected across graph, routing, sources and legacy identity probes. Three routing examples and two enrollment examples validated; empty general bindings are valid. |
+| Local links | 210 Markdown links resolved across source and both packages. |
+| Native packaging | Two self-contained packages, 76 files each, match authoring sources byte-for-byte. |
+| Native manifests and skills | Codex plugin validator, eight skill validators, Claude plugin and marketplace validators passed. Both Codex agent TOML definitions parse. |
 | Hook tests | 36 tests passed: feedback routing, routine/explicit/opt-out cases, mixed messages, bounded scan, four lifecycle contexts, prompt-content isolation and workspace boundaries. New gate tests first failed before implementation; regression cases failed before fixes. |
 | Packaged hook commands | Both host commands emitted structured context through PowerShell and cmd, including package paths containing spaces. |
-| Init bootstrap | Real local Git empty-base and candidate commits produced a reviewable enrollment diff; no hosted mutation. |
+| Init bootstrap | Earlier local empty-base/candidate experiment remains historical evidence. Current personal template-copy and existing-repository import procedures have not been exercised end to end. |
 | TOML role guidance | Marked guidance serialized and parsed inside developer_instructions; unrelated fields preserved. |
 
 Run `node --test tests/message-gate.test.cjs tests/native-hooks.test.cjs` and `python tools/package_plugins.py --check` for the committed executable checks. Graph/template/link checks used existing Python jsonschema, YAML and TOML tools through temporary local validation scripts; no graph validator/runtime is distributed.
@@ -35,8 +35,14 @@ Current unresolved review findings: Standards 0; Spec 0.
 
 No live plugin installation, initialization of a hosted knowledge repository, remote PR/MR, native delegated model run or paired performance experiment was exercised. Creating the Moneta source repository does not validate those workflows. Command-level hook tests do not establish live hook trust/enablement or host event coverage. Those boundaries remain in [REQUIREMENTS.md](REQUIREMENTS.md).
 
-Earlier 0.1.0 validation covered the flat seven-node graph, separate evaluation, local-clone retrieval and the narrow HTML on desktop/mobile. Earlier review fixed candidate activation and empty-base initialization. The current domain layout supersedes that flat layout; native hooks supersede their earlier omission. See Git history for that validation record.
+Earlier 0.1.0 validation covered the flat seven-node graph, separate evaluation, local-clone retrieval and the narrow HTML on desktop/mobile. Earlier review fixed candidate activation and empty-base initialization. The current isolated memory-area layout supersedes that flat layout; native hooks supersede their earlier omission. See Git history for that validation record.
 
 ## Moneta branding validation
 
 Version 0.4.0 renames both native plugins to `moneta`, the marketplace to `moneta-native`, generated package directories to `plugins/moneta-codex` and `plugins/moneta-claude-code`, and workspace connections to `.moneta.md`. Existing workflow names, including `evolve`, are retained. The 36 hook tests, seven skill validators, both plugin validators and Claude marketplace validation passed after the rename. Both 71-file packages match their authoring sources.
+
+## Personal memory revision
+
+Version 0.5.0 adds the init entry point, personal bootstrap workflow, general/agent routing contract and sourced domain-knowledge. Scope selection is an agent procedure; JSON Schema validates arguments but does not enforce file access. Cross-agent read isolation requires actual access evidence and remains unverified in live delegated runs. Git checks establish changed-file scope only.
+
+Review found an obsolete agent/domain instruction and an overclaim that Git could verify reads. Both were corrected and focused Standards/Spec rereviews reported zero remaining actionable findings. Existing-repository init now proposes missing bootstrap files through review with collision preservation.

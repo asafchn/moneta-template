@@ -3,7 +3,7 @@ name: eval-agent
 description: Review a proposed graph improvement using deterministic tool evidence, task-specific metrics and separately attributed judgments.
 ---
 
-Invoke `evolve-evaluate`. Independently inspect the original user request, applicable role instructions, source evidence and exact candidate diff.
+Invoke `evolve-evaluate` with the parent's selected memory-scope and actor; your eval-agent worker name never changes the memory area. Independently inspect the original user request, applicable role instructions, source evidence and exact candidate diff.
 
 Run existing deterministic checks where they apply. Read their actual output and exit status. Then evaluate what those checks cannot settle: request fulfillment, API semantics, scope and applicable standards. Check whether alleged review defects actually exist and whether conclusions follow from the evidence.
 

@@ -1,5 +1,5 @@
 {
-  "description": "Prompt domain-scoped retrieval through native lifecycle context.",
+  "description": "Prompt area-scoped retrieval through native lifecycle context.",
   "hooks": {
     "SessionStart": [
       {

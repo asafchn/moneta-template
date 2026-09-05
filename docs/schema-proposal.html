@@ -60,14 +60,14 @@
     <div class="card">
       <section id="step-1" aria-labelledby="title-1">
         <p class="eyebrow">01 · Files</p>
-        <h1 id="title-1" tabindex="-1">One domain. Many agents.</h1>
-        <p class="lead">Indexes, typed nodes and schemas, grouped by domain.</p>
+        <h1 id="title-1" tabindex="-1">Your repository. One selected area.</h1>
+        <p class="lead">Moneta bootstraps your personal memory repository.</p>
         <dl>
-          <div class="row"><dt>domain/indexes/schema-definition.md</dt><dd>Explains fields, node types, edge schemas and both directions of each relationship.</dd></div>
-          <div class="row"><dt>domain/indexes/node-index.md + agent-index.md</dt><dd>Node slugs and summaries; a separate catalog identifies agents.</dd></div>
-          <div class="row"><dt>One Markdown file per node</dt><dd>domain/node-type/slug.md. YAML for discovery; body for detail.</dd></div>
+          <div class="row"><dt>memory/general/indexes/schema-definition.md</dt><dd>Explains fields, node types, edge schemas and both directions of each relationship.</dd></div>
+          <div class="row"><dt>area/indexes/node-index.md + agent-index.md</dt><dd>Node slugs and summaries; a separate catalog identifies agents.</dd></div>
+          <div class="row"><dt>One Markdown file per node</dt><dd>memory/area/node-type/slug.md. YAML for discovery; body for detail.</dd></div>
         </dl>
-        <p class="note">Init asks: new GitHub repository, or existing? Each agent joins a domain through reviewed enrollment.</p>
+        <p class="note">Init asks: new personal repository from Moneta, or existing? No agent-slug selects general; an explicit slug selects only its area.</p>
       </section>
       <section id="step-2" aria-labelledby="title-2">
         <p class="eyebrow">02 · One node</p>
@@ -98,16 +98,17 @@ If tokens are opaque, pass them unchanged.</pre><p>Illustration only. Actual gui
       </section>
       <section id="step-3" aria-labelledby="title-3">
         <p class="eyebrow">03 · Node types</p>
-        <h1 id="title-3" tabindex="-1">Your seven types.</h1>
+        <h1 id="title-3" tabindex="-1">Your eight types.</h1>
         <p class="lead">Exact names retained. Expand for the fields.</p>
         <details><summary>tool-calls</summary><p>Reusable invocation guidance. Historical calls stay in source evidence.</p><p><code>tool, purpose, input-schema, preconditions</code></p></details>
+        <details><summary>domain-knowledge</summary><p>Sourced facts, concepts and terminology. At least one source is required.</p><p><code>subject, applies-when</code></p></details>
         <details><summary>coding-guidelines</summary><p>Scoped coding practice.</p><p><code>rule, applies-when</code></p></details>
         <details><summary>agent-responsibility</summary><p>What the agent is accountable for.</p><p><code>role, responsibilities</code></p></details>
         <details><summary>skills</summary><p>Discover and invoke a skill.</p><p><code>invocation, purpose</code></p></details>
         <details><summary>guard-rails</summary><p>Behavioral constraints. Storing a constraint does not enforce it.</p><p><code>constraint, applies-when</code></p></details>
         <details><summary>agentic-flow context</summary><p>Reusable context and steps for coordinated work. Raw task state stays in source evidence.</p><p><code>trigger, steps</code></p></details>
         <details><summary>schemas</summary><p>Reusable data or interface contracts. The supporting schema-definition file explains the graph format.</p><p><code>schema-id, definition</code></p></details>
-        <p class="note">task-cases and feedback remain proposed additions, outside the default seven.</p>
+        <p class="note">domain-knowledge is now included. task-cases and feedback remain unadopted.</p>
       </section>
       <section id="step-4" aria-labelledby="title-4">
         <p class="eyebrow">04 · Relationships</p>
@@ -134,15 +135,15 @@ If tokens are opaque, pass them unchanged.</pre><p>Illustration only. Actual gui
       </section>
       <section id="step-6" aria-labelledby="title-6">
         <p class="eyebrow">06 · Access boundaries</p>
-        <h1 id="title-6" tabindex="-1">Three ways to reach information.</h1>
-        <p class="lead">Agreed separation.</p>
+        <h1 id="title-6" tabindex="-1">One area. Separate evaluation.</h1>
+        <p class="lead">No cross-agent reads. No general fallback.</p>
         <dl>
           <div class="row"><dt>Operational knowledge</dt><dd>The typed Markdown graph. Access through index, find, walk and read.</dd></div>
-          <div class="row"><dt>Domain knowledge</dt><dd>Outside source. Use that source’s access method; keep facts there.</dd></div>
+          <div class="row"><dt>Domain knowledge</dt><dd>Search sourced domain-knowledge nodes normally. Verify authoritative sources when freshness matters.</dd></div>
           <div class="row"><dt>Evaluation criteria + results</dt><dd>Access through a different skill. Excluded from ordinary graph search.</dd></div>
         </dl>
         <p class="flow">node-index covers ordinary searchable knowledge only.</p>
-        <p class="note">Connection file names the external source and separate evaluation directory. Evaluation uses evolve-evaluate.</p>
+        <p class="note">The connection points to your personal repository. Omitted agent-slug means general; otherwise use only that agent area. Evaluation uses evolve-evaluate.</p>
       </section>
       <section id="step-7" aria-labelledby="title-7">
         <p class="eyebrow">07 · Review</p>

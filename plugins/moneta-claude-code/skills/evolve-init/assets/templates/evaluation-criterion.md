@@ -21,4 +21,4 @@ dimensions:
 
 This is a draft example, not an active universal rubric. Adapt it to the actual task before assessment and record its revision. Define explicit score values and meanings only if scoring is needed. The lectures do not supply a universal numeric threshold for admitting a Markdown memory.
 
-Store adopted criteria under the configured evaluation root's `<domain>/<agent>/criteria/` directory, outside operational graph search. Exact command, project revision and evidence locations belong in each result.
+Store adopted criteria under the configured evaluation root's `<memory-scope>/<agent>/criteria/` directory, outside operational graph search. Exact command, project revision and evidence locations belong in each result.

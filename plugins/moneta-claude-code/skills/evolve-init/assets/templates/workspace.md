@@ -1,26 +1,18 @@
 ---
-repository-url: https://github.com/example/knowledge-graph
+repository-url: https://github.com/example/my-moneta
 hosting: auto
 base-branch: main
-checkout: .moneta-local/graph
-graph-root: .moneta-local/graph
+checkout: .moneta-local/repository
+graph-root: .moneta-local/repository/memory
 evaluation-root: .moneta-local/evaluation
 domain-source: null
-bindings:
-  - agent: coding-agent
-    domain: engineering
-    role-file: AGENTS.md
-  - agent: review-agent
-    domain: engineering
-    role-file: review-agent.md
+bindings: []
 ---
 
-# Moneta connection template
+# Personal Moneta connection
 
-Copy to `.moneta.md` in the consuming workspace. Replace the example repository URL with the user's actual URL. Resolve relative paths from that connection file's directory. Set hosting explicitly for an ambiguous self-hosted domain.
+Copy to `.moneta.md` in the consuming workspace and use the user's actual repository URL, reviewed branch and local paths. Resolve relative paths from this connection file. Validate against the selected area's `schemas/workspace.schema.json`.
 
-The agent clones/fetches with existing Git tools. The checkout is ordinary local files. Domain sources are optional until supplied; when present use `location` and `access` fields describing their existing access method. Validate this frontmatter against the selected domain's `schemas/workspace.schema.json`.
+The default is always general when the invocation omits agent-slug. A supplied slug selects only its memory area. Bindings record enrollment; they do not override invocation defaults. Example enrollment entry: `{agent: coding-agent, memory-scope: coding-agent, role-file: AGENTS.md}`. Add only real roles. General can have no bindings.
 
-Set `base-branch` from the repository's actual reviewed default/base branch; `main` above is an example. Ordinary retrieval must verify this branch and its remote-tracking revision. Keep candidate work in a separate checkout.
-
-`graph-root` is the graph repository root. Each binding maps an actual role file to a domain and responsibility-node slug. Resolve the current agent from its role file or explicit input; ask when ambiguous. These two bindings are examples: init records only agents actually enrolled.
+The graph-root is the personal repository's `memory/` directory, containing `general/` and any explicit agent-slug directories. Keep candidates separate from the reviewed checkout. Optional domain-source specifies `{location, access}` for an authoritative external source; sourced domain-knowledge nodes are searched normally.

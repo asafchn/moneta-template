@@ -7,11 +7,11 @@
     {
       "name": "moneta",
       "source": "./plugins/moneta-claude-code",
-      "description": "Initialize shared agent domains and evolve reviewed knowledge.",
-      "version": "0.4.0"
+      "description": "Bootstrap personal agent memory and evolve reviewed knowledge.",
+      "version": "0.5.0"
     }
   ],
   "metadata": {
-    "description": "Native Moneta plugins for domain-scoped knowledge and reviewed improvement."
+    "description": "Native Moneta plugins for area-scoped knowledge and reviewed improvement."
   }
 }

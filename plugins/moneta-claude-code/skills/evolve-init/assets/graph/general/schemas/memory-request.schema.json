@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moneta.invalid/schemas/memory-request.schema.json",
+  "title": "Memory routing arguments",
+  "description": "Omit agent-slug to read/write general. A supplied slug selects exactly that area, without fallback or cross-area traversal.",
+  "type": "object",
+  "properties": {
+    "agent-slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "default": "general"
+    }
+  },
+  "additionalProperties": false
+}

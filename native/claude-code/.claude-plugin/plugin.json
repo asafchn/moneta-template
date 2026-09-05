@@ -1,7 +1,7 @@
 {
   "name": "moneta",
-  "version": "0.4.0",
-  "description": "Initialize shared agent domains, retrieve local graph knowledge, and propose evaluated improvements with native hooks.",
+  "version": "0.5.0",
+  "description": "Bootstrap personal agent memory, retrieve local graph knowledge, and propose evaluated improvements with native hooks.",
   "author": {
     "name": "asafchn"
   }

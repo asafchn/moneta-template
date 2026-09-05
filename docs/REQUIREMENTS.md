@@ -1,6 +1,6 @@
 # Requirements and decisions
 
-Current authority: the user's conversation, including the corrections to deliver JSON schemas, Markdown structure and skills, local cloning, agent review with existing deterministic tools, followed by init, shared domains, and two full native plugins with hooks. Earlier runtime plans are superseded. This checklist tracks implementation, not demonstrated effectiveness.
+Current authority: the user's conversation, including the corrections to deliver JSON schemas, Markdown structure and skills, local cloning, agent review with existing deterministic tools, followed by native plugins, personal bootstrap repositories, sourced domain knowledge and isolated general/agent memory areas. Earlier runtime plans are superseded. This checklist tracks implementation, not demonstrated effectiveness.
 
 | ID | Requirement / decision | Delivery |
 |---|---|---|
@@ -11,13 +11,13 @@ Current authority: the user's conversation, including the corrections to deliver
 | R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
 | R06 | Skill invocation in each relevant agent instruction file | Setup plus AGENTS/CLAUDE/role templates; preserve unrelated instructions. |
 | R07 | Hosting flag; user supplies GitLab/GitHub URL; create MR/PR | `auto/gitlab/github`; local clone; `glab`/`gh`; human merge. Hosted role files follow their own repository's review flow. |
-| R08 | Exact seven node types | `tool-calls`, `coding-guidelines`, `agent-responsibility`, `skills`, `guard-rails`, `agentic-flow context`, `schemas`. |
-| R09 | Markdown nodes; YAML metadata + summary description + body | Common schema, seven per-type schemas and eight starter nodes illustrating two agents. |
+| R08 | Original seven node types, extended by the user | `tool-calls`, `coding-guidelines`, `agent-responsibility`, `skills`, `guard-rails`, `agentic-flow context`, `schemas`, plus `domain-knowledge`. |
+| R09 | Markdown nodes; YAML metadata + summary description + body | Common schema, eight per-type schemas and nine starter examples; only actual role enrollments are instantiated. |
 | R10 | Named, typed, bidirectional edges; same/cross type | Eleven directional edge schemas, inverse/endpoint registry, mirrored frontmatter. Cross-file checks are agent work. |
-| R11 | Schema definition and slug-description index | Per-domain `indexes/schema-definition.md`, `node-index.md`, `agent-index.md`; updated with node changes. |
+| R11 | Schema definition and slug-description index | Per-area `indexes/schema-definition.md`, `node-index.md`, `agent-index.md`; updated with node changes. |
 | R12 | Index-informed query, tokenize, find headers, walk direct relations, read selected bodies | `knowledge-search`; repeat when new needs emerge. |
 | R13 | Hook before action | Native session/prompt/subagent/tool context hooks request retrieval; they do not certify completion or block a pending tool. |
-| R14 | Domain knowledge external | Connection source pointer; no domain-knowledge node type. |
+| R14 | Revised: domain-knowledge is a searchable node type | Sourced facts, structured subject/applicability and normal find/walk/read. Supersedes the earlier outside-only requirement; external authoritative sources remain available. |
 | R15 | Evaluation criteria/results outside ordinary search; separate skill | `evolve-evaluate`, separate schemas, templates and configured directory. |
 | R16 | Improve request/role fulfillment, API usage and coding standards | Analysis and evaluation prioritize those outcomes; tool errors are secondary evidence. |
 | R17 | Agent review with deterministic tools/metrics | Existing validators, tests, linters, calculators; record command, revision, exit status and evidence. Separate agent/human judgments. |
@@ -52,12 +52,12 @@ Ordinary retrieval now verifies and refreshes the configured reviewed `base-bran
 | ID | Requirement | Delivery |
 |---|---|---|
 | R23 | Init asks new GitHub repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
-| R24 | Domain -> indexes, node-type folders, schemas -> Markdown nodes | Bundled engineering domain, eight nodes illustrating two agents; exact folder mapping in each domain's type registry. |
-| R25 | Multiple agents in one repository/domain | Agent index, explicit bindings, domain-local slugs/edges, shared guidance and separate role responsibilities. |
+| R24 | Revised: memory area -> indexes, node-type folders, schemas -> nodes | Bundled general template; personal `memory/general/` or `memory/<agent-slug>/`. Type registry controls placement. |
+| R25 | Revised: multiple isolated agent areas in one personal repository | No slug selects general; an explicit slug selects only its area. No cross-agent reads, general fallback or cross-area edges. |
 | R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/moneta-codex` and `plugins/moneta-claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
 | R27 | Apply writing-for-agents | Short init steps with completion criteria; new/existing/enrollment/connection details disclosed by branch; shared definitions have one authoring source. |
 
-The native-plugin request supersedes the earlier omission of executable hooks. The new runtime code only emits native lifecycle context; the packaging tool copies source into installable artifacts. No custom graph search, evaluation engine or provider service was reintroduced. Domain grouping is organizational; external domain knowledge remains external. Cross-domain edges remain outside the current schema.
+The native-plugin request supersedes the earlier omission of executable hooks. The new runtime code only emits native lifecycle context; the packaging tool copies source into installable artifacts. No custom graph search, evaluation engine or provider service was reintroduced. The later user clarification replaces shared-domain retrieval with general/agent isolation. Domain-knowledge nodes are now explicitly adopted. Cross-area edges remain invalid.
 
 ## Single-message feedback
 
@@ -71,3 +71,14 @@ The fast gate is deliberately heuristic, not a Stanford-trained verifier or a un
 ## Project identity
 
 The project is Moneta. Native plugin names are `moneta`, distributed through `moneta-native` from `asafchn/Moneta`. Authoring sources generate `plugins/moneta-codex` and `plugins/moneta-claude-code`. Connections use `.moneta.md`; local graph/evidence defaults use `.moneta-local/`. The user-facing evolution workflow retains the `evolve` name.
+
+## Personal bootstrap and isolated memory
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R30 | Moneta bootstraps a user-owned repository | `init` delegates to evolve-init; new repositories copy the Moneta template, with an explicitly requested linked-fork alternative. Existing repositories remain supported. Memory PRs target the personal remote. |
+| R31 | General when agent-slug is omitted | Routing contract and shared selection reference; role names, bindings and child names never infer storage. General works without an enrolled actor. |
+| R32 | Explicit agent-slug isolates reads and writes | Exactly one memory area, parent selection propagated through search/analysis/evaluation, local indexes/edges, no fallback or cross-agent memory. |
+| R33 | Add domain-knowledge | Eighth type with required sources, subject/applicability, mirrored permitted edges and a sourced starter example. |
+
+These are user-approved revisions to R14/R24/R25, not lecture-prescribed storage rules. The bootstrap keeps plugin authoring sources and generated packages; the user's repository adds memory areas. Shared native instruction changes require separate scope because they affect all agents. Existing shared graphs require explicit ownership mapping before migration; nodes are not silently copied between agents.

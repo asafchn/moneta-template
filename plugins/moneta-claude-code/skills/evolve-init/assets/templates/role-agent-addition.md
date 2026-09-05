@@ -8,3 +8,5 @@ The marked block complements the native context hooks. Hook reminders request re
 
 
 For a Codex `.toml` role, parse the existing TOML and merge the guidance into its `developer_instructions` string, with one marker-delimited block inside that string. Preserve the role's existing instructions and every other field. Serialize valid TOML with correct string quoting; validate it with an existing TOML parser and compare all fields except the intended instruction update. HTML markers and Markdown belong inside the instruction string, never at TOML top level. Completion: the role still parses, retains its name/configuration, and its loaded instructions explicitly invoke the relevant skills.
+
+Init must instantiate routing in the block: omit agent-slug for general, or include the user-selected `agent-slug: <slug>` in both retrieval and evolution calls. Retain that value through analysis/evaluation delegation. Never derive a new storage area from the loaded worker role name.

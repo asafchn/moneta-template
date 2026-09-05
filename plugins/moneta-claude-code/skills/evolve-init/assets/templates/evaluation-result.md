@@ -1,6 +1,6 @@
 ---
 id: pending-review
-domain: engineering
+memory-scope: general
 agent: coding-agent
 kind: proposal-assessment
 subject: Replace with the candidate commit or an exact retained diff locator.
@@ -19,7 +19,7 @@ metrics: []
 
 # Evaluation result template
 
-Replace this template's identity/subject fields with real values. Store the completed record under the configured evaluation root's `<domain>/<agent>/results/` directory. Use `schemas/evaluation-result.schema.json` for frontmatter fields.
+Replace this template's identity/subject fields with real values. Store the completed record under the configured evaluation root's `<memory-scope>/<agent>/results/` directory. Use `schemas/evaluation-result.schema.json` for frontmatter fields.
 
 ## Findings
 

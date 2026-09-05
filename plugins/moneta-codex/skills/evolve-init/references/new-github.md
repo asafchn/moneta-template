@@ -1,10 +1,10 @@
-# New GitHub repository
+# Personal Moneta repository
 
-Reach this branch after the user selects new and supplies owner/name and visibility.
+Reach this branch after the user selects new and supplies owner/name and visibility. Moneta is the bootstrap; learned memories belong in the user's repository.
 
-1. Check `gh auth status` and inspect `gh repo create --help`. Prepare the intended domain and role edits locally before creating the remote. Preserve the selected destination across retries.
-2. Check whether that exact repository already exists. If it does, verify ownership/destination and continue through [existing repository](existing-repository.md); a name collision is not permission to overwrite it.
-3. Create with existing `gh`, using the selected visibility and `--add-readme` to establish a base commit. Argument template: `gh repo create <owner/name> --private --add-readme --description <description>`. Replace `--private` only with the user's selected visibility. Keep company guidance and telemetry out of the initial README.
-4. Read the created URL and default branch using `gh repo view <owner/name> --json url,defaultBranchRef`. Clone that URL into the workspace's ignored local area. Completion: remote identity and a base commit exist; enrollment knowledge goes through its own PR.
+1. Check GitHub authentication and local `gh repo create --help`. Verify access to the bootstrap `asafchn/Moneta` and its template status. Prepare the selected memory-area and optional role edits locally before remote creation. Preserve the destination across retries.
+2. Check whether that exact destination exists. If it does, verify ownership/destination and resume through [existing repository](existing-repository.md). Never replace a repository on a name collision.
+3. Create the personal template copy with `gh repo create <owner/name> --private --template asafchn/Moneta`. Use the user's chosen visibility. This copies the bootstrap's plugin/skill/schema structure and establishes a base; it is a GitHub template copy, not a linked GitHub fork. If the user specifically requests a linked fork, inspect `gh repo fork --help` and use that workflow with the selected destination. If access, template status or hosting policy blocks either operation, retain the prepared work and report the concrete limit; do not silently publish an empty substitute.
+4. Read the created URL/default branch with `gh repo view <owner/name> --json url,defaultBranchRef`, then clone into the ignored local area. Set the personal remote as origin. If a linked fork retains the bootstrap as upstream, verify every future push/PR targets the personal repository. Completion: personal remote identity and reviewed base exist; memory enrollment proceeds through its own PR.
 
-If creation succeeds but cloning or enrollment fails, report the created URL and resume from it. Publish only the intended repository; retain prepared files locally if authentication or organization policy blocks progress. CLI flags: [GitHub repo create](https://cli.github.com/manual/gh_repo_create), [repo view](https://cli.github.com/manual/gh_repo_view).
+The user can commit and push their own repository normally. Moneta's proposed memories still follow evaluation and human review before ordinary retrieval. If creation succeeds but cloning/enrollment fails, return the created URL and resume there. Keep telemetry private and preserve the bootstrap's shared authoring/generated package structure.

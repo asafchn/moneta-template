@@ -4,7 +4,7 @@
 
 You review an agent's PR. Wrong API. Missed convention. A responsibility it overlooked. You explain the fix. Moneta gives that feedback a path into the next run: extract the lesson, evaluate it, propose a change, retrieve it when relevant.
 
-Native plugins for **Codex** and **Claude Code**. Shared memory lives in a Git repository of Markdown nodes and JSON schemas, cloned locally by the agent. Every proposed improvement is reviewable as a GitHub PR or GitLab MR.
+Native plugins for **Codex** and **Claude Code**. Moneta is the bootstrap for your own agentic memory system: a personal Git repository of Markdown nodes and JSON schemas, cloned locally by the agent. Every proposed improvement is reviewable as a GitHub PR or GitLab MR.
 
 > "Use our shared API client. Preserve its retry behavior."
 >
@@ -47,39 +47,53 @@ Run initialization on the agent you want to connect:
 
 | Action | Codex | Claude Code |
 |---|---|---|
-| Connect an agent | `$evolve-init` | `/moneta:evolve-init` |
+| Bootstrap your repository | `$init` | `/moneta:init` |
 | Learn from a run or transcript | `$evolve` | `/moneta:evolve` |
 | Analyze one correction | `$evolve-message` | `/moneta:evolve-message` |
 
-Init asks whether to **create a new GitHub repository or use an existing GitHub/GitLab repository**, then binds the agent to a domain and role file. Multiple agents can share a domain. It proposes initial knowledge through review, writes the local `.moneta.md` connection, and adds skill invocations to the agent's instructions.
+Clone Moneta to work on the bootstrap locally, or install the plugin directly as above. In a local clone, each host can register the current directory with `plugin marketplace add .` before installing `moneta@moneta-native`.
 
-Host discovery and hook trust controls apply. Codex agent roles are registered by init. See [native installation and compatibility](docs/NATIVE-COMPATIBILITY.md).
+**Init creates your Moneta.** Choose a new personal GitHub repository from this template, or use an existing GitHub/GitLab repository. You own that repository and can commit and push it normally. Initialization proposes your first memory area through review, writes `.moneta.md`, and connects any enrolled role's skill invocations. A template copy is independent; a linked GitHub fork is available when explicitly requested.
+
+| Invocation | Reads and writes |
+|---|---|
+| `init` / `evolve` / `knowledge-search`, no agent-slug | `memory/general/` only |
+| Same skill with `agent-slug: coding-agent` | `memory/coding-agent/` only |
+
+**One area per operation.** Agent-specific retrieval never also reads general or another agent. Missing knowledge stays a gap. The current role name does not implicitly select an area; explicitly enrolled role instructions pass their selected slug through analysis and evaluation.
+
+Host discovery and hook trust controls apply. Codex agent roles are registered by init. The underlying `evolve-init` workflow remains available. See [native installation and compatibility](docs/NATIVE-COMPATIBILITY.md).
 
 **Memory the agent can navigate**
 
 ```text
-knowledge-repository/
-  engineering/
-    indexes/                  # schema definitions, node descriptions, agent identities
-    agent-responsibility/    # one responsibility node per agent
-    coding-guidelines/
-    tool-calls/
-    skills/
-    guard-rails/
-    agentic-flow-context/
-    schemas/                 # JSON definitions and Markdown schema nodes
-  another-domain/
+my-moneta/
+  skills/                     # bootstrap workflows and schema templates
+  native/                     # native host adapters
+  plugins/                    # installable Codex and Claude Code packages
+  memory/
+    general/                  # used when no agent-slug is supplied
+      indexes/                # schema definition, node descriptions, agent index
+      agent-responsibility/
+      coding-guidelines/
+      domain-knowledge/       # sourced facts, concepts and terminology
+      tool-calls/
+      skills/
+      guard-rails/
+      agentic-flow-context/
+      schemas/                # JSON definitions and Markdown schema nodes
+    coding-agent/             # same layout; selected only by explicit agent-slug
 ```
 
 Each node is a Markdown file: typed YAML frontmatter for discovery, a body for detail. Named edges describe the relationship in both directions. The schema-definition index explains those types and relations; the node index pairs every slug with a description.
 
-Before work, the agent uses the indexes to form a query, **finds matching frontmatter, walks relevant direct relations, then reads selected bodies**. It retrieves from a verified reviewed revision. External domain knowledge keeps its own source; evaluation criteria and results use the separate evaluation skill.
+Before work, the agent uses the indexes to form a query, **finds matching frontmatter, walks relevant direct relations, then reads selected bodies**. It retrieves from a verified reviewed revision. Domain-knowledge nodes participate in the same search, with cited sources and applicability. Evaluation criteria and results stay outside it and use the separate evaluation skill.
 
 Moneta learns by changing the knowledge available to future runs. Model weights stay untouched. A promising lesson still needs evidence: evaluator scores are judgments, and passing a check establishes only what that check measured. Future performance gains require subsequent evaluation.
 
 **Inside the plugins**
 
-Both packages include seven skills, analysis and evaluation roles, graph templates, schemas, and hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart`, and `PreToolUse`. The small Node.js hook supplies context and screens messages; the agent performs retrieval and review using existing tools. The feedback screen uses bounded English phrase matching, so explicit `evolve-message` remains available when it misses a correction.
+Both packages include eight skills, analysis and evaluation roles, graph templates, schemas, and hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart`, and `PreToolUse`. The small Node.js hook supplies context and screens messages; the agent performs retrieval and review using existing tools. The feedback screen uses bounded English phrase matching, so explicit `evolve-message` remains available when it misses a correction.
 
 | Directory | Purpose |
 |---|---|
