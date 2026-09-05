@@ -20,7 +20,7 @@ Import `asafchn/moneta-template`, set **Root Directory** to `site`, and use the 
 
 ## Design
 
-An editorial field notebook: warm paper, forest ink, restrained rust highlights, Newsreader headings and DM Sans controls. Fonts are served locally. MUI provides the theme, buttons, tabs, inputs, chips and feedback. Canvas draws the graph; equivalent HTML buttons support keyboard exploration. A faint background network drifts behind stationary graph targets. Motion pauses offscreen, has a pause control, and respects reduced motion; no graph library is needed.
+An editorial field notebook: warm paper, forest ink, restrained rust highlights, Newsreader headings and DM Sans controls. Fonts are served locally. MUI provides the theme, buttons, tabs, inputs, chips and feedback. Canvas draws the graph; equivalent HTML buttons support keyboard exploration. Graph nodes float gently, paired dots travel along connections, and the selected node pulses. Motion pauses offscreen and can be paused manually. Reduced motion starts still with an explicit Play control; no graph library is needed.
 
 Graph examples and learning stages live in `src/data.ts`. The eight type names and five edge pairs match Moneta's starter collection; node bodies are illustrative. The extension preview is a teaching mock, not a schema generator. Installation commands reflect the private source repository and do not execute in the browser.
 

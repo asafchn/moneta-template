@@ -29,8 +29,7 @@ em { color: #68744e; font-weight: 400; }
 .cross { font-size: 15px; }
 .graph-paper { background: #eeefe6; border: 1px solid #d7dacb; border-radius: 7px; overflow: hidden; }
 .graph-stage { position: relative; }
-.motion-toggle.MuiButtonBase-root { position: absolute; right: 12px; bottom: 7px; padding: 5px 7px; color: #68705e; background: #eeefe6e8; border-radius: 3px; font: 9px monospace; }
-@media (prefers-reduced-motion: reduce) { .motion-toggle.MuiButtonBase-root { display: none; } }
+.motion-toggle.MuiButtonBase-root { position: absolute; right: 12px; bottom: 7px; padding: 6px 9px; color: #4d5944; background: #f9f8f2; border: 1px solid #c9cfbb; border-radius: 3px; font: 10px monospace; }
 .graph-toolbar, .graph-caption { display: flex; align-items: center; justify-content: space-between; font-family: monospace; font-size: 10px; gap: 10px; padding: 15px 18px; }
 .graph-toolbar { border-bottom: 1px solid #d7dacb; }
 .graph-canvas { display: block; width: 100%; height: 330px; cursor: pointer; background-image: radial-gradient(#c6cbb8 0.65px, transparent 0.65px); background-size: 17px 17px; }

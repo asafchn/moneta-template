@@ -108,3 +108,7 @@ Setup 0.10.1 / runtime 0.3.1: 97 Node tests and 12 Python tests pass locally. A 
 ## PolyForm Shield distribution
 
 Setup 0.10.2 / runtime 0.3.2 includes the official unmodified PolyForm Shield 1.0.0 text and Moneta ownership notice at every installer/template/runtime boundary. Thirteen Python tests pass, including notice propagation and package parity. Eight viewer-server tests pass, including text/plain license and notice endpoints. Five browser checks pass after adding footer links; standalone landing and viewer production builds pass. The source license and built browser copies match official SHA-256 56328093d57c87dcf2811ddcc824caf2723a07ffc332e6fbe4f9f108a2893a91. These checks validate distribution, not legal enforceability.
+
+## Visible graph motion
+
+Setup 0.10.3 / runtime 0.3.3 keeps the shared canvas synchronized with the landing page. The demo now floats its actual nodes, animates paired signals along edges and pulses the selected node. Hit testing follows drawn positions. Reduced motion starts still with an explicit Play control; pause and offscreen suspension remain supported. Two browser regressions reproduced the prior stationary main nodes and unavailable Play control, then passed after the change. Seven template browser tests, five standalone landing tests, thirteen Python tests, production builds and package parity passed. The local knowledge viewer remains static by default.

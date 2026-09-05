@@ -8,7 +8,7 @@
       "name": "moneta-setup",
       "source": "./plugins/moneta-setup-claude-code",
       "description": "Bootstrap personal agent memory and evolve reviewed knowledge.",
-      "version": "0.10.2"
+      "version": "0.10.3"
     }
   ],
   "metadata": {

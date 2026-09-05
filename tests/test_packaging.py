@@ -47,7 +47,7 @@ class PackagingTests(unittest.TestCase):
             metadata = installer / (".codex-plugin" if host == "codex" else ".claude-plugin") / "plugin.json"
             manifest = json.loads(metadata.read_text(encoding="utf-8"))
             self.assertEqual(manifest["name"], "moneta-setup")
-            self.assertEqual(manifest["version"], "0.10.2")
+            self.assertEqual(manifest["version"], "0.10.3")
             self.assertNotIn("hooks", manifest)
 
     def test_each_template_contains_both_independent_runtime_packages(self):
