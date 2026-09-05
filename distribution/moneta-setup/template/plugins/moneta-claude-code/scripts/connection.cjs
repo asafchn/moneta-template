@@ -130,6 +130,6 @@ if (require.main === module) {
     const connection = process.argv.length === 3 && typeof cwd === 'string' && path.isAbsolute(cwd) ? resolveConnection(cwd,path.resolve(__dirname,'..')) : null;
     const result = connection ? {status:'matched',...connection} : {status:'unmatched'};
     const {redact} = require('./redact.cjs');
-    process.stdout.write(redact(JSON.stringify(result))+'\n');
+    process.stdout.write(redact(JSON.stringify(result),process.env,{localPaths:[connection?.path,connection?.profilePath,connection?.repositoryRoot]})+'\n');
   } catch { process.stdout.write('{"status":"unmatched"}\n'); }
 }

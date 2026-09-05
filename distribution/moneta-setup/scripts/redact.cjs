@@ -25,7 +25,7 @@ function entropy(value) {
   return bits;
 }
 
-function redact(input, env = process.env) {
+function redact(input, env = process.env, {localPaths = []} = {}) {
   let text = String(input).replace(/\\u([0-9a-f]{4})/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
   // Strip display controls before matching to prevent escape-split credentials.
   text = text.replace(/\x1b\[[0-?]*[ -/]*[@-~]/g, '').replace(/[\u200b-\u200f\u202a-\u202e\u2060\ufeff]/g, '');
@@ -44,11 +44,24 @@ function redact(input, env = process.env) {
   // Drop complete labeled values, including quoted and multiline values.
   text = text.replace(/(["']?[\w.-]*(?:token|secret|password|passwd|credential|key|device[_-]?code|verification[_-]?code)[\w.-]*["']?\s*[:=]\s*)(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s,;]+)/gi, '$1' + MASK);
   for (const pattern of patterns) text = text.replace(pattern, MASK);
-  // Prefer false positives for opaque output; this can also hide hashes/identifiers.
-  text = text.replace(/[A-Za-z0-9+\/_=-]{24,}/g, value => {
+  // Only explicitly resolved connection paths are exempt from the opaque-entropy heuristic.
+  // Known secrets and credential patterns have already been removed above.
+  const spans = [];
+  for (const localPath of localPaths) {
+    if (typeof localPath !== 'string' || !localPath.startsWith('/')) continue;
+    for (let at = text.indexOf(localPath); at !== -1; at = text.indexOf(localPath, at + localPath.length)) spans.push([at, at + localPath.length]);
+  }
+  const opaque = value => {
     // Our bounded generated identity is metadata, after all known-secret rules.
     if (/^moneta-[a-z0-9-]{1,48}-[a-f0-9]{8}$/.test(value)) return value;
     return entropy(value) >= 4 || (/^[a-f0-9]{32,}$/i.test(value) && entropy(value) >= 3) ? MASK : value;
+  };
+  // Prefer false positives for opaque output; this can also hide hashes/identifiers.
+  text = text.replace(/[A-Za-z0-9+\/_=-]{24,}/g, (value, offset) => {
+    if (spans.some(([start,end]) => offset >= start && offset + value.length <= end)) {
+      return value;
+    }
+    return opaque(value);
   });
   return text;
 }

@@ -20,13 +20,13 @@ Import `asafchn/moneta-template`, set **Root Directory** to `site`, and use the 
 
 ## Design
 
-An editorial field notebook: warm paper, forest ink, restrained rust highlights, Newsreader headings and DM Sans controls. Fonts are served locally. MUI provides the theme, buttons, tabs, inputs, chips and feedback. Canvas draws the graph; equivalent HTML buttons support keyboard exploration. No perpetual animation or graph library.
+An editorial field notebook: warm paper, forest ink, restrained rust highlights, Newsreader headings and DM Sans controls. Fonts are served locally. MUI provides the theme, buttons, tabs, inputs, chips and feedback. Canvas draws the graph; equivalent HTML buttons support keyboard exploration. A faint background network drifts behind stationary graph targets. Motion pauses offscreen, has a pause control, and respects reduced motion; no graph library is needed.
 
 Graph examples and learning stages live in `src/data.ts`. The eight type names and five edge pairs match Moneta's starter collection; node bodies are illustrative. The extension preview is a teaching mock, not a schema generator. Installation commands reflect the private source repository and do not execute in the browser.
 
 ## Local graph viewer
 
-The generated runtime's `moneta-show` skill serves its selected memory area on 127.0.0.1. `Viewer.tsx` shares `CanvasGraph` with the landing page. Its server reads the area's local registries and direct Markdown nodes; no provider calls, graph writes or remote assets. Search is a UI filter, separate from the agent's knowledge-search skill. The inspector shows Markdown as text, without executing embedded HTML. Limits: 2,000 nodes and 1 MiB per file; larger inputs are rejected rather than silently truncated.
+The generated runtime's `moneta-show` skill serves its selected memory area on 127.0.0.1. `Viewer.tsx` shares `CanvasGraph` with the landing page. Its server reads the area's local registries and direct Markdown nodes; no provider API calls, graph writes or remote assets. Production refresh applies the shared one-hour Git pull rule to the reviewed clone before reading; candidates keep their separate frozen checkout. Search is a UI filter, separate from the agent's knowledge-search skill. The inspector shows Markdown as text, without executing embedded HTML. Limits: 2,000 nodes and 1 MiB per file; larger inputs are rejected rather than silently truncated.
 
 After changing the viewer or `tools/moneta-show-server.cjs`, run `npm run build:viewer` here, then `python tools/package_plugins.py --reconcile` from the repository root. This builds committed runtime assets and a self-contained Node.js server with bundled YAML parsing and redaction. End users do not install npm dependencies. Run `npm run build` separately for the Vercel landing page.
 

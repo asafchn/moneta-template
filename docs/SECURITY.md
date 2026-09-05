@@ -11,3 +11,5 @@ Generic filtering can produce false positives and miss unknown secret formats, a
 Run node --test tests/provider-output.test.cjs for synthetic leakage cases. Tests contain fabricated values, not live credentials. Interactive login is not exercised by those tests and must not be claimed validated from a launched process alone.
 
 Generated runtime identifiers of the bounded moneta-<name>-<8hex> form are preserved by the entropy heuristic so installation remains usable. Known environment-secret masking and provider/key patterns run first, including when a credential has that shape. Other opaque metadata may still be withheld.
+
+Resolved connection paths are explicit metadata. Hook/connection output exempts only those exact local paths from generic entropy matching, which otherwise mistakes Unix paths and macOS temporary directories for opaque tokens. Known credential values, labeled secrets and provider-key patterns still run first; a path containing a recognized secret is redacted. Provider output receives no path exemption. This does not claim detection of every unknown secret.

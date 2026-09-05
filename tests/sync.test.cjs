@@ -22,7 +22,7 @@ function fixture(t) {
 }
 test('first pull stores private local paths; a fresh receipt avoids network; exactly one hour pulls',t=>{
   const f=fixture(t); assert.equal(f.call().status,'pulled');
-  assert.equal(f.read().checkout,fs.realpathSync(f.checkout)); assert.equal(f.read()['graph-root'],path.join(f.checkout,'memory'));
+  assert.equal(f.read().checkout,fs.realpathSync(f.checkout)); assert.equal(f.read()['graph-root'],path.join(fs.realpathSync(f.checkout),'memory'));
   f.mock.now+=HOUR-1; assert.equal(f.call().status,'current'); assert.equal(f.mock.pulls,1);
   f.mock.now++; assert.equal(f.call().status,'pulled'); assert.equal(f.mock.pulls,2);
   assert.equal(f.read()['last-successful-pull-at'],new Date(f.mock.now).toISOString());

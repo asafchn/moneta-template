@@ -112,3 +112,14 @@ test('generated runtime identifiers remain usable while known credentials always
  assert.equal(redact(identity,{}),identity);
  assert.equal(redact(identity,{API_KEY:identity}),'[REDACTED]');
 });
+test('resolved Unix paths remain usable without exempting secret path components or other output',()=>{
+  const localPath='/home/runner/work/moneta-template/runtime-1/moneta.json';
+  assert.equal(redact(localPath,{}, {localPaths:[localPath]}),localPath);
+  const token='ghp_abcdefghijklmnopqrstuvwxyz123456';const secretPath='/home/user/'+token+'/moneta.json';
+  assert.doesNotMatch(redact(secretPath,{}, {localPaths:[secretPath]}),new RegExp(token));
+  const opaque='aB3dE6gH9jK2mN5pQ8sT1vW4xY7zA0bC';
+  const macPath='/private/var/folders/ab/'+opaque+'/T/moneta/runtime-1/moneta.json';
+  assert.equal(redact(macPath,{}, {localPaths:[macPath]}),macPath);
+  assert.doesNotMatch(redact(localPath,{API_TOKEN:'runtime-1'}, {localPaths:[localPath]}),/runtime-1/);
+  assert.equal(redact(opaque,{}, {localPaths:[localPath]}),'[REDACTED]');
+});

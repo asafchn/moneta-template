@@ -25,7 +25,7 @@ try {
     const gate = decide(input.prompt);
     if (gate.route === 'inspect') additionalContext += ` Message gate: ${gate.reason}. Invoke ${connection.skillPrefix}evolve-message for this submitted user message only, starting with its brief no-tool triage. Keep fulfilling the current request; a candidate signal is not approval to add a permanent rule.`;
   }
-  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext: redact(additionalContext) } }));
+  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext: redact(additionalContext, process.env, {localPaths:[connection.path,connection.profilePath]}) } }));
 } catch {
   // Optional guidance cannot interrupt the user's work or expose captured input.
 }
