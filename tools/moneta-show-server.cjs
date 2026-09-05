@@ -12,6 +12,7 @@ const http = require('node:http');
 const { execFile } = require('node:child_process');
 const YAML = require('yaml');
 const { redact } = require('../native/shared/scripts/redact.cjs');
+const { sync } = require('../native/shared/scripts/sync.cjs');
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function inside(root, target) {
@@ -89,8 +90,8 @@ function readGraph(area) {
   return result;
 }
 
-function createViewer(area, assets) {
-  // Resolve the sole permitted area once. No connection discovery or network calls.
+function createViewer(area, assets, beforeRead = () => ({status:'current'})) {
+  // Resolve the sole permitted area once; production supplies a reviewed-clone freshness check.
   const root = fs.realpathSync(area), staticRoot = fs.realpathSync(assets);
   const server = http.createServer((request, response) => {
     const origin = `http://127.0.0.1:${server.address().port}`;
@@ -108,6 +109,9 @@ function createViewer(area, assets) {
     if (url.pathname === '/health') { response.setHeader('Content-Type', 'application/json'); response.end('{"ok":true}'); return; }
     if (url.pathname === '/graph.json') {
       response.setHeader('Content-Type', 'application/json');
+      try {
+        if (!['current','pulled'].includes(beforeRead().status)) throw new Error('Freshness unavailable');
+      } catch { response.writeHead(409); response.end('{"error":"Memory refresh is blocked. Check the local checkout and connection before retrying."}'); return; }
       try { response.end(JSON.stringify(readGraph(root))); }
       catch { response.writeHead(422); response.end('{"error":"Unable to read selected graph. Check local schemas, node frontmatter, target paths and viewer limits."}'); }
       return;
@@ -128,8 +132,15 @@ function main() {
   const args = process.argv.slice(2), areaAt = args.indexOf('--area');
   if (areaAt < 0 || !args[areaAt + 1] || !path.isAbsolute(args[areaAt + 1])) throw new Error('Provide --area with an absolute selected-area path.');
   const area = args[areaAt + 1];
+  const checkout = args[args.indexOf('--checkout') + 1], stateFile = args[args.indexOf('--config') + 1];
+  if (!args.includes('--checkout') || !args.includes('--config') || !path.isAbsolute(checkout) || !path.isAbsolute(stateFile)) throw new Error('Provide the reviewed checkout and private config paths.');
+  const profile = JSON.parse(fs.readFileSync(path.resolve(__dirname,'../../../moneta.json'),'utf8'));
+  const beforeRead = () => sync({profile,checkout,stateFile});
+  if (!['current','pulled'].includes(beforeRead().status)) throw new Error('Reviewed checkout refresh is blocked.');
+  // An explicitly requested candidate view may live elsewhere; only the reviewed checkout is pulled.
+  if (!args.includes('--candidate')) inside(path.join(checkout,'memory'),area);
   readGraph(area);
-  const server = createViewer(area, path.join(__dirname, '../assets/viewer'));
+  const server = createViewer(area, path.join(__dirname, '../assets/viewer'),beforeRead);
   server.listen(0, '127.0.0.1', () => {
     const url = `http://127.0.0.1:${server.address().port}/`;
     console.log(`Moneta viewer: ${url}\nRead only. Stop this process to close the viewer. Expires after 8 hours.`);

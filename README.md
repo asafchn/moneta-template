@@ -29,22 +29,30 @@ The source repository is private; installation uses your existing GitHub access.
 
 **One wizard, your own repository**
 
-Init asks only unresolved choices: provider, new/existing destination, owner and visibility when new, repository/group URLs to connect, and optional purpose. That purpose shapes your README. Omit agent-slug for general memory; supply it to select only that agent's area.
+Init asks only unresolved choices: provider, new/existing destination, owner and visibility when new, and optional purpose. Availability is global by default. Codebase targets are asked only when you request restrictions. That purpose shapes your README. Omit agent-slug for general memory; supply it to select only that agent's area.
 
-It generates a personalized runtime, publishes it to your repository, prepares one graph setup PR/MR, then installs and enables the runtime for your active host. Start a fresh chat to load it; merge the graph setup review before ordinary retrieval. Host-required hook trust remains a human action.
+For a new knowledge base, it generates a personalized runtime, publishes it to your repository, prepares one graph setup PR/MR, then installs and enables the runtime for your active host. Start a fresh chat to load it; merge the graph setup review before ordinary retrieval. Host-required hook trust remains a human action.
+
+Choose connect to reuse a teammate's exact repository: init clones it locally, reuses its existing plugin and graph, and installs that plugin. Joining an existing area needs no new repository, bootstrap copy, commit or setup review.
+
+Each installed brain uses a private machine-local ~/.moneta/<plugin-id>/config.json with the local checkout, graph path, repository identity and last successful pull. Reads always use that clone. Before operations, Moneta pulls when the last successful pull is at least one hour old; failed pulls never mark stale data fresh. Work in progress is preserved. SessionStart reminds the agent that memory exists; relevant prompts trigger selective retrieval.
 
 With read-only credentials, init still prepares and validates the files locally. It reports the exact blocked write, prepared artifacts and manual steps, then resumes later without starting over. A locally installed runtime is clearly marked unpublished when remote access is pending.
 
-**Connect an organization once**
+**Use it across projects**
 
-Supply a GitLab group URL or repository URLs. Each generated plugin stores these matching rules. When you open a codebase, the hook checks only its local Git origin. Group rules include subgroups and future repositories. No organization inventory, repository enumeration or source-code scan is performed. No per-codebase init is required. Teammates and CI install your generated plugin on their own hosts.
+Your generated plugin works in every project and ordinary chat by default, including folders outside Git. No codebase URL, Git origin or per-repository init is required. The chosen knowledge repository is storage for your memory, not a restriction on where you can use it.
+
+For optional restrictions, supply exact repository or organization/group URLs. Restricted mode reads only the current codebase's local Git origin; group rules include subgroups and future repositories without inventory, enumeration or source scans. Existing profiles with targets remain restricted until you request their removal. Say "make this Moneta runtime unbound" during init to reuse its destination and switch it to global.
+
+Multiple installed memories stay separate: choose a runtime when ambiguous. General and explicit agent-slug isolation apply everywhere. Teammates and CI install the generated plugin on their own hosts.
 
 **Use your generated plugin**
 
 - `evolve`: learn from a correction, current run or saved transcript; context chooses the flow or asks a focused question.
 - `extend`: decide whether a missing concept fits an existing node/type/relation, then design and review a schema extension when needed.
 - `knowledge-search`: index -> query -> frontmatter find -> direct-relation walk -> selected bodies.
-- `moneta-show`: open a read-only localhost canvas of the selected memory area, with node details and named edges. The generated plugin includes the viewer; Node.js is sufficient, and knowledge stays local.
+- `moneta-show`: open a read-only localhost canvas of the selected memory area, with node details and named edges. The generated plugin includes the viewer; Node.js and Git are sufficient, and knowledge stays local.
 
 Use the generated plugin's qualified skill name when more than one runtime is installed. Feedback hooks screen a single user message and can suggest one-message evolution; relevance is assessed by the agent. Useful improvements receive independent evaluation with available deterministic checks, then a PR/MR. Human merge activates learned guidance. Scores alone do not prove future performance gains.
 

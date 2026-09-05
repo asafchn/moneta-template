@@ -1,36 +1,137 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Personal Moneta runtime connection",
-  "description": "Portable profile generated once by init. Organization targets are explicit local-origin matching rules, including subgroups and future repositories. They authorize no organization discovery, repository listing, network request, source scan or graph read by hooks. Checkouts are derived privately on each machine, never stored here.",
+  "description": "Portable memory storage profile. Global availability works in any project or chat without Git origin checks. Optional restricted availability matches only explicit codebase targets. Hooks perform no provider calls, organization discovery or graph reads.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["repository-url", "hosting", "base-branch", "targets"],
+  "required": [
+    "repository-url",
+    "hosting",
+    "base-branch"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "repository-url": { "type": "string", "maxLength": 4096, "description": "Personal memory repository URL without passwords or HTTP credentials. HTTPS, SSH URL and git@host:path forms are supported." },
-    "hosting": { "enum": ["auto", "github", "gitlab"] },
-    "base-branch": { "type": "string", "minLength": 1, "maxLength": 255, "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$" },
+    "$schema": {
+      "type": "string"
+    },
+    "repository-url": {
+      "type": "string",
+      "maxLength": 4096,
+      "description": "Personal memory repository URL without passwords or HTTP credentials. HTTPS, SSH URL and git@host:path forms are supported."
+    },
+    "hosting": {
+      "enum": [
+        "auto",
+        "github",
+        "gitlab"
+      ]
+    },
+    "base-branch": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$"
+    },
     "targets": {
-      "type": "array", "minItems": 1, "maxItems": 100,
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 100,
       "items": {
         "oneOf": [
           {
-            "type": "object", "additionalProperties": false, "required": ["kind", "host", "namespace"],
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "host",
+              "namespace"
+            ],
             "properties": {
-              "kind": { "const": "organization" },
-              "host": { "type": "string", "maxLength": 259, "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]*(?::[0-9]{1,5})?$" },
-              "namespace": { "type": "string", "maxLength": 2048, "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.-]*(/[A-Za-z0-9_][A-Za-z0-9_.-]*)*$", "description": "Explicit group path. Matches only repositories beneath this complete namespace boundary on the exact host, including subgroups." }
+              "kind": {
+                "const": "organization"
+              },
+              "host": {
+                "type": "string",
+                "maxLength": 259,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]*(?::[0-9]{1,5})?$"
+              },
+              "namespace": {
+                "type": "string",
+                "maxLength": 2048,
+                "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.-]*(/[A-Za-z0-9_][A-Za-z0-9_.-]*)*$",
+                "description": "Explicit group path. Matches only repositories beneath this complete namespace boundary on the exact host, including subgroups."
+              }
             }
           },
           {
-            "type": "object", "additionalProperties": false, "required": ["kind", "url"],
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "url"
+            ],
             "properties": {
-              "kind": { "const": "repository" },
-              "url": { "type": "string", "maxLength": 4096, "description": "Exact repository URL without passwords or HTTP credentials." }
+              "kind": {
+                "const": "repository"
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 4096,
+                "description": "Exact repository URL without passwords or HTTP credentials."
+              }
             }
           }
         ]
       }
+    },
+    "availability": {
+      "enum": [
+        "global",
+        "restricted"
+      ],
+      "description": "New setup defaults to global. A legacy profile with nonempty targets remains restricted until deliberately changed."
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "const": "global"
+          }
+        },
+        "required": [
+          "availability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "targets": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "availability": {
+            "const": "restricted"
+          }
+        },
+        "required": [
+          "availability"
+        ]
+      },
+      "then": {
+        "required": [
+          "targets"
+        ],
+        "properties": {
+          "targets": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
 }

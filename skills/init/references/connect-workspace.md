@@ -1,6 +1,6 @@
 # Legacy or explicit workspace connection
 
-Organization targets use the generated runtime profile and [private runtime connection](../../knowledge-search/references/connection.md); no per-codebase file is required. Reach this branch only for an explicitly requested local override or existing .moneta.md.
+Global availability and optional organization targets use the generated runtime profile and [private runtime connection](../../knowledge-search/references/connection.md); no per-codebase file is required. Reach this branch only for an explicitly requested local override or existing .moneta.md.
 
 Preserve existing bindings and responsibilities. Same destination resumes missing steps. A different destination requires an explicit switch decision; retain the original until the replacement is ready. Distinct destinations use distinct verified clone paths. Populate the workspace template with the actual repository, reviewed base, checkout and evaluation directory, then validate its frontmatter.
 

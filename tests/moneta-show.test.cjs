@@ -106,3 +106,11 @@ test('localhost server serves the viewer, rejects foreign origins and writes, an
   assert.equal(failed.status, 422);
   assert.doesNotMatch(await failed.text(), /private-sensitive-parser-content/);
 });
+test('viewer refuses graph reads when freshness fails and retries on refresh', async t => {
+  const { area } = fixture(t); let fresh=false,calls=0;
+  const server=createViewer(area,assets,()=>{calls++;return {status:fresh?'current':'pull-failed'};});
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));t.after(()=>{server.closeAllConnections();server.close();});
+  const url=`http://127.0.0.1:${server.address().port}/graph.json`;
+  const blocked=await fetch(url);assert.equal(blocked.status,409);assert.equal((await blocked.json()).nodes,undefined);
+  fresh=true;assert.equal((await fetch(url)).status,200);assert.equal(calls,2);
+});

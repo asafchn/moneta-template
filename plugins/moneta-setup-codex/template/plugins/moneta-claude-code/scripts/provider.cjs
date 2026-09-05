@@ -78,6 +78,27 @@ function main(args) {
   }
   if (mode === 'login') {
     if (rest.length !== 1 || !hostPattern.test(rest[0])) return {status:'invalid-host',exitCode:null};
+    if (process.platform === 'darwin') {
+      // Only fixed commands and a validated hostname reach Terminal; login output stays there.
+      const command = `${provider} auth login --hostname '${rest[0]}' --web`;
+      const result = collect('osascript',['-e',`tell application "Terminal" to do script "${command}"`,'-e','tell application "Terminal" to activate']);
+      if (result.failure) return {status:result.failure,exitCode:null};
+      return {status:result.status===0?'login-started':'login-launch-failed',terminal:'Terminal',exitCode:result.status};
+    }
+    if (process.platform === 'linux') {
+      if (!process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) return {status:'interactive-terminal-required',exitCode:null};
+      for (const terminal of ['x-terminal-emulator','gnome-terminal','konsole','xterm']) {
+        const found = collect('sh',['-c','command -v "$1" >/dev/null 2>&1','moneta',terminal]);
+        if (found.failure) return {status:found.failure,exitCode:null};
+        if (found.status !== 0) continue;
+        const prefix = terminal === 'gnome-terminal' ? ['--wait','--'] : ['-e'];
+        const result = collect('sh',['-c','"$@" </dev/null >/dev/null 2>&1 & echo $!','moneta',terminal,...prefix,provider,'auth','login','--hostname',rest[0],'--web']);
+        if (result.failure) return {status:result.failure,exitCode:null};
+        const pid = String(result.stdout || '').trim();
+        return result.status===0 && /^[1-9][0-9]{0,9}$/.test(pid) ? {status:'login-started',terminal,processId:Number(pid),exitCode:0} : {status:'login-launch-failed',exitCode:result.status};
+      }
+      return {status:'interactive-terminal-required',exitCode:null};
+    }
     if (process.platform !== 'win32') return {status:'interactive-terminal-required',exitCode:null};
     // Output goes to a separate user-visible console, never to this captured tool call.
     const script = `$p = Start-Process -FilePath '${provider}' -ArgumentList @('auth','login','--hostname','${rest[0]}','--web') -WindowStyle Normal -PassThru; $p.Id`;

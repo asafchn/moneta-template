@@ -152,9 +152,51 @@ test('malformed and ambiguous profile or URL structures fail silently',()=>{
   const {repository,validProfile}=require('../native/shared/scripts/connection.cjs');
   for(const url of ['https://gitlab.example/engineering/platform/../other/repo','https://gitlab.example/engineering%2fplatform/repo','https://gitlab.example/engineering/platform/repo?secret=92517','ssh://git@gitlab.example:99999/engineering/platform/repo','https://gitlab.example/engineering/platform//repo']) assert.equal(repository(url),null);
   assert.equal(validProfile({...profile,checkout:'C:\\private\\memory'}),false);
-  assert.equal(validProfile({...profile,targets:[]}),false);
+  assert.equal(validProfile({...profile,availability:'restricted',targets:[]}),false);
   const directory=repo('https://gitlab.example/engineering/platform/repo');
   const root=runtime();
   fs.writeFileSync(path.join(root,'moneta.json'),'{SYNTHETIC_SECRET');
   assert.equal(run(root,directory),'');
+});
+
+test('global memory works in ordinary folders, unrelated repositories and repositories without origin',()=>{
+  const root=runtime({...profile,availability:'global',targets:[]});
+  const folder=path.join(temporary,`plain-chat-${++sequence}`);
+  fs.mkdirSync(folder);
+  for (const cwd of [folder, repo(null), repo('https://unrelated.example/team/project')]) {
+    const output=run(root,cwd);
+    assert.match(output,/my-memory:knowledge-search/);
+    assert.match(output,/my-memory:evolve-message/);
+    assert.match(output,/all projects and chats/);
+    assert.match(output,/explicit agent-slug selects only that area/);
+    assert.doesNotMatch(output,/Selected target:/);
+  }
+});
+
+test('omitting binding configuration defaults to global and skips Git origin entirely',()=>{
+  const vm=require('node:vm');
+  const globalProfile={...profile}; delete globalProfile.targets;
+  const root=runtime(globalProfile);
+  const module={exports:{}};
+  let loaded=false;
+  vm.runInNewContext(fs.readFileSync(path.join(source,'scripts','connection.cjs'),'utf8'),{module,process:{env:{}},require(name){
+    if(name==='node:child_process'){loaded=true;throw new Error('Git must not run');}
+    return require(name);
+  },URL});
+  const result=module.exports.resolveConnection(temporary,root);
+  assert.equal(result.availability,'global');
+  assert.equal(result.profilePath,path.join(root,'moneta.json'));
+  assert.equal(loaded,false);
+});
+
+test('global mode preserves conflicting local overrides and rejects contradictory or placeholder profiles',()=>{
+  const {validProfile}=require('../native/shared/scripts/connection.cjs');
+  assert.equal(validProfile({...profile,availability:'global'}),false);
+  assert.equal(validProfile({...profile,availability:'unknown',targets:[]}),false);
+  const root=runtime({...profile,availability:'global',targets:[]});
+  const directory=repo(null);
+  fs.writeFileSync(path.join(directory,'.moneta.md'),'---\nrepository-url: https://other.example/me/memory\n---\n');
+  assert.equal(run(root,directory),'');
+  const placeholder=runtime({...profile,'repository-url':'https://example.invalid/owner/knowledge',availability:'global',targets:[]});
+  assert.equal(run(placeholder,temporary),'');
 });

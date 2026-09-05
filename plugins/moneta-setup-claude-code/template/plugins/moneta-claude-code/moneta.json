@@ -3,11 +3,5 @@
   "repository-url": "https://example.invalid/owner/knowledge",
   "hosting": "auto",
   "base-branch": "main",
-  "targets": [
-    {
-      "kind": "organization",
-      "host": "example.invalid",
-      "namespace": "owner"
-    }
-  ]
+  "availability": "global"
 }

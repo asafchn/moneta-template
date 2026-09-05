@@ -7386,6 +7386,254 @@ var require_redact = __commonJS({
   }
 });
 
+// ../native/shared/scripts/connection.cjs
+var require_connection = __commonJS({
+  "../native/shared/scripts/connection.cjs"(exports2, module2) {
+    "use strict";
+    var fs2 = require("node:fs");
+    var path2 = require("node:path");
+    function readSmall(file) {
+      const stat = fs2.statSync(file);
+      if (!stat.isFile() || stat.size > 65536) throw new Error("invalid-config");
+      return fs2.readFileSync(file, "utf8");
+    }
+    function namespace(value) {
+      return typeof value === "string" && value.length <= 2048 && value.split("/").every((part) => /^[A-Za-z0-9_][A-Za-z0-9_.-]*$/.test(part) && ![".", ".."].includes(part));
+    }
+    function host(value) {
+      if (typeof value !== "string" || !/^[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?(?::[0-9]{1,5})?$/.test(value)) return null;
+      const [name, port] = value.toLowerCase().split(":");
+      if (name.length > 253 || name.split(".").some((label) => !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(label))) return null;
+      if (port && (+port < 1 || +port > 65535)) return null;
+      return name + (port ? `:${+port}` : "");
+    }
+    function repository(value, allowCredentials = false) {
+      if (typeof value !== "string" || value.length > 4096 || /[\s\\?#%]/.test(value)) return null;
+      let authority, location;
+      if (/^(https?|ssh):\/\//.test(value)) {
+        const raw = /^(https?|ssh):\/\/([^/]+)\/(.+)$/.exec(value);
+        if (!raw) return null;
+        let url;
+        try {
+          url = new URL(value);
+        } catch {
+          return null;
+        }
+        if (!allowCredentials && url.password || !allowCredentials && url.username && (url.protocol !== "ssh:" || url.username !== "git")) return null;
+        authority = host(url.host);
+        location = raw[3];
+      } else {
+        const scp = /^git@([^:]+):(.+)$/.exec(value);
+        if (!scp) return null;
+        authority = host(scp[1]);
+        location = scp[2];
+      }
+      location = location.replace(/\.git$/, "");
+      if (!authority || !namespace(location) || !location.includes("/")) return null;
+      return { host: authority, namespace: location };
+    }
+    function sameRepository(a, b) {
+      return Boolean(a && b && a.host === b.host && a.namespace === b.namespace);
+    }
+    function availability(value) {
+      return value.availability || (Array.isArray(value.targets) && value.targets.length ? "restricted" : "global");
+    }
+    function validProfile(value) {
+      if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+      if (Object.keys(value).some((key) => !["$schema", "repository-url", "hosting", "base-branch", "targets", "availability"].includes(key))) return false;
+      if ("$schema" in value && typeof value.$schema !== "string") return false;
+      if (!repository(value["repository-url"]) || !["auto", "github", "gitlab"].includes(value.hosting)) return false;
+      if (typeof value["base-branch"] !== "string" || !/^[A-Za-z0-9][A-Za-z0-9_./-]{0,254}$/.test(value["base-branch"]) || /\.\.|\/\/|\/$|\.$|\.lock(?:\/|$)/.test(value["base-branch"])) return false;
+      if ("availability" in value && !["global", "restricted"].includes(value.availability)) return false;
+      const targets = value.targets === void 0 ? [] : value.targets;
+      if (!Array.isArray(targets) || targets.length > 100) return false;
+      if (availability(value) === "restricted" ? !targets.length : targets.length > 0) return false;
+      return targets.every((target) => {
+        if (!target || typeof target !== "object" || Array.isArray(target)) return false;
+        if (target.kind === "organization") return Object.keys(target).every((key) => ["kind", "host", "namespace"].includes(key)) && Boolean(host(target.host)) && namespace(target.namespace);
+        return target.kind === "repository" && Object.keys(target).every((key) => ["kind", "url"].includes(key)) && Boolean(repository(target.url));
+      });
+    }
+    function origin(directory) {
+      if (Object.keys(process.env).some((key) => /^(NODE_DEBUG|NODE_DEBUG_NATIVE|NODE_OPTIONS)$/i.test(key) && process.env[key])) return null;
+      const env = { ...process.env };
+      for (const key of Object.keys(env)) if (/^(?:GIT_.*|NODE_DEBUG|NODE_DEBUG_NATIVE|NODE_OPTIONS|GH_DEBUG|GLAB_DEBUG|DEBUG)$/i.test(key)) delete env[key];
+      try {
+        const { spawnSync } = require("node:child_process");
+        const result = spawnSync("git", ["-c", `safe.directory=${directory.replaceAll("\\", "/")}`, "config", "--local", "--no-includes", "--null", "--get-all", "remote.origin.url"], { cwd: directory, env, shell: false, windowsHide: true, stdio: ["ignore", "pipe", "pipe"], timeout: 1500, maxBuffer: 16384 });
+        if (result.error || result.signal || result.status !== 0) return null;
+        const values = String(result.stdout).split("\0");
+        if (values.length !== 2 || values[1] !== "") return null;
+        return repository(values[0], true);
+      } catch {
+        return null;
+      }
+    }
+    function locate(cwd) {
+      let directory = path2.resolve(cwd), legacy;
+      for (let depth = 0; depth < 128; depth++) {
+        const candidate = path2.join(directory, ".moneta.md");
+        if (fs2.existsSync(candidate) && fs2.statSync(candidate).isFile()) return { legacy: candidate };
+        if (fs2.existsSync(path2.join(directory, ".git"))) return { directory, legacy };
+        const parent = path2.dirname(directory);
+        if (parent === directory) return { legacy };
+        directory = parent;
+      }
+      return { legacy };
+    }
+    function legacyRepository(file) {
+      const raw = readSmall(file);
+      const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(raw);
+      if (!frontmatter || /(?:^|\n)\s*<<\s*:/.test(frontmatter[1])) return null;
+      const fields = frontmatter[1].split(/\r?\n/).filter((line) => /^(?:repository-url|["']repository-url["'])\s*:/.test(line));
+      if (fields.length !== 1 || !/^repository-url:/.test(fields[0])) return null;
+      let value = fields[0].slice("repository-url:".length).trim();
+      if (/^"[^"]*"$|^'[^']*'$/.test(value)) value = value.slice(1, -1);
+      return repository(value);
+    }
+    function resolveConnection(cwd, root) {
+      try {
+        const local = locate(cwd);
+        const profilePath = path2.join(root, "moneta.json");
+        if (!fs2.existsSync(profilePath)) return local.legacy ? { path: local.legacy, skillPrefix: "" } : null;
+        const profile = JSON.parse(readSmall(profilePath));
+        if (!validProfile(profile)) return null;
+        if (/\.invalid(?::\d+)?$/.test(repository(profile["repository-url"]).host)) return null;
+        const names = [".codex-plugin", ".claude-plugin"].map((folder) => path2.join(root, folder, "plugin.json")).filter((file) => fs2.existsSync(file)).map((file) => JSON.parse(readSmall(file)).name);
+        if (!names.length || names.some((name) => typeof name !== "string" || !/^[a-z][a-z0-9-]{0,63}$/.test(name) || name !== names[0])) return null;
+        const skillPrefix = `${names[0]}:`;
+        if (local.legacy) {
+          if (!sameRepository(legacyRepository(local.legacy), repository(profile["repository-url"]))) return null;
+          return { path: local.legacy, profilePath, skillPrefix };
+        }
+        if (availability(profile) === "global") return { path: profilePath, profilePath, skillPrefix, availability: "global" };
+        if (!local.directory) return null;
+        const remote = origin(local.directory);
+        if (!remote) return null;
+        const target = profile.targets.find((item) => item.kind === "organization" ? host(item.host) === remote.host && remote.namespace.startsWith(`${item.namespace}/`) : sameRepository(repository(item.url), remote));
+        if (!target) return null;
+        return { path: profilePath, profilePath, target, skillPrefix, repositoryRoot: local.directory };
+      } catch {
+        return null;
+      }
+    }
+    module2.exports = { resolveConnection, repository, validProfile, origin };
+    if (require.main === module2) {
+      try {
+        const cwd = process.argv[2];
+        const connection = process.argv.length === 3 && typeof cwd === "string" && path2.isAbsolute(cwd) ? resolveConnection(cwd, path2.resolve(__dirname, "..")) : null;
+        const result = connection ? { status: "matched", ...connection } : { status: "unmatched" };
+        const { redact: redact2 } = require_redact();
+        process.stdout.write(redact2(JSON.stringify(result)) + "\n");
+      } catch {
+        process.stdout.write('{"status":"unmatched"}\n');
+      }
+    }
+  }
+});
+
+// ../native/shared/scripts/sync.cjs
+var require_sync = __commonJS({
+  "../native/shared/scripts/sync.cjs"(exports2, module2) {
+    "use strict";
+    var fs2 = require("node:fs");
+    var path2 = require("node:path");
+    var { repository, validProfile } = require_connection();
+    var HOUR = 60 * 60 * 1e3;
+    function git(checkout, args) {
+      if (Object.keys(process.env).some((key) => /^(NODE_DEBUG|NODE_DEBUG_NATIVE|NODE_OPTIONS)$/i.test(key) && process.env[key])) return { ok: false };
+      const env = { ...process.env, GIT_TERMINAL_PROMPT: "0" };
+      for (const key of Object.keys(env)) if (/^(?:GIT_CONFIG.*|GIT_DIR|GIT_WORK_TREE|GIT_TRACE.*|GIT_CURL_VERBOSE|NODE_DEBUG|NODE_DEBUG_NATIVE|NODE_OPTIONS|DEBUG)$/i.test(key)) delete env[key];
+      try {
+        const result = require("node:child_process").spawnSync("git", ["-c", `safe.directory=${checkout.replaceAll("\\", "/")}`, ...args], { cwd: checkout, env, shell: false, windowsHide: true, encoding: "utf8", timeout: 45e3, maxBuffer: 1024 * 1024 });
+        return { ok: !result.error && !result.signal && result.status === 0, output: result.status === 0 ? result.stdout : "" };
+      } catch {
+        return { ok: false };
+      }
+    }
+    function sync2({ profile, checkout, stateFile, clock = Date.now, runGit = git }) {
+      let lock, locked = false;
+      try {
+        if (!validProfile(profile) || !path2.isAbsolute(checkout) || !path2.isAbsolute(stateFile) || path2.basename(stateFile) !== "config.json") return { status: "invalid-connection" };
+        const identity = repository(profile["repository-url"]);
+        if (/\.invalid(?::\d+)?$/.test(identity.host)) return { status: "unpersonalized" };
+        checkout = fs2.realpathSync(checkout);
+        const stateParent = path2.dirname(stateFile);
+        fs2.mkdirSync(stateParent, { recursive: true });
+        const relative = path2.relative(checkout, fs2.realpathSync(stateParent));
+        if (relative === "" || !relative.startsWith("..") && !path2.isAbsolute(relative)) return { status: "state-must-be-private" };
+        if (fs2.existsSync(stateFile) && fs2.lstatSync(stateFile).isSymbolicLink()) return { status: "invalid-state-path" };
+        lock = stateFile + ".lock";
+        try {
+          fs2.writeFileSync(lock, String(process.pid), { flag: "wx", mode: 384 });
+          locked = true;
+        } catch {
+          return { status: "sync-in-progress", action: "Wait for the other operation; if it exited, remove only its abandoned config.json.lock." };
+        }
+        const command = (args) => runGit(checkout, args);
+        const origin = command(["config", "--local", "--no-includes", "--get-all", "remote.origin.url"]);
+        const remote = origin.ok && repository(String(origin.output).trim(), true);
+        if (!remote || remote.host !== identity.host || remote.namespace !== identity.namespace) return { status: "repository-mismatch" };
+        const branch = command(["symbolic-ref", "--quiet", "--short", "HEAD"]);
+        const clean = command(["status", "--porcelain", "--untracked-files=all"]);
+        if (!branch.ok || String(branch.output).trim() !== profile["base-branch"] || !clean.ok || String(clean.output).trim()) return { status: "checkout-needs-preservation", action: "Use a separate clean checkout of the reviewed base; preserve this work." };
+        const current = command(["rev-parse", "--verify", "HEAD"]);
+        const revision = current.ok && String(current.output).trim();
+        if (!revision || !/^[a-f0-9]{40,64}$/.test(revision)) return { status: "invalid-revision" };
+        let state;
+        try {
+          if (fs2.statSync(stateFile).size <= 16384) state = JSON.parse(fs2.readFileSync(stateFile, "utf8"));
+        } catch {
+        }
+        const age = clock() - Date.parse(state?.["last-successful-pull-at"]);
+        const tracking = command(["rev-parse", "--verify", `refs/remotes/origin/${profile["base-branch"]}`]);
+        const same = tracking.ok && String(tracking.output).trim() === revision && state?.version === 1 && state.checkout === checkout && state["graph-root"] === path2.join(checkout, "memory") && state.branch === profile["base-branch"] && state.revision === revision && state.repository?.host === identity.host && state.repository?.namespace === identity.namespace;
+        if (same && age >= 0 && age < HOUR) return { status: "current", lastSuccessfulPullAt: state["last-successful-pull-at"] };
+        const pull = command(["-c", "pull.rebase=false", "-c", "pull.ff=only", "pull", "--ff-only", "origin", profile["base-branch"]]);
+        if (!pull.ok) return { status: "pull-failed", action: "Retry with approved network/credential access. Do not use stale memory unless the user explicitly chooses offline use." };
+        const head = command(["rev-parse", "--verify", "HEAD"]);
+        const remoteHead = command(["rev-parse", "--verify", `refs/remotes/origin/${profile["base-branch"]}`]);
+        const after = command(["status", "--porcelain", "--untracked-files=all"]);
+        const updated = head.ok && String(head.output).trim();
+        if (!updated || !/^[a-f0-9]{40,64}$/.test(updated) || !remoteHead.ok || updated !== String(remoteHead.output).trim() || !after.ok || String(after.output).trim()) return { status: "reviewed-state-unverified" };
+        state = { version: 1, repository: identity, checkout, "graph-root": path2.join(checkout, "memory"), branch: profile["base-branch"], revision: updated, "last-successful-pull-at": new Date(clock()).toISOString() };
+        const temporary = stateFile + `.${process.pid}.tmp`;
+        let created = false;
+        try {
+          fs2.writeFileSync(temporary, JSON.stringify(state, null, 2) + "\n", { flag: "wx", mode: 384 });
+          created = true;
+          fs2.renameSync(temporary, stateFile);
+        } finally {
+          if (created && fs2.existsSync(temporary)) fs2.unlinkSync(temporary);
+        }
+        return { status: "pulled", lastSuccessfulPullAt: state["last-successful-pull-at"] };
+      } catch {
+        return { status: "sync-unavailable", action: "Inspect the local checkout and private sync record; raw diagnostics are withheld." };
+      } finally {
+        if (locked) {
+          try {
+            fs2.unlinkSync(lock);
+          } catch {
+          }
+        }
+      }
+    }
+    module2.exports = { sync: sync2, HOUR };
+    if (require.main === module2) {
+      let result;
+      try {
+        const [checkout, stateFile] = process.argv.slice(2);
+        const profile = JSON.parse(fs2.readFileSync(path2.resolve(__dirname, "../moneta.json"), "utf8"));
+        result = process.argv.length === 4 ? sync2({ profile, checkout, stateFile }) : { status: "invalid-arguments" };
+      } catch {
+        result = { status: "invalid-connection" };
+      }
+      process.stdout.write(JSON.stringify(result) + "\n");
+      process.exitCode = ["current", "pulled"].includes(result.status) ? 0 : 1;
+    }
+  }
+});
+
 // ../tools/moneta-show-server.cjs
 if (Object.keys(process.env).some((key) => /^(NODE_DEBUG|NODE_DEBUG_NATIVE|NODE_OPTIONS)$/i.test(key) && process.env[key])) {
   if (require.main === module) {
@@ -7400,6 +7648,7 @@ var http = require("node:http");
 var { execFile } = require("node:child_process");
 var YAML = require_dist();
 var { redact } = require_redact();
+var { sync } = require_sync();
 var slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 function inside(root, target) {
   const real = fs.realpathSync(target);
@@ -7478,7 +7727,7 @@ function readGraph(area) {
   if (new Set(result.nodes.map((n) => n.id)).size !== result.nodes.length) throw new Error("Redaction obscures distinct node identities; inspect the selected files privately.");
   return result;
 }
-function createViewer(area, assets) {
+function createViewer(area, assets, beforeRead = () => ({ status: "current" })) {
   const root = fs.realpathSync(area), staticRoot = fs.realpathSync(assets);
   const server = http.createServer((request, response) => {
     const origin = `http://127.0.0.1:${server.address().port}`;
@@ -7512,6 +7761,13 @@ function createViewer(area, assets) {
     if (url.pathname === "/graph.json") {
       response.setHeader("Content-Type", "application/json");
       try {
+        if (!["current", "pulled"].includes(beforeRead().status)) throw new Error("Freshness unavailable");
+      } catch {
+        response.writeHead(409);
+        response.end('{"error":"Memory refresh is blocked. Check the local checkout and connection before retrying."}');
+        return;
+      }
+      try {
         response.end(JSON.stringify(readGraph(root)));
       } catch {
         response.writeHead(422);
@@ -7537,8 +7793,14 @@ function main() {
   const args = process.argv.slice(2), areaAt = args.indexOf("--area");
   if (areaAt < 0 || !args[areaAt + 1] || !path.isAbsolute(args[areaAt + 1])) throw new Error("Provide --area with an absolute selected-area path.");
   const area = args[areaAt + 1];
+  const checkout = args[args.indexOf("--checkout") + 1], stateFile = args[args.indexOf("--config") + 1];
+  if (!args.includes("--checkout") || !args.includes("--config") || !path.isAbsolute(checkout) || !path.isAbsolute(stateFile)) throw new Error("Provide the reviewed checkout and private config paths.");
+  const profile = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../moneta.json"), "utf8"));
+  const beforeRead = () => sync({ profile, checkout, stateFile });
+  if (!["current", "pulled"].includes(beforeRead().status)) throw new Error("Reviewed checkout refresh is blocked.");
+  if (!args.includes("--candidate")) inside(path.join(checkout, "memory"), area);
   readGraph(area);
-  const server = createViewer(area, path.join(__dirname, "../assets/viewer"));
+  const server = createViewer(area, path.join(__dirname, "../assets/viewer"), beforeRead);
   server.listen(0, "127.0.0.1", () => {
     const url = `http://127.0.0.1:${server.address().port}/`;
     console.log(`Moneta viewer: ${url}

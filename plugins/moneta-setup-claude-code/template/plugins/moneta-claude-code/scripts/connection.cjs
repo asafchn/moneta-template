@@ -41,13 +41,20 @@ function repository(value, allowCredentials = false) {
   return { host:authority, namespace:location };
 }
 function sameRepository(a,b) { return Boolean(a && b && a.host === b.host && a.namespace === b.namespace); }
+function availability(value) {
+  return value.availability || (Array.isArray(value.targets) && value.targets.length ? 'restricted' : 'global');
+}
 function validProfile(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
-  if (Object.keys(value).some(key => !['$schema','repository-url','hosting','base-branch','targets'].includes(key))) return false;
+  if (Object.keys(value).some(key => !['$schema','repository-url','hosting','base-branch','targets','availability'].includes(key))) return false;
   if ('$schema' in value && typeof value.$schema !== 'string') return false;
   if (!repository(value['repository-url']) || !['auto','github','gitlab'].includes(value.hosting)) return false;
   if (typeof value['base-branch'] !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9_./-]{0,254}$/.test(value['base-branch']) || /\.\.|\/\/|\/$|\.$|\.lock(?:\/|$)/.test(value['base-branch'])) return false;
-  return Array.isArray(value.targets) && value.targets.length > 0 && value.targets.length <= 100 && value.targets.every(target => {
+  if ('availability' in value && !['global','restricted'].includes(value.availability)) return false;
+  const targets = value.targets === undefined ? [] : value.targets;
+  if (!Array.isArray(targets) || targets.length > 100) return false;
+  if (availability(value) === 'restricted' ? !targets.length : targets.length > 0) return false;
+  return targets.every(target => {
     if (!target || typeof target !== 'object' || Array.isArray(target)) return false;
     if (target.kind === 'organization') return Object.keys(target).every(key => ['kind','host','namespace'].includes(key)) && Boolean(host(target.host)) && namespace(target.namespace);
     return target.kind === 'repository' && Object.keys(target).every(key => ['kind','url'].includes(key)) && Boolean(repository(target.url));
@@ -96,6 +103,8 @@ function resolveConnection(cwd, root) {
     if (!fs.existsSync(profilePath)) return local.legacy ? {path:local.legacy,skillPrefix:''} : null;
     const profile = JSON.parse(readSmall(profilePath));
     if (!validProfile(profile)) return null;
+    // Bundled template profiles are inert until personalized by init.
+    if (/\.invalid(?::\d+)?$/.test(repository(profile['repository-url']).host)) return null;
     const names = ['.codex-plugin','.claude-plugin'].map(folder => path.join(root,folder,'plugin.json')).filter(file => fs.existsSync(file)).map(file => JSON.parse(readSmall(file)).name);
     if (!names.length || names.some(name => typeof name !== 'string' || !/^[a-z][a-z0-9-]{0,63}$/.test(name) || name !== names[0])) return null;
     const skillPrefix = `${names[0]}:`;
@@ -103,6 +112,7 @@ function resolveConnection(cwd, root) {
       if (!sameRepository(legacyRepository(local.legacy),repository(profile['repository-url']))) return null;
       return {path:local.legacy,profilePath,skillPrefix};
     }
+    if (availability(profile) === 'global') return {path:profilePath,profilePath,skillPrefix,availability:'global'};
     if (!local.directory) return null;
     const remote = origin(local.directory);
     if (!remote) return null;

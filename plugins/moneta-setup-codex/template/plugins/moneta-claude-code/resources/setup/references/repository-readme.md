@@ -8,6 +8,6 @@ Write a short README.md (roughly 100-200 words): repository name; purpose in the
 
 For skip, describe a shared agent knowledge repository with Markdown nodes, indexes and JSON schemas. Explain that omission of agent-slug selects general and an explicit slug selects only that area's memories. Include the generated plugin installation command for teammates when relevant; no Moneta development source tree or product pitch, fabricated company facts or example roles presented as actual agents. The skills/ directory inside a memory area holds knowledge nodes about skills, not installed SKILL.md packages.
 
-Include moneta-show as the local read-only graph viewer, alongside retrieval and reviewed learning. It opens the selected area in a browser; no graph upload or separate dependency installation.
+State that the generated runtime works across projects/chats by default, or describe the explicitly chosen restrictions. The memory repository is its storage, not a codebase binding. Include moneta-show as the local read-only graph viewer, alongside retrieval and reviewed learning. It opens the selected area in a browser; no graph upload or separate dependency installation.
 
 Completion: the README describes this user's repository, with accurate current setup/connection state. Raw telemetry, local connection paths and secrets stay outside the repository.

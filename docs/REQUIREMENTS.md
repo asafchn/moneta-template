@@ -126,7 +126,7 @@ This is the current distribution authority. It supersedes the earlier full-sourc
 |---|---|---|
 | R40 | Template repository named moneta-template; installer moneta-setup | Separate source identity and generated destination-specific plugin names. |
 | R41 | Installer exposes only init; generates and installs/enables runtime | Native installers and self-contained skills.sh entry; runtime packages have evolve, extend, knowledge-search and analysis/evaluation skills plus hooks/scripts. |
-| R42 | Setup once for all codebases under a chosen organization | User-supplied group/repository matching rules in runtime moneta.json; only local Git origin is inspected, including subgroups/future repositories. No remote enumeration or code scan. |
+| R42 | Optional organization-wide restriction | Explicit restricted mode uses group/repository matching rules in moneta.json; only local Git origin is inspected. New runtimes default to global availability without codebase binding. |
 | R43 | Multiple/repeated init | Destination-specific plugin identities; preserve bindings and reuse pending reviews. Conflicting/overlapping bindings require a user decision. |
 | R44 | Optional repository purpose | Wizard asks once, accepts skip, and writes purpose-aligned README without inventing policy or inferring access. |
 | R45 | Extend node/edge types through a wizard | First assess existing representations; define typed fields, endpoints and both directions; validate compatibility and propose scoped schema/node/index changes through review. |
@@ -138,3 +138,15 @@ This is the current distribution authority. It supersedes the earlier full-sourc
 | R50 | Meaningful wikilink edge keys | related maps quoted [[edge-type]] keys to target slugs or lists; five inverse pairs, no generic related-to; existing graphs migrate through review. |
 
 One machine's init does not configure teammates or CI remotely. They install the generated plugin through their host or managed distribution. Runtime changes affect connected agents and require separate scope/review from memory changes. Raw transcripts/evaluation remain private; purpose text does not authorize organization browsing or cross-agent memory.
+
+## Global runtime availability
+
+New runtime profiles use availability: global without targets. Hooks and explicit skills work in any folder or chat; global resolution performs no Git origin lookup. Legacy nonempty targets retain restricted behavior unless the user requests unbinding that instance. Multiple runtime selection, explicit local overrides, general/agent-slug isolation and reviewed memory activation remain independent. Reserved .invalid placeholder profiles remain inert.
+
+## Shared local memory and retrieval refinement
+
+Init explicitly separates creating a brain from connecting to an existing teammate repository. Connect reuses the existing graph and runtime without publishing another copy. Every runtime has a private machine-local config.json recording its local clone, graph path, repository identity and last successful pull. Before operations, pull if at least one hour old. Preserve dirty or candidate work; failed pulls do not update timestamps.
+
+SessionStart reminds the host that memory exists. Relevant prompts form a query from the index. Find inspects discovery metadata; walk discovers connected knowledge find missed, including different vocabulary. Only selected full bodies enter context. Walk may add candidates; context narrowing does not require a monotonically shrinking candidate count.
+
+Runtime scripts, packaging and local viewer must support Windows, macOS and Linux. Desktop authentication stays in a user-controlled terminal; headless hosts report the pending manual login step. The landing example uses restrained background canvas animation, pauses when hidden and respects reduced motion.

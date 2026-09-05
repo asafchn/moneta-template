@@ -3,6 +3,9 @@ name: evolve-evaluate
 description: Review guidance changes with tool evidence and attributed judgments, or look up prior assessments for message deduplication.
 ---
 
+Before substantive work, apply [local clone freshness](../knowledge-search/references/freshness.md) using the originating runtime and machine-local config. A parent supplies the same checked connection to children; refresh again if an hour passes. Initial offline preparation before a repository exists records sync as pending and does not claim retrieved knowledge.
+
+
 Apply [memory selection](../knowledge-search/references/memory-scope.md), retaining an explicit parent selection or defaulting a direct call without agent-slug to general. Resolve [the runtime connection](../knowledge-search/references/connection.md); access `evaluation-root/<memory-scope>/<agent>/` directly. During init before connection, accept those explicit paths and identities from the parent. Use agent: unassigned if no actor is enrolled; the evaluator worker name never selects another area. Evaluation files are not ordinary graph-search nodes. Use the existing host's tools; this skill supplies the review procedure, not a custom runner.
 
 For `mode: lookup`, follow [assessment lookup](references/message-lookup.md) and return its result; the review sequence below does not run. Otherwise use the review sequence.

@@ -3,6 +3,9 @@ name: extend
 description: Guide a wizard to decide whether knowledge needs an existing node, a new node type or an edge type, then propose the necessary graph schema changes through review.
 ---
 
+Before substantive work, apply [local clone freshness](../knowledge-search/references/freshness.md) using the originating runtime and machine-local config. A parent supplies the same checked connection to children; refresh again if an hour passes. Initial offline preparation before a repository exists records sync as pending and does not claim retrieved knowledge.
+
+
 Retain and pass the originating runtime root, profile path, resolved connection and explicit agent-slug to every nested skill or child. Resolve bundled roles/skills from that exact root; never locate a same-named skill in another installed instance.
 
 1. **Select context.** Apply [memory selection](../knowledge-search/references/memory-scope.md) and verify [reviewed state](../knowledge-search/references/reviewed-state.md). Use the active connection and selected area's catalogs. Missing setup reaches init while retaining the request; supplied agent-slug passes through explicitly. Completion: one repository, reviewed revision and memory area are fixed.

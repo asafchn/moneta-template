@@ -3,6 +3,9 @@ name: evolve-agent
 description: Start a dedicated native agent to analyze captured run telemetry, including a plain text file, and distill supported guidance improvements.
 ---
 
+Before substantive work, apply [local clone freshness](../knowledge-search/references/freshness.md) using the originating runtime and machine-local config. A parent supplies the same checked connection to children; refresh again if an hour passes. Initial offline preparation before a repository exists records sync as pending and does not claim retrieved knowledge.
+
+
 Retain and pass the originating runtime root, profile path, resolved connection and explicit agent-slug to every nested skill or child. Resolve bundled roles/skills from that exact root; never locate a same-named skill in another installed instance.
 
 Use the native host's agent delegation facility and [the evolve-agent role](references/role.md). In Claude, use the plugin's discovered agent identifier. In Codex, use the registered evolve-agent when discovered; otherwise spawn a native child with that Markdown role explicitly.
