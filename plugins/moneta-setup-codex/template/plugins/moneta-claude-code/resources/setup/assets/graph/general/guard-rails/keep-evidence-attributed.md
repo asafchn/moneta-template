@@ -13,7 +13,7 @@ data:
   constraint: Attribute evidence and distinguish a proposal assessment from demonstrated
     performance.
   applies-when: Analyzing a session or proposing a knowledge change.
-relations: []
+related: {}
 ---
 
 Keep source locators and limitations. A transcript can contain inaccurate claims; a model score or merged MR does not itself prove better future task performance.

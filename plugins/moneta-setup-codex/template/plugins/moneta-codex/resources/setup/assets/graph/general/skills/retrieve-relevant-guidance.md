@@ -12,11 +12,9 @@ scope:
 data:
   invocation: knowledge-search
   purpose: Choose relevant guidance through index, find, walk and read.
-relations:
-- type: uses
-  target: inspect-node-frontmatter
-- type: used-by
-  target: retrieve-before-work
+related:
+  '[[uses]]': inspect-node-frontmatter
+  '[[used-by]]': retrieve-before-work
 ---
 
 Invoke the installed knowledge-search skill. It guides query creation and staged reads using the host's existing tools. Evaluation material uses evolve-evaluate; sourced domain-knowledge nodes use ordinary search.

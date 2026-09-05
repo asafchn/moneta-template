@@ -10,7 +10,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = ("codex", "claude-code")
 PERSONAL_NAME = "moneta-personal"
-RUNTIME_VERSION = "0.1.0"
+RUNTIME_VERSION = "0.2.0"
 LINK = re.compile(r"\]\((?:<(?P<angle>[^>]+)>|(?P<plain>[^\s)]+))(?:\s+\"[^\"]*\")?\)")
 
 

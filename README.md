@@ -44,6 +44,7 @@ Supply a GitLab group URL or repository URLs. Each generated plugin stores these
 - `evolve`: learn from a correction, current run or saved transcript; context chooses the flow or asks a focused question.
 - `extend`: decide whether a missing concept fits an existing node/type/relation, then design and review a schema extension when needed.
 - `knowledge-search`: index -> query -> frontmatter find -> direct-relation walk -> selected bodies.
+- `moneta-show`: open a read-only localhost canvas of the selected memory area, with node details and named edges. The generated plugin includes the viewer; Node.js is sufficient, and knowledge stays local.
 
 Use the generated plugin's qualified skill name when more than one runtime is installed. Feedback hooks screen a single user message and can suggest one-message evolution; relevance is assessed by the agent. Useful improvements receive independent evaluation with available deterministic checks, then a PR/MR. Human merge activates learned guidance. Scores alone do not prove future performance gains.
 
@@ -71,6 +72,8 @@ Runtime changes affect every connected agent and receive separate review from me
 
 **Develop the template**
 
-Author skills in skills/ and adapters in native/. Build installers and their self-contained runtime templates with `python tools/package_plugins.py`; verify with `--check`. The standalone skills.sh entry is generated in distribution/moneta-setup/. No graph server or custom search engine is required.
+The [interactive landing page](site/README.md) is a standalone React + MUI app in `site/`. Run `npm ci` and `npm run dev` there. For Vercel, select `site` as the project root.
+
+Author skills in skills/ and adapters in native/. Build installers and their self-contained runtime templates with `python tools/package_plugins.py`; verify with `--check`. The standalone skills.sh entry is generated in distribution/moneta-setup/. Agent retrieval uses local files and existing tools. The optional moneta-show viewer runs a read-only localhost server for the browser.
 
 [Requirements](docs/REQUIREMENTS.md) | [Validation](docs/VALIDATION.md) | [Secret handling](docs/SECURITY.md) | [Course grounding](docs/course-grounding.md)

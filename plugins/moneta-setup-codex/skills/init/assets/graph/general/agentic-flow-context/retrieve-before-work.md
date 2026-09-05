@@ -16,13 +16,9 @@ data:
   - Form a query from the task and expected information needs.
   - Find candidate headers, walk relevant direct relations, then read selected bodies.
   - Apply the relevant guidance; repeat retrieval when new needs emerge.
-relations:
-- type: uses
-  target: retrieve-relevant-guidance
-- type: guided-by
-  target: follow-applicable-guidance
-- type: related-to
-  target: follow-applicable-guidance
+related:
+  '[[uses]]': retrieve-relevant-guidance
+  '[[guided-by]]': follow-applicable-guidance
 ---
 
 The agent follows this flow through skill invocation. It is guidance, not an executable gate that blocks tools.

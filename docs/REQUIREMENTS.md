@@ -5,7 +5,7 @@ Current authority (the final installer revision below supersedes earlier distrib
 | ID | Requirement / decision | Delivery |
 |---|---|---|
 | R01 | Native Claude Code/Codex; no Pi | Both plugin manifests; native skills and Markdown roles. |
-| R02 | Graph remains schemas/Markdown with existing tools | Native hook glue and package materialization added by the later full-plugin request; no graph server/runtime. |
+| R02 | Graph remains schemas/Markdown with existing tools | Agent retrieval stays file-based. Native plugin glue and the explicitly requested read-only localhost viewer are runtime support, not a graph search engine. |
 | R03 | Work against a local clone | `moneta-setup` initializer; generated profile and private local connection/cache; existing Git/file tools. |
 | R04 | Evolve a current session or captured `.txt`, including outside runs | `evolve` captures available evidence and marks coverage; `evolve-agent` reads the supplied source. |
 | R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
@@ -13,7 +13,7 @@ Current authority (the final installer revision below supersedes earlier distrib
 | R07 | Hosting flag; user supplies GitLab/GitHub URL; create MR/PR | `auto/gitlab/github`; local clone; `glab`/`gh`; human merge. Hosted role files follow their own repository's review flow. |
 | R08 | Original seven node types, extended by the user | `tool-calls`, `coding-guidelines`, `agent-responsibility`, `skills`, `guard-rails`, `agentic-flow context`, `schemas`, plus `domain-knowledge`. |
 | R09 | Markdown nodes; YAML metadata + summary description + body | Common schema, eight initial per-type schemas and seven ready general nodes; actual role enrollments are added explicitly. |
-| R10 | Named, typed, bidirectional edges; same/cross type | Eleven directional edge schemas, inverse/endpoint registry, mirrored frontmatter. Cross-file checks are agent work. |
+| R10 | Named, typed, bidirectional edges; same/cross type | Ten directional edge schemas, inverse/endpoint registry, mirrored related mappings keyed by quoted [[edge-type]]. Cross-file checks are agent work. |
 | R11 | Schema definition and slug-description index | Per-area `indexes/schema-definition.md`, `node-index.md`, `agent-index.md`; updated with node changes. |
 | R12 | Index-informed query, tokenize, find headers, walk direct relations, read selected bodies | `knowledge-search`; repeat when new needs emerge. |
 | R13 | Hook before action | Native session/prompt/subagent/tool context hooks request retrieval; they do not certify completion or block a pending tool. |
@@ -133,5 +133,8 @@ This is the current distribution authority. It supersedes the earlier full-sourc
 | R46 | Read-only provider credentials are acceptable | Complete independent local preparation/validation/installation, retain receipts, report exact blocked write and manual commands; resume without duplicate creation or forced reauthentication. |
 | R47 | Shorter, calmer init; recover real telemetry failures | Direct verified filesystem copy, ready general seed, offline Registry validation, serialized YAML, per-command exit checks; concise progress. No measured latency guarantee. |
 | R48 | Native activation and reviewed memory are distinct | Init installs/enables the generated runtime; host trust/new-chat reload and graph merge are reported separately. No silent hook trust bypass or automatic human-merge substitute. |
+
+| R49 | Local graph viewer | moneta-show opens a read-only localhost canvas for one selected memory area; bundled assets, custom type registry, no provider access or upload. |
+| R50 | Meaningful wikilink edge keys | related maps quoted [[edge-type]] keys to target slugs or lists; five inverse pairs, no generic related-to; existing graphs migrate through review. |
 
 One machine's init does not configure teammates or CI remotely. They install the generated plugin through their host or managed distribution. Runtime changes affect connected agents and require separate scope/review from memory changes. Raw transcripts/evaluation remain private; purpose text does not authorize organization browsing or cross-agent memory.

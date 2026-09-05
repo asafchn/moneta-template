@@ -12,7 +12,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = ("codex", "claude-code")
-RUNTIME_SKILLS = {"evolve", "evolve-agent", "evolve-evaluate", "evolve-message", "extend", "knowledge-search"}
+RUNTIME_SKILLS = {"evolve", "evolve-agent", "evolve-evaluate", "evolve-message", "extend", "knowledge-search", "moneta-show"}
 LINK = re.compile(r"\]\((?:<([^>]+)>|([^\s)]+))(?:\s+\"[^\"]*\")?\)")
 
 
@@ -45,7 +45,7 @@ class PackagingTests(unittest.TestCase):
             metadata = installer / (".codex-plugin" if host == "codex" else ".claude-plugin") / "plugin.json"
             manifest = json.loads(metadata.read_text(encoding="utf-8"))
             self.assertEqual(manifest["name"], "moneta-setup")
-            self.assertEqual(manifest["version"], "0.8.0")
+            self.assertEqual(manifest["version"], "0.9.0")
             self.assertNotIn("hooks", manifest)
 
     def test_each_template_contains_both_independent_runtime_packages(self):
@@ -57,6 +57,8 @@ class PackagingTests(unittest.TestCase):
                 self.assertTrue((runtime / "hooks/hooks.json").is_file())
                 self.assertTrue((runtime / "hooks/context.cjs").is_file())
                 self.assertTrue((runtime / "scripts/provider.cjs").is_file())
+                self.assertTrue((runtime / "skills/moneta-show/scripts/server.cjs").is_file())
+                self.assertTrue((runtime / "skills/moneta-show/assets/viewer/graph.html").is_file())
                 self.assertTrue((runtime / "resources/setup/assets/graph/general/indexes/node-index.md").is_file())
                 self.assertFalse((runtime / "resources/setup/SKILL.md").exists())
                 metadata = runtime / (".codex-plugin" if host == "codex" else ".claude-plugin") / "plugin.json"

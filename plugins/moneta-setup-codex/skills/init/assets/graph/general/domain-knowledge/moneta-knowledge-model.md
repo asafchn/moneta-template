@@ -1,18 +1,22 @@
 ---
 slug: moneta-knowledge-model
 node-type: domain-knowledge
-description: Moneta terminology for knowledge nodes, discovery metadata and reviewed activation.
-tags: [moneta, knowledge, terminology]
-scope: [moneta]
+description: Moneta terminology for knowledge nodes, discovery metadata and reviewed
+  activation.
+tags:
+- moneta
+- knowledge
+- terminology
+scope:
+- moneta
 data:
   subject: Moneta knowledge model
   applies-when: Explaining or maintaining a Moneta knowledge graph.
-relations:
-  - type: related-to
-    target: knowledge-node-format
 sources:
-  - location: ../indexes/schema-definition.md
-    note: Local graph format and activation rules; verify against the reviewed revision in use.
+- location: ../indexes/schema-definition.md
+  note: Local graph format and activation rules; verify against the reviewed revision
+    in use.
+related: {}
 ---
 
 # Moneta knowledge model

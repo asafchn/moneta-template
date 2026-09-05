@@ -3,19 +3,19 @@
   "$id": "https://moneta.invalid/schemas/edges/conforms-to.schema.json",
   "title": "conforms-to",
   "description": "This node follows the data or interface contract described by the target schema node.",
-  "type": "object",
-  "properties": {
-    "type": {
-      "const": "conforms-to"
-    },
-    "target": {
+  "oneOf": [
+    {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
     }
-  },
-  "required": [
-    "type",
-    "target"
-  ],
-  "additionalProperties": false
+  ]
 }

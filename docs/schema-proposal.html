@@ -77,7 +77,7 @@
           <div class="row"><dt>slug · node-type</dt><dd>Unique identity and the schema this node follows.</dd></div>
           <div class="row"><dt>description · tags · scope</dt><dd>What it covers and when it matters. Used for discovery.</dd></div>
           <div class="row"><dt>data</dt><dd>Fields specific to this node type.</dd></div>
-          <div class="row"><dt>relations</dt><dd>Named edges to other node slugs.</dd></div>
+          <div class="row"><dt>related</dt><dd>Quoted [[edge-type]] keys map to a node slug or a list of slugs.</dd></div>
           <div class="row"><dt>Body</dt><dd>Full guidance and examples. Loaded after selection.</dd></div>
         </dl>
         <details class="example"><summary>See a Markdown node</summary><pre>---
@@ -89,9 +89,8 @@ scope: [coding]
 data:
   rule: Follow returned continuation tokens.
   applies-when: Implementing a paginated client.
-relations:
-  - type: guides
-    target: fetch-next-page
+related:
+  "[[guides]]": fetch-next-page
 ---
 Check the external API documentation.
 If tokens are opaque, pass them unchanged.</pre><p>Illustration only. Actual guidance needs the API’s source, version and scope.</p></details>

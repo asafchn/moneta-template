@@ -20,7 +20,7 @@ Each node has an opening `---` YAML block, a closing `---`, and a nonempty Markd
 | tags | Discovery terms. |
 | scope | Tasks or contexts where the node applies. |
 | data | Type-specific structured fields. |
-| relations | Named direct edges: `type` and target `slug`. |
+| related | Mapping from quoted `"[[edge-type]]"` keys to a target slug, or a nonempty list of distinct target slugs. Use `{}` for no edges. |
 | sources | Optional source locations and notes. Domain-knowledge requires at least one source; retain authority and freshness caveats. |
 
 The body contains detailed guidance, conditions and examples. A description supports discovery; it does not replace reading selected details. Keep contextual limitations when summarizing.
@@ -35,7 +35,19 @@ Adding a type is a reviewed schema change: use the installed extend skill to upd
 
 [edge-types.json](../schemas/edge-types.json) defines each edge's name, inverse name, directional meaning, allowed source/target types and JSON Schema. This is the authority for relationship meaning.
 
-Every edge is bidirectional. Store both directions in frontmatter. For `A --guides--> B`, store `B --guided-by--> A`. For symmetric `related-to`, both nodes store `related-to`. Same-type and cross-type relationships are supported where the edge definition allows them. Related context does not imply authority or dependency.
+Every edge is bidirectional. Store both directions in `related`. For `A --guides--> B`, store `B --guided-by--> A`. The starter pairs are guides/guided-by, owns/owned-by, uses/used-by, constrains/constrained-by and conforms-to/schema-for. Every edge states a concrete meaning; generic related-to is not supported. Same-type and cross-type relationships are supported where the edge definition allows them. Leave a node isolated when no registered meaning fits, or use extend to propose a specific relationship.
+
+```yaml
+related:
+  "[[uses]]": inspect-node-frontmatter
+  "[[constrained-by]]":
+    - keep-evidence-attributed
+    - protect-credentials
+```
+
+The brackets are part of the edge key; YAML quotes keep it a string. Keys refer to edge-types.json entries, not Markdown node files. Target slugs are area-local. Group multiple targets under one key; duplicate YAML keys are invalid. Walk resolves the edge name inside the brackets, reads its directional definition, then inspects the selected target headers.
+
+This replaces the former relations list of type/target objects. Existing repositories retain their own schema until a reviewed migration updates definitions and affected nodes together. Preserve specific edges and inverse links; review generic related-to instances individually, removing them or selecting a justified specific edge. Do not silently infer new meanings or rewrite other memory areas.
 
 Agents check these cross-file invariants separately from JSON Schema:
 

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "edges": {
     "guides": {
       "inverse": "guided-by",
@@ -152,31 +152,6 @@
       ],
       "description": "This schema node describes a contract followed by the target node.",
       "schema": "edges/schema-for.schema.json"
-    },
-    "related-to": {
-      "inverse": "related-to",
-      "source-types": [
-        "tool-calls",
-        "coding-guidelines",
-        "agent-responsibility",
-        "skills",
-        "guard-rails",
-        "agentic-flow context",
-        "schemas",
-        "domain-knowledge"
-      ],
-      "target-types": [
-        "tool-calls",
-        "coding-guidelines",
-        "agent-responsibility",
-        "skills",
-        "guard-rails",
-        "agentic-flow context",
-        "schemas",
-        "domain-knowledge"
-      ],
-      "description": "These nodes provide related context; the relation implies no dependency or authority.",
-      "schema": "edges/related-to.schema.json"
     }
   }
 }

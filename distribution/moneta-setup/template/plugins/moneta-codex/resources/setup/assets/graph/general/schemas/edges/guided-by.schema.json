@@ -3,19 +3,19 @@
   "$id": "https://moneta.invalid/schemas/edges/guided-by.schema.json",
   "title": "guided-by",
   "description": "Use of this invocation, skill or flow is governed by the target guideline.",
-  "type": "object",
-  "properties": {
-    "type": {
-      "const": "guided-by"
-    },
-    "target": {
+  "oneOf": [
+    {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
     }
-  },
-  "required": [
-    "type",
-    "target"
-  ],
-  "additionalProperties": false
+  ]
 }

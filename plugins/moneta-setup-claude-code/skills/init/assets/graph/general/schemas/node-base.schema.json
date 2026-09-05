@@ -46,13 +46,6 @@
     "data": {
       "type": "object"
     },
-    "relations": {
-      "type": "array",
-      "items": {
-        "$ref": "edge.schema.json"
-      },
-      "uniqueItems": true
-    },
     "sources": {
       "type": "array",
       "items": {
@@ -75,6 +68,9 @@
         ],
         "additionalProperties": false
       }
+    },
+    "related": {
+      "$ref": "edge.schema.json"
     }
   },
   "required": [
@@ -84,6 +80,6 @@
     "tags",
     "scope",
     "data",
-    "relations"
+    "related"
   ]
 }

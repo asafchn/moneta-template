@@ -1,40 +1,39 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://moneta.invalid/schemas/edge.schema.json",
-  "title": "Named edge instance",
-  "oneOf": [
-    {
+  "title": "Related edges keyed by quoted wikilink names",
+  "type": "object",
+  "properties": {
+    "[[guides]]": {
       "$ref": "edges/guides.schema.json"
     },
-    {
+    "[[guided-by]]": {
       "$ref": "edges/guided-by.schema.json"
     },
-    {
+    "[[owns]]": {
       "$ref": "edges/owns.schema.json"
     },
-    {
+    "[[owned-by]]": {
       "$ref": "edges/owned-by.schema.json"
     },
-    {
+    "[[uses]]": {
       "$ref": "edges/uses.schema.json"
     },
-    {
+    "[[used-by]]": {
       "$ref": "edges/used-by.schema.json"
     },
-    {
+    "[[constrains]]": {
       "$ref": "edges/constrains.schema.json"
     },
-    {
+    "[[constrained-by]]": {
       "$ref": "edges/constrained-by.schema.json"
     },
-    {
+    "[[conforms-to]]": {
       "$ref": "edges/conforms-to.schema.json"
     },
-    {
+    "[[schema-for]]": {
       "$ref": "edges/schema-for.schema.json"
-    },
-    {
-      "$ref": "edges/related-to.schema.json"
     }
-  ]
+  },
+  "additionalProperties": false
 }
