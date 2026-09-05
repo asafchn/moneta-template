@@ -1,0 +1,27 @@
+const fs = require('node:fs');
+const path = require('node:path');
+
+// Lifecycle glue only: emit context; the agent performs retrieval with its tools.
+try {
+  const raw = fs.readFileSync(0, 'utf8');
+  if (raw.length > 1024 * 1024) process.exit(0);
+  const input = JSON.parse(raw);
+  const event = input?.hook_event_name;
+  if (!['SessionStart', 'UserPromptSubmit', 'SubagentStart', 'PreToolUse'].includes(event)) process.exit(0);
+  if (typeof input.cwd !== 'string' || !path.isAbsolute(input.cwd)) process.exit(0);
+  let directory = path.resolve(input.cwd);
+  let connection;
+  while (true) {
+    const candidate = path.join(directory, '.agent-evolve.md');
+    if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) { connection = candidate; break; }
+    if (fs.existsSync(path.join(directory, '.git'))) break;
+    const parent = path.dirname(directory);
+    if (parent === directory) break;
+    directory = parent;
+  }
+  if (!connection) process.exit(0);
+  const additionalContext = `Agent Evolve connection: ${JSON.stringify(connection)}. Resolve the assigned agent/domain binding. Before task work, invoke knowledge-search: domain indexes -> task query -> frontmatter find -> direct walk -> selected bodies. Re-query for new needs; apply each node within its scope. An assigned eval-agent uses evolve-evaluate for evaluation records. This reminder supplies context, not a retrieval-completion check.`;
+  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext } }));
+} catch {
+  // Optional guidance cannot interrupt the user's work or expose captured input.
+}

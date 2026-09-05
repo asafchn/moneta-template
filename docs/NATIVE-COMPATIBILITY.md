@@ -1,14 +1,28 @@
-# Native integration boundaries
+# Native installation
 
-| Host | Delivered | Boundary |
+The repository provides two complete, self-contained package directories. Their shared skills/assets are generated from one authoring source.
+
+| Host | Package | Components |
 |---|---|---|
-| Claude Code | `.claude-plugin/plugin.json`, `skills/*/SKILL.md`, `agents/*.md` | Qualified skill name `/agent-evolve:evolve`; verify discovery in the installed host. |
-| Codex | `.codex-plugin/plugin.json`, `skills/*/SKILL.md` | Invoke discovered skills, normally `$evolve`. Spawn native children with role Markdown explicitly; Markdown does not register a Codex custom-agent type. |
+| Codex | `plugins/codex` | Codex manifest, skills/assets, hooks, custom-agent TOML definitions registered into the project by init. |
+| Claude Code | `plugins/claude-code` | Claude manifest, skills/assets, hooks and automatically discovered Markdown agents. |
 
-There is no executable hook, MCP server, bundled provider client or custom graph engine. Pre-action retrieval is a role instruction. Exact bare `/evolve` and enforced retrieval before every action remain integration gaps; neither is implied by manifest validity.
+The repository includes each host's marketplace metadata. Add this repository's local path as a marketplace using the host CLI, then install `agent-evolve` from `agent-evolve-native`. For Claude development, `claude --plugin-dir <absolute-path-to-plugins/claude-code>` loads the package directly. Invoke discovered skills: normally `$evolve-init` / `$evolve` in Codex, `/agent-evolve:evolve-init` / `/agent-evolve:evolve` in Claude. Exact bare `/evolve` remains host-dependent.
 
-The plugin's roles and supporting files resolve relative to the installed plugin, while graph/configuration paths resolve from the consuming workspace. Setup must write an actual discoverable invocation or installed role path into each target instruction file; never leave an ambiguous `agents/eval-agent.md` pointing at the consuming project.
+## Hooks
 
-An absent native delegation capability is a reported limitation. Do not claim a separate evaluator was used when analysis happened in the same agent.
+Both packages register `SessionStart`, `UserPromptSubmit`, `SubagentStart` and `PreToolUse`. The Node.js command emits structured context only when a connection exists in the current workspace. It finds a connection from nested working directories, respects nested repository boundaries, and emits no transcript/tool-input contents. It stores no telemetry and performs no Git/network operation.
 
-References: [Codex plugins](https://developers.openai.com/plugins/build/plugins), [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [Claude plugin reference](https://code.claude.com/docs/en/plugins-reference), [Claude skills](https://code.claude.com/docs/en/skills), [Claude subagents](https://code.claude.com/docs/en/sub-agents). Local versions inspected during implementation: Codex 0.153.2; Claude Code 2.1.168. Source delivery does not install or enable plugins.
+Session/prompt/subagent hooks orient the agent before work; the tool hook reminds it when work is underway. Context is consumed on the host's next model request. This is a retrieval prompt, not an enforced proof that retrieval finished before a pending tool runs. Coverage, enablement and hook trust remain host controls. These hooks serve the requested workflow; unrelated event handlers, MCP services and permission overrides are not bundled.
+
+Node.js must be available on PATH. Hook commands resolve the exported plugin-root environment variable inside Node, keeping paths with spaces out of shell interpolation. Local versions inspected: Codex 0.153.2 and Claude 2.1.168. Validate and inspect hook trust in the installed host before claiming live delivery.
+
+## Agent registration and activation
+
+Claude loads `agents/*.md`. Codex loads project `.codex/agents/*.toml`; init copies its bundled role definitions there, preserves conflicting files and verifies discovery. Until that registration is available, explicit native-child delegation uses the bundled role Markdown. Plugin installation alone is not claimed to register Codex custom agents.
+
+Graph-node edits activate after human merge and safe refresh. Native skill/hook edits require updating/reloading the owning plugin. A graph clone refresh does not update installed plugin files. A fresh install still needs the user's repository choice and role/domain enrollment.
+
+The request to use Vercel skills.sh was superseded by the request for two full native plugins. Its skill installer does not establish native hooks/agent registration. No live installation, GitHub repository creation or remote PR/MR was performed during source implementation.
+
+Sources: [Codex packaging](https://developers.openai.com/plugins/build/plugins), [Codex hooks](https://learn.chatgpt.com/docs/hooks), [Codex agents](https://learn.chatgpt.com/docs/agent-configuration/subagents), [Claude plugin reference](https://code.claude.com/docs/en/plugins-reference), [Claude hooks](https://code.claude.com/docs/en/hooks).

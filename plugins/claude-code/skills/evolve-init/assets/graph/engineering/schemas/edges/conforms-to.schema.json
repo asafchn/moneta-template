@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/edges/conforms-to.schema.json",
+  "title": "conforms-to",
+  "description": "This node follows the data or interface contract described by the target schema node.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "conforms-to"
+    },
+    "target": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "type",
+    "target"
+  ],
+  "additionalProperties": false
+}

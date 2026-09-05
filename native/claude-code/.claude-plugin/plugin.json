@@ -1,0 +1,8 @@
+{
+  "name": "agent-evolve",
+  "version": "0.2.0",
+  "description": "Initialize shared agent domains, retrieve local graph knowledge, and propose evaluated improvements with native hooks.",
+  "author": {
+    "name": "Local developer"
+  }
+}

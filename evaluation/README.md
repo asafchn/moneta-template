@@ -1,5 +1,3 @@
 # Separate evaluation store
 
-Setup configures `evaluation-root`, normally `.evolve-local/evaluation` in the consuming workspace. Create `criteria/`, `results/` and private `sources/` there as needed. Use [criterion](../templates/evaluation-criterion.md) and [result](../templates/evaluation-result.md) templates through `evolve-evaluate`.
-
-This package contains no active company rubric or measured outcome. Templates are starting formats, not evaluation records. Criteria/results and raw transcripts never enter the operational index. Publish only intentionally selected evidence summaries with the MR/PR; retain source files privately by default.
+`evolve-evaluate` reads `evaluation-root/<domain>/<agent>/criteria/`, `results/` and private `sources/`. Init can pass this location before a connection exists. [Criterion](../skills/evolve-init/assets/templates/evaluation-criterion.md) and [result](../skills/evolve-init/assets/templates/evaluation-result.md) templates are formats, not measured outcomes. Evaluation stays outside operational domain indexes.

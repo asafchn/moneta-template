@@ -1,22 +1,22 @@
 # Requirements and decisions
 
-Current authority: the user's conversation, including the corrections to deliver JSON schemas, Markdown structure and skills, local cloning, and agent review with existing deterministic tools. Earlier runtime plans are superseded. This checklist tracks implementation, not demonstrated effectiveness.
+Current authority: the user's conversation, including the corrections to deliver JSON schemas, Markdown structure and skills, local cloning, agent review with existing deterministic tools, followed by init, shared domains, and two full native plugins with hooks. Earlier runtime plans are superseded. This checklist tracks implementation, not demonstrated effectiveness.
 
 | ID | Requirement / decision | Delivery |
 |---|---|---|
 | R01 | Native Claude Code/Codex; no Pi | Both plugin manifests; native skills and Markdown roles. |
-| R02 | Declarative package; no custom deterministic runtime/server | JSON schemas and Markdown content. Prior runtime work archived outside this repository. |
+| R02 | Graph remains schemas/Markdown with existing tools | Native hook glue and package materialization added by the later full-plugin request; no graph server/runtime. |
 | R03 | Work against a local clone | `evolve-setup`, `.agent-evolve.md` connection, existing Git/file tools. |
 | R04 | Evolve a current session or captured `.txt`, including outside runs | `evolve` captures available evidence and marks coverage; `evolve-agent` reads the supplied source. |
-| R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex native child agents receive the role Markdown explicitly. |
+| R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
 | R06 | Skill invocation in each relevant agent instruction file | Setup plus AGENTS/CLAUDE/role templates; preserve unrelated instructions. |
 | R07 | Hosting flag; user supplies GitLab/GitHub URL; create MR/PR | `auto/gitlab/github`; local clone; `glab`/`gh`; human merge. Hosted role files follow their own repository's review flow. |
 | R08 | Exact seven node types | `tool-calls`, `coding-guidelines`, `agent-responsibility`, `skills`, `guard-rails`, `agentic-flow context`, `schemas`. |
-| R09 | Markdown nodes; YAML metadata + summary description + body | Common schema, seven per-type schemas and seven starter nodes. |
+| R09 | Markdown nodes; YAML metadata + summary description + body | Common schema, seven per-type schemas and eight starter nodes illustrating two agents. |
 | R10 | Named, typed, bidirectional edges; same/cross type | Eleven directional edge schemas, inverse/endpoint registry, mirrored frontmatter. Cross-file checks are agent work. |
-| R11 | Schema definition and slug-description index | Root `schema-definition.md`, `node-index.md`; updated with node changes. |
+| R11 | Schema definition and slug-description index | Per-domain `indexes/schema-definition.md`, `node-index.md`, `agent-index.md`; updated with node changes. |
 | R12 | Index-informed query, tokenize, find headers, walk direct relations, read selected bodies | `knowledge-search`; repeat when new needs emerge. |
-| R13 | Hook before action | **Partial:** role guidance invokes retrieval. No executable hook after the declarative-only correction. Guidance does not enforce a tool gate. |
+| R13 | Hook before action | Native session/prompt/subagent/tool context hooks request retrieval; they do not certify completion or block a pending tool. |
 | R14 | Domain knowledge external | Connection source pointer; no domain nodes. |
 | R15 | Evaluation criteria/results outside ordinary search; separate skill | `evolve-evaluate`, separate schemas, templates and configured directory. |
 | R16 | Improve request/role fulfillment, API usage and coding standards | Analysis and evaluation prioritize those outcomes; tool errors are secondary evidence. |
@@ -36,8 +36,8 @@ No automatic promotion from criticism to permanent instruction. First distinguis
 ## Remaining integration evidence
 
 - Exact bare `/evolve` alias is not guaranteed across hosts; use host-discovered invocation names.
-- Codex Markdown role files require explicit native delegation; this package does not auto-register TOML agents.
-- No graph URL has been supplied for deployment. Cloning a real knowledge repository, adding its hosted role block and opening its MR/PR remain unexercised integration steps.
+- Codex Markdown role files require explicit native delegation; init registers project TOML definitions.
+- No deployment repository choice has been supplied; init now creates a new GitHub repository or reuses an existing one. Cloning a real knowledge repository, adding its hosted role block and opening its MR/PR remain unexercised integration steps.
 - Native manifest validation does not establish runtime skill discovery or successful delegated runs.
 - No paired agent experiment has measured future performance gains. Structural validation cannot substitute for that evidence.
 
@@ -46,3 +46,15 @@ Historical runtime files were preserved in `C:/Users/asafu/Downloads/excluded/ag
 ## Review corrections
 
 Ordinary retrieval now verifies and refreshes the configured reviewed `base-branch`. Candidates use a separate worktree/checkout; explicit evaluation of candidate retrieval is labeled experimental. An empty remote receives only an empty base commit before the seed knowledge is proposed through MR/PR. Protected initialization is reported as unavailable. Native plugin skill/role changes require their host's update/reload process; a graph refresh alone does not activate installed plugin changes.
+
+## Latest user additions
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R23 | Init asks new GitHub repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
+| R24 | Domain -> indexes, node-type folders, schemas -> Markdown nodes | Bundled engineering domain, eight nodes illustrating two agents; exact folder mapping in each domain's type registry. |
+| R25 | Multiple agents in one repository/domain | Agent index, explicit bindings, domain-local slugs/edges, shared guidance and separate role responsibilities. |
+| R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/codex` and `plugins/claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
+| R27 | Apply writing-for-agents | Short init steps with completion criteria; new/existing/enrollment/connection details disclosed by branch; shared definitions have one authoring source. |
+
+The native-plugin request supersedes the earlier omission of executable hooks. The new runtime code only emits native lifecycle context; the packaging tool copies source into installable artifacts. No custom graph search, evaluation engine or provider service was reintroduced. Domain grouping is organizational; external domain knowledge remains external. Cross-domain edges remain outside the current schema.

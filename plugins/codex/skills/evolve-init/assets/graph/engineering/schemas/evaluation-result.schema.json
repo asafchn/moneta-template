@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/evaluation-result.schema.json",
+  "title": "Evaluation result frontmatter",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "kind": {
+      "enum": [
+        "proposal-assessment",
+        "reported-outcome"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "base-revision": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "criterion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "criterion-revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "assessor": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "scores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "required": [
+          "dimension",
+          "value",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "recommendation": {
+      "enum": [
+        "propose",
+        "revise",
+        "no-change",
+        "insufficient-evidence"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "required": [
+          "source",
+          "locator",
+          "note"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "uniqueItems": true
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "command": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cwd": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "execution": {
+            "enum": [
+              "ran",
+              "not-run",
+              "unavailable"
+            ]
+          },
+          "exit-code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "criterion",
+          "command",
+          "cwd",
+          "revision",
+          "execution",
+          "exit-code",
+          "evidence"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "execution": {
+                  "enum": [
+                    "not-run",
+                    "unavailable"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "exit-code": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "condition": {
+            "enum": [
+              "baseline",
+              "candidate",
+              "single-run"
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "method": {
+            "enum": [
+              "deterministic-check",
+              "agent-judgment",
+              "human-judgment"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "condition",
+          "value",
+          "unit",
+          "source",
+          "method"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "agent": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "subject",
+    "base-revision",
+    "criterion",
+    "criterion-revision",
+    "assessor",
+    "scores",
+    "recommendation",
+    "evidence",
+    "limitations",
+    "checks",
+    "metrics",
+    "domain",
+    "agent"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "criterion": {
+            "type": "null"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "scores": {
+            "maxItems": 0
+          },
+          "criterion-revision": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

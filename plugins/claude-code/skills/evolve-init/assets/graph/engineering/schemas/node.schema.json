@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/node.schema.json",
+  "title": "Operational node selector",
+  "oneOf": [
+    {
+      "$ref": "nodes/tool-calls.schema.json"
+    },
+    {
+      "$ref": "nodes/coding-guidelines.schema.json"
+    },
+    {
+      "$ref": "nodes/agent-responsibility.schema.json"
+    },
+    {
+      "$ref": "nodes/skills.schema.json"
+    },
+    {
+      "$ref": "nodes/guard-rails.schema.json"
+    },
+    {
+      "$ref": "nodes/agentic-flow-context.schema.json"
+    },
+    {
+      "$ref": "nodes/schemas.schema.json"
+    }
+  ]
+}

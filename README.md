@@ -1,28 +1,27 @@
 # Agent Evolve
 
-Native Claude Code/Codex plugin content: JSON schemas, a Markdown knowledge graph, skills and agent roles. Agents clone the graph locally and use their existing tools. No server, custom runtime or executable hooks.
+Two native plugins: [Codex](plugins/codex) and [Claude Code](plugins/claude-code). Each includes initialization, six skills, agent roles, graph/schema templates and lifecycle hooks. Agents operate on locally cloned knowledge with existing tools.
 
-The improvement target is fulfilling the user's request and the agent's responsibilities, including human review corrections about APIs and coding standards. A failed tool call is only one possible signal.
+Run `evolve-init` on the target agent. It asks **new GitHub repository or existing repository**, then enrolls the agent in a domain, opens the initialization review and connects its role instructions. New repository creation uses the selected owner/name and visibility; GitLab remains supported for existing repositories.
 
-## Use
+```text
+knowledge-repository/
+  engineering/
+    indexes/                  # schema-definition, node-index, agent-index
+    agent-responsibility/     # coding-agent.md, review-agent.md, ...
+    coding-guidelines/        # Markdown nodes
+    tool-calls/
+    skills/
+    guard-rails/
+    agentic-flow-context/
+    schemas/                  # JSON definitions + schema-node Markdown
+  another-domain/             # same structure, independent identities
+```
 
-Load this directory through your host's native plugin mechanism. Run `evolve-setup` and supply the graph repository URL; use `hosting: auto`, `gitlab` or `github`. Setup clones the graph and adds explicit skill invocations to the relevant workspace/role instructions. This source package has not been installed into your hosts.
+Each agent has a responsibility node and an explicit domain/role-file binding. Guidance can be shared within the domain. Retrieval: indexes, task query, frontmatter find, direct walk, selected bodies. External domain facts and separate evaluation records retain their own access paths.
 
-Claude uses `/agent-evolve:evolve`; Codex uses its discovered `evolve` skill, normally `$evolve`. Pass a current run or a captured `.txt` transcript. Dedicated `evolve-agent` analysis leads to separate `eval-agent` review, using `evolve-evaluate`, then a human-reviewed MR/PR through `glab`/`gh`. Exact bare `/evolve` availability is host-dependent. See [compatibility](docs/NATIVE-COMPATIBILITY.md).
+Run `evolve` on a current session or captured `.txt`. Analysis and a separate evaluator compare the request, responsibilities, actual artifacts and human corrections. Existing deterministic tools supply check evidence; judgments remain attributed. Proposed knowledge changes go through a GitHub PR or GitLab MR. Ordinary retrieval uses reviewed state; candidates stay in separate worktrees.
 
-## Storage and learning
+[Installation and native limits](docs/NATIVE-COMPATIBILITY.md) ? [Narrow walkthrough](docs/schema-proposal.html) ? [Requirements](docs/REQUIREMENTS.md) ? [Course grounding](docs/course-grounding.md) ? [Validation](docs/VALIDATION.md)
 
-| Location | Contents / access |
-|---|---|
-| `schema-definition.md`, `node-index.md` | Format and discovery catalog. Read before querying. |
-| `nodes/*.md` | Seven operational types. Find frontmatter, walk direct relations, read selected bodies. |
-| `schemas/` | JSON Schema per node/edge type; registries explain meanings and inverse names. |
-| `skills/`, `agents/`, `templates/` | Native procedures, delegated roles and workspace/evaluation templates. |
-| Configured `evaluation-root` | Separate criteria/results and private evidence; accessed by `evolve-evaluate`. |
-| Configured `domain-source` | External domain facts, accessed using that source's own method. |
-
-Learning means reviewed external knowledge changes, retrieved in later runs. It does not train model weights. Merge controls shared activation; agents refresh the reviewed base branch safely. A proposal assessment is distinct from measured improvement on later tasks.
-
-Start with [the narrow walkthrough](docs/schema-proposal.html), [graph format](schema-definition.md), [requirements and remaining gaps](docs/REQUIREMENTS.md), and [course grounding](docs/course-grounding.md). The seven starter nodes describe this plugin's procedures; they are not company knowledge.
-
-[Validation and review record](docs/VALIDATION.md).
+For maintenance, edit `skills/` and `native/`, then run `python tools/package_plugins.py`. Committed `plugins/` are generated installable packages; `python tools/package_plugins.py --check` detects drift. The only runtime glue is the small native context hook (Node.js); graph search and review remain agent procedures.

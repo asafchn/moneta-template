@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/nodes/agent-responsibility.schema.json",
+  "title": "agent-responsibility",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "agent-responsibility"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "responsibilities": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "role",
+            "responsibilities"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

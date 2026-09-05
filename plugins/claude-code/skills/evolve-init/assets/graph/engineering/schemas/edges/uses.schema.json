@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/edges/uses.schema.json",
+  "title": "uses",
+  "description": "This skill or flow uses the target capability or schema.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "uses"
+    },
+    "target": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "type",
+    "target"
+  ],
+  "additionalProperties": false
+}

@@ -60,14 +60,14 @@
     <div class="card">
       <section id="step-1" aria-labelledby="title-1">
         <p class="eyebrow">01 · Files</p>
-        <h1 id="title-1" tabindex="-1">Three kinds of file.</h1>
-        <p class="lead">The format, the catalog, the knowledge.</p>
+        <h1 id="title-1" tabindex="-1">One domain. Many agents.</h1>
+        <p class="lead">Indexes, typed nodes and schemas, grouped by domain.</p>
         <dl>
-          <div class="row"><dt>schema-definition.md</dt><dd>Explains fields, node types, edge schemas and both directions of each relationship.</dd></div>
-          <div class="row"><dt>node-index.md</dt><dd>Each searchable node’s slug beside its description.</dd></div>
-          <div class="row"><dt>One Markdown file per node</dt><dd>YAML frontmatter for discovery and links. Body for detail.</dd></div>
+          <div class="row"><dt>domain/indexes/schema-definition.md</dt><dd>Explains fields, node types, edge schemas and both directions of each relationship.</dd></div>
+          <div class="row"><dt>domain/indexes/node-index.md + agent-index.md</dt><dd>Node slugs and summaries; a separate catalog identifies agents.</dd></div>
+          <div class="row"><dt>One Markdown file per node</dt><dd>domain/node-type/slug.md. YAML for discovery; body for detail.</dd></div>
         </dl>
-        <p class="note">Local clone. JSON schemas define the format; native skills use existing file and Git tools.</p>
+        <p class="note">Init asks: new GitHub repository, or existing? Each agent joins a domain through reviewed enrollment.</p>
       </section>
       <section id="step-2" aria-labelledby="title-2">
         <p class="eyebrow">02 · One node</p>
@@ -130,7 +130,7 @@ If tokens are opaque, pass them unchanged.</pre><p>Illustration only. Actual gui
         </dl>
         <details class="example"><summary>See an index entry</summary><pre>follow-pagination-tokens
   Guidance for paginated API clients.</pre><p>The agent updates the index alongside node changes, keeping descriptions aligned.</p></details>
-        <p class="note">Role instructions invoke this workflow. An enforced pre-action hook is not included in the declarative package.</p>
+        <p class="note">Role instructions invoke this workflow. Native hooks reinforce retrieval; context reminders do not prove completion before a pending tool.</p>
       </section>
       <section id="step-6" aria-labelledby="title-6">
         <p class="eyebrow">06 · Access boundaries</p>

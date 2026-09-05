@@ -1,0 +1,17 @@
+{
+  "name": "agent-evolve-native",
+  "owner": {
+    "name": "Local developer"
+  },
+  "plugins": [
+    {
+      "name": "agent-evolve",
+      "source": "./plugins/claude-code",
+      "description": "Initialize shared agent domains and evolve reviewed knowledge.",
+      "version": "0.2.0"
+    }
+  ],
+  "metadata": {
+    "description": "Native Agent Evolve plugins for domain-scoped knowledge and reviewed improvement."
+  }
+}

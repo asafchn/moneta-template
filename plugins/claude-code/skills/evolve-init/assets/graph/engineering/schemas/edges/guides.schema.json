@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/edges/guides.schema.json",
+  "title": "guides",
+  "description": "This guideline governs use of the target invocation, skill or flow.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "guides"
+    },
+    "target": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "type",
+    "target"
+  ],
+  "additionalProperties": false
+}

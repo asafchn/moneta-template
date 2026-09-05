@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "types": {
+    "tool-calls": {
+      "schema": "nodes/tool-calls.schema.json",
+      "description": "Reusable guidance for invoking an existing tool.",
+      "directory": "tool-calls"
+    },
+    "coding-guidelines": {
+      "schema": "nodes/coding-guidelines.schema.json",
+      "description": "Coding practices and their applicability.",
+      "directory": "coding-guidelines"
+    },
+    "agent-responsibility": {
+      "schema": "nodes/agent-responsibility.schema.json",
+      "description": "An agent role and what it must fulfill.",
+      "directory": "agent-responsibility"
+    },
+    "skills": {
+      "schema": "nodes/skills.schema.json",
+      "description": "A skill invocation and its purpose.",
+      "directory": "skills"
+    },
+    "guard-rails": {
+      "schema": "nodes/guard-rails.schema.json",
+      "description": "Behavioral constraints and their scope.",
+      "directory": "guard-rails"
+    },
+    "agentic-flow context": {
+      "schema": "nodes/agentic-flow-context.schema.json",
+      "description": "Context and ordered steps for coordinated work.",
+      "directory": "agentic-flow-context"
+    },
+    "schemas": {
+      "schema": "nodes/schemas.schema.json",
+      "description": "Reusable data and interface contracts.",
+      "directory": "schemas"
+    }
+  }
+}

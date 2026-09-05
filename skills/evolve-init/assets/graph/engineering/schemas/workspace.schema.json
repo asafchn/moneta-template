@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/workspace.schema.json",
+  "title": "Workspace connection frontmatter",
+  "type": "object",
+  "properties": {
+    "repository-url": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "hosting": {
+      "enum": [
+        "auto",
+        "gitlab",
+        "github"
+      ]
+    },
+    "checkout": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "graph-root": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "evaluation-root": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "domain-source": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "access": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "location",
+            "access"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "base-branch": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "description": "Reviewed branch used for ordinary retrieval; discovered from the supplied repository."
+    },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "domain": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "role-file": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "agent",
+          "domain",
+          "role-file"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "repository-url",
+    "hosting",
+    "checkout",
+    "graph-root",
+    "evaluation-root",
+    "domain-source",
+    "base-branch",
+    "bindings"
+  ],
+  "additionalProperties": false
+}

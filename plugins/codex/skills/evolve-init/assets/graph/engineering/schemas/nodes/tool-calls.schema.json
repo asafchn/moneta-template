@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/nodes/tool-calls.schema.json",
+  "title": "tool-calls",
+  "allOf": [
+    {
+      "$ref": "../node-base.schema.json"
+    },
+    {
+      "properties": {
+        "node-type": {
+          "const": "tool-calls"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "tool": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "purpose": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "input-schema": {
+              "type": "object"
+            },
+            "preconditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool",
+            "purpose",
+            "input-schema",
+            "preconditions"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

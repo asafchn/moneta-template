@@ -1,0 +1,17 @@
+{
+  "name": "agent-evolve-native",
+  "plugins": [
+    {
+      "name": "agent-evolve",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
