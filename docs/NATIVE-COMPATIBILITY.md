@@ -42,3 +42,11 @@ Init is an agent-led wizard: provider/host, chosen CLI authentication, new/exist
 Evolve chooses a flow from explicit intent and visible context, asking one focused question when ambiguous. Missing setup retains the requested source through the init wizard. Automatic message hooks still use their bounded one-message flow and cannot create a repository. Context never overrides the explicit agent-slug/general memory rule.
 
 GitLab creation uses the [documented glab create flags](https://docs.gitlab.com/cli/repo/create/) with explicit host, namespace and visibility, then copies the bootstrap before a separate enrollment MR. The local environment has no glab installation; GitLab execution remains unverified.
+
+## Auth status reports an invalid token
+
+A sandbox/network block can make gh auth status report an invalid token even when credentials work. Init probes the account API before diagnosing login. Use `node <plugin-root>/scripts/provider.cjs probe gh github.com`; retry through approved network and credential-store access when the initial tool is isolated. Both transport failures and an invisible credential store must be resolved before diagnosing credentials. The helper returns fixed categories instead of raw authentication output. Successful account lookup permits the wizard to continue. A transport error leaves authentication unverified; it is not a reason to log out or replace a token.
+
+Already-running sessions may retain earlier skill instructions. Update the installed Moneta plugin and start a fresh session to load revised guidance; pushing this source repository does not update an existing installation automatically.
+
+When account verification establishes missing/rejected credentials, init starts the provider CLI's browser login in a separate user-visible Windows console and retains its process ID while the user completes approval. Device codes and credential prompts stay outside captured chat. Other platforms currently require a user-controlled terminal. It rechecks the account before resuming. A manual login command is a fallback for hosts without interactive login support. Credentials that already work are reused.

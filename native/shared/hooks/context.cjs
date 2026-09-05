@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { decide } = require('./message-gate.cjs');
+const { redact } = require('../scripts/redact.cjs');
 
 // Lifecycle glue only: emit context; the agent performs retrieval with its tools.
 try {
@@ -26,7 +27,7 @@ try {
     const gate = decide(input.prompt);
     if (gate.route === 'inspect') additionalContext += ` Message gate: ${gate.reason}. Invoke evolve-message for this submitted user message only, starting with its brief no-tool triage. Keep fulfilling the current request; a candidate signal is not approval to add a permanent rule.`;
   }
-  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext } }));
+  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: event, additionalContext: redact(additionalContext) } }));
 } catch {
   // Optional guidance cannot interrupt the user's work or expose captured input.
 }

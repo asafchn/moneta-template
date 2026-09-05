@@ -1,0 +1,11 @@
+# Secret handling
+
+Moneta filters provider-command output before returning it to chat. Authentication probes discard raw stdout/stderr and return fixed categories plus a validated, screened account name. Provider operations use the bundled scripts/provider.cjs wrapper; credentials are supplied through the provider store/environment, never command arguments. The hook also filters its generated context.
+
+The independently written JavaScript patterns are informed by [Gitleaks rule families](https://github.com/gitleaks/gitleaks/blob/master/config/gitleaks.toml), reviewed 2026-09-05: GitHub/GitLab token prefixes, generic credential assignments, cloud/API keys, JWTs and private keys. Conservative length thresholds also catch partial values. [detect-secrets entropy detection](https://github.com/Yelp/detect-secrets/blob/master/detect_secrets/plugins/high_entropy_strings.py) informed the additional opaque-string heuristic. This is a bounded filter, not an embedded copy of either scanner.
+
+Known credential environment values are masked in literal, URL-encoded, JSON-escaped and base64/base64url forms. Controls and JSON Unicode escapes are normalized before matching. Generic output is buffered before filtering, so chunk splits cannot bypass it. Timeouts, oversized output, launch failures and unsupported runtime diagnostics return static results without partial buffers. Login opens a user-visible Windows console; its device code stays outside tool/chat capture. Other hosts require an equivalent user-controlled terminal.
+
+Generic filtering can produce false positives and miss unknown secret formats, arbitrary transformations or short unlabeled values. It does not protect inputs already put in chat/tool arguments, calls that bypass the wrapper, a malicious provider binary or code injected before Node starts. Authentication's fixed output is stricter than generic filtering. Failed/redacted output is not permission to bypass the wrapper or display raw logs. Keep debug/preload injection disabled; the helper rejects NODE_DEBUG/NODE_DEBUG_NATIVE/NODE_OPTIONS before spawning.
+
+Run node --test tests/provider-output.test.cjs for synthetic leakage cases. Tests contain fabricated values, not live credentials. Interactive login is not exercised by those tests and must not be claimed validated from a launched process alone.

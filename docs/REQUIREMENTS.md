@@ -6,7 +6,7 @@ Current authority: the user's conversation, including the corrections to deliver
 |---|---|---|
 | R01 | Native Claude Code/Codex; no Pi | Both plugin manifests; native skills and Markdown roles. |
 | R02 | Graph remains schemas/Markdown with existing tools | Native hook glue and package materialization added by the later full-plugin request; no graph server/runtime. |
-| R03 | Work against a local clone | `evolve-init`, `.moneta.md` connection, existing Git/file tools. |
+| R03 | Work against a local clone | `init`, `.moneta.md` connection, existing Git/file tools. |
 | R04 | Evolve a current session or captured `.txt`, including outside runs | `evolve` captures available evidence and marks coverage; `evolve-agent` reads the supplied source. |
 | R05 | Dedicated analysis and evaluation agents | Claude named Markdown agents; Codex project TOML registration through init, with explicit role delegation fallback. |
 | R06 | Skill invocation in each relevant agent instruction file | Setup plus AGENTS/CLAUDE/role templates; preserve unrelated instructions. |
@@ -51,7 +51,7 @@ Ordinary retrieval now verifies and refreshes the configured reviewed `base-bran
 
 | ID | Requirement | Delivery |
 |---|---|---|
-| R23 | Init asks new GitHub/GitLab repository vs existing | `evolve-init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
+| R23 | Init asks new GitHub/GitLab repository vs existing | `init`, provider branches, retry-safe destination, enrollment review and workspace connection. |
 | R24 | Revised: memory area -> indexes, node-type folders, schemas -> nodes | Bundled general template; personal `memory/general/` or `memory/<agent-slug>/`. Type registry controls placement. |
 | R25 | Revised: multiple isolated agent areas in one personal repository | No slug selects general; an explicit slug selects only its area. No cross-agent reads, general fallback or cross-area edges. |
 | R26 | One Codex plugin and one Claude Code plugin with hooks/components | Self-contained `plugins/moneta-codex` and `plugins/moneta-claude-code`; native adapters plus shared source. Supersedes the intermediate skills.sh proposal. |
@@ -76,7 +76,7 @@ The project is Moneta. Native plugin names are `moneta`, distributed through `mo
 
 | ID | Requirement | Delivery |
 |---|---|---|
-| R30 | Moneta bootstraps a user-owned repository | `init` delegates to evolve-init; new repositories copy the Moneta template, with an explicitly requested linked-fork alternative. Existing repositories remain supported. Memory PRs target the personal remote. |
+| R30 | Moneta bootstraps a user-owned repository | `init` runs the setup wizard; new repositories copy the Moneta template, with an explicitly requested linked-fork alternative. Existing repositories remain supported. Memory PRs target the personal remote. |
 | R31 | General when agent-slug is omitted | Routing contract and shared selection reference; role names, bindings and child names never infer storage. General works without an enrolled actor. |
 | R32 | Explicit agent-slug isolates reads and writes | Exactly one memory area, parent selection propagated through search/analysis/evaluation, local indexes/edges, no fallback or cross-agent memory. |
 | R33 | Add domain-knowledge | Eighth type with required sources, subject/applicability, mirrored permitted edges and a sourced starter example. |
@@ -100,3 +100,19 @@ Workflow inference does not change memory routing: absent agent-slug still means
 | R37 | Choose personal or organization/group repository and privacy | New-repository owner/namespace, name and visibility are distinct choices. Private is suggested for either owner type. Existing repositories retain their owner/visibility. GitHub and GitLab creation have provider-specific references. |
 
 New GitLab creation supersedes the earlier new-GitHub-only branch. It copies a verified bootstrap into the user's new project, then proposes memory enrollment in an MR. It requires glab plus Git access to the bootstrap, not both provider CLIs. No shell wizard, graph server or deterministic workflow classifier is introduced.
+
+## Authentication diagnosis
+
+| ID | Requirement | Delivery |
+|---|---|---|
+| R38 | Existing gh authentication must not be misdiagnosed from sandbox failures | Init checks the actual authenticated account endpoint, distinguishes transport failure from HTTP credential rejection, retries via approved network access where available, and retains wizard state. Auth-status text alone cannot trigger an invalid-token claim or logout instruction. |
+
+| R39 | Wizard starts authentication when needed | After verified diagnosis, init launches gh/glab browser login through an interactive session, retains its handle, waits for user browser/device approval, verifies the account and resumes. Working credentials are reused; transport errors do not initiate login. |
+
+## One setup skill
+
+The canonical setup workflow lives at skills/init/SKILL.md. The former evolve-init and evolve-setup aliases are removed to avoid duplicate setup commands. Evolve invokes init when setup is needed; direct user commands are $init or /moneta:init. Existing plugin installations need an update and fresh session to replace cached skills.
+
+## Active output protection
+
+The user's security requirement authorizes a small deterministic provider-output wrapper and redactor. Authentication uses fixed-output probing; provider operations filter output before chat; browser/device codes remain in a separate user terminal. Research-backed token/key patterns and known environment values support filtering, with explicit limits in [SECURITY.md](SECURITY.md). This is not a graph or evaluation engine.

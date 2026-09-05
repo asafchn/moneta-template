@@ -1,6 +1,6 @@
 # Schema proposal: implemented structure
 
-The [narrow walkthrough](schema-proposal.html) explains the current personal memory model. [Machine-readable definitions](../skills/evolve-init/assets/graph/general/schemas/node.schema.json) and [schema-definition.md](../schema-definition.md) are the agent-facing contract.
+The [narrow walkthrough](schema-proposal.html) explains the current personal memory model. [Machine-readable definitions](../skills/init/assets/graph/general/schemas/node.schema.json) and [schema-definition.md](../schema-definition.md) are the agent-facing contract.
 
 - Moneta bootstraps a personal repository; `memory/general/` is selected when no agent-slug is supplied.
 - An explicit agent-slug selects only `memory/<agent-slug>/`. Reads and writes never fall back or cross agent areas.

@@ -1,6 +1,6 @@
 # Review a local graph change through Git
 
-Use existing Git and provider CLI tools from the configured local clone. The user supplies the repository URL; preserve the selected `hosting` flag.
+Apply [provider output handling](../../init/references/provider-output.md) to every provider CLI command below. Use existing Git and provider CLI tools from the configured local clone. The user supplies the repository URL; preserve the selected `hosting` flag.
 
 1. Confirm the checkout's remote identifies the personal repository, including when a GitHub fork also has a bootstrap upstream. Inspect status, current branch and base revision. Fetch current remote state when available; report if working offline. Preserve unrelated work. Create the change branch in a separate local worktree/checkout from the configured reviewed base; leave the ordinary retrieval checkout unchanged.
 2. Apply supported node/schema changes only inside the selected memory area, including skills-type Markdown nodes. Shared native plugin edits require a separate user-scoped request. Maintain both edge directions and update affected index descriptions. Inspect every changed file. Schema/edge meaning changes are material and must be raised to the user.

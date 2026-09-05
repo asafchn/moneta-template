@@ -12,14 +12,9 @@ Native plugins for **Codex** and **Claude Code**. Moneta is the bootstrap for yo
 
 **Get started**
 
-You need Git, Node.js, Codex or Claude Code, and **either gh or glab installed and authenticated** for the host where you will store memories.
+You need Git, Node.js, Codex or Claude Code, and **either gh or glab installed** for the host where you will store memories. Init checks existing authentication. If login is needed, the wizard starts it; you complete the browser/device approval, and setup resumes.
 
-| Your host | Log in if needed | Check authentication |
-|---|---|---|
-| GitHub | `gh auth login` | `gh auth status` |
-| GitLab | `glab auth login` | `glab auth status` |
-
-For self-hosted GitLab, use your host when logging in. You also need Git access to this private Moneta bootstrap; GitLab authentication alone does not grant GitHub access.
+For self-hosted GitLab, tell init your host. Installing this private Moneta plugin also requires GitHub access; authenticating glab does not grant access to the bootstrap.
 
 **1. Install your plugin directly.** Run one block in your terminal. The plugin manager downloads Moneta; no manual source clone is needed.
 
@@ -41,7 +36,7 @@ claude plugin install moneta@moneta-native
 
 Init asks one question at a time:
 
-- GitHub (`gh`) or GitLab (`glab`)? It checks the chosen CLI's authentication.
+- GitHub (`gh`) or GitLab (`glab`)? It verifies the chosen CLI's account and starts browser login if needed.
 - Create a repository or use an existing URL?
 - For new: your personal account or an organization/group, then its name and repository visibility. **Private is recommended for either owner type.**
 - The agent's role file, if you want to enroll one and its path is not already known.
@@ -107,7 +102,7 @@ Moneta learns by changing the knowledge available to future runs. Model weights 
 
 **Inside the plugins**
 
-Both packages include eight skills, analysis and evaluation roles, graph templates, schemas, and hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart`, and `PreToolUse`. The small Node.js hook supplies context and screens messages; the agent performs retrieval and review using existing tools. The feedback screen uses bounded English phrase matching, so explicit `evolve-message` remains available when it misses a correction.
+Both packages include six skills, analysis and evaluation roles, graph templates, schemas, and hooks for `SessionStart`, `UserPromptSubmit`, `SubagentStart`, and `PreToolUse`. The small Node.js hook supplies context and screens messages; the agent performs retrieval and review using existing tools. The feedback screen uses bounded English phrase matching, so explicit `evolve-message` remains available when it misses a correction.
 
 | Directory | Purpose |
 |---|---|
