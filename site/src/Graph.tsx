@@ -30,7 +30,6 @@ export function CanvasGraph({ selected, onSelect, items, connections, ambient = 
     let lastFrame = 0;
     let visible = true;
     const byId = new Map(items.map(node => [node.id, node]));
-    const order = new Map(items.map((node, index) => [node.id, index]));
     const neighbors = new Set(connections.flatMap(edge => edge.from === selected ? [edge.to] : edge.to === selected ? [edge.from] : []));
     const render = () => {
       if (disposed) return;
@@ -63,10 +62,9 @@ export function CanvasGraph({ selected, onSelect, items, connections, ambient = 
       }
       const point = (id: string) => {
         const node = byId.get(id)!;
-        const phase = order.get(id)! * 1.3;
         return {
-          x: 25 + node.x * (width - 50) + (ambient ? Math.sin(time * 0.75 + phase) * 10 : 0),
-          y: 28 + node.y * (height - 70) + (ambient ? Math.cos(time * 0.75 + phase) * 7 : 0),
+          x: 25 + node.x * (width - 50),
+          y: 28 + node.y * (height - 70),
         };
       };
       hitPoints.current = new Map(items.map(node => [node.id, point(node.id)]));
@@ -98,9 +96,8 @@ export function CanvasGraph({ selected, onSelect, items, connections, ambient = 
         const active = node.id === selected;
         const radius = active ? 21 : 12;
         if (active) {
-          const pulse = ambient ? (time / 2.4) % 1 : 0;
-          ctx.beginPath(); ctx.arc(x, y, 28 + pulse * 14, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(174,75,46,${0.45 * (1 - pulse)})`; ctx.lineWidth = 1.2; ctx.stroke();
+          ctx.beginPath(); ctx.arc(x, y, 28, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(174,75,46,0.45)'; ctx.lineWidth = 1.2; ctx.stroke();
         }
         ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fillStyle = active ? '#ae4b2e' : '#f5f4ed'; ctx.fill();

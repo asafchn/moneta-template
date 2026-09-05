@@ -1,6 +1,6 @@
 {
   "name": "moneta-personal",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Bootstrap personal agent memory, retrieve local graph knowledge, and propose evaluated improvements with native hooks.",
   "author": {
     "name": "asafchn"
