@@ -10,7 +10,8 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = ("codex", "claude-code")
 PERSONAL_NAME = "moneta-personal"
-RUNTIME_VERSION = "0.3.1"
+RUNTIME_VERSION = "0.3.2"
+LEGAL_FILES = ("LICENSE", "NOTICE.md")
 LINK = re.compile(r"\]\((?:<(?P<angle>[^>]+)>|(?P<plain>[^\s)]+))(?:\s+\"[^\"]*\")?\)")
 
 
@@ -64,6 +65,8 @@ def json_bytes(value):
 
 def runtime(host):
     mapping = {}
+    for name in LEGAL_FILES:
+        mapping[(ROOT / name).resolve()] = Path(name)
     add_tree(mapping, ROOT / "skills", Path("skills"), exclude=("init",))
     add_tree(mapping, ROOT / "skills/init", Path("resources/setup"), exclude=("SKILL.md",))
     add_tree(mapping, ROOT / "native/shared")
@@ -77,7 +80,7 @@ def runtime(host):
 
 
 def repository_template(runtimes):
-    expected = {}
+    expected = {Path(name): (ROOT / name).read_bytes() for name in LEGAL_FILES}
     for host, (contents, _) in runtimes.items():
         expected.update({Path("plugins") / f"moneta-{host}" / path: data for path, data in contents.items()})
     expected[Path(".agents/plugins/marketplace.json")] = json_bytes({
@@ -97,6 +100,8 @@ def repository_template(runtimes):
 
 def installer(host, runtimes, template):
     mapping = {}
+    for name in LEGAL_FILES:
+        mapping[(ROOT / name).resolve()] = Path(name)
     add_tree(mapping, ROOT / "skills/init", Path("skills/init"))
     add_tree(mapping, ROOT / "native/installer" / host)
     for name in ("provider.cjs", "redact.cjs"):

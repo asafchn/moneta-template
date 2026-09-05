@@ -85,3 +85,7 @@ The [interactive landing page](site/README.md) is a standalone React + MUI app i
 Author skills in skills/ and adapters in native/. Build installers and their self-contained runtime templates with `python tools/package_plugins.py`; verify with `--check`. The standalone skills.sh entry is generated in distribution/moneta-setup/. Agent retrieval uses local files and existing tools. The optional moneta-show viewer runs a read-only localhost server for the browser.
 
 [Requirements](docs/REQUIREMENTS.md) | [Validation](docs/VALIDATION.md) | [Secret handling](docs/SECURITY.md) | [Course grounding](docs/course-grounding.md)
+
+## License
+
+Moneta is source-available under [PolyForm Shield 1.0.0](LICENSE). Use, customization and sharing are permitted under its terms; using Moneta to provide a competing product or service is restricted. Independently created user knowledge retains its owners' rights. See [ownership and third-party notices](NOTICE.md).

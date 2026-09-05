@@ -150,3 +150,7 @@ Init explicitly separates creating a brain from connecting to an existing teamma
 SessionStart reminds the host that memory exists. Relevant prompts form a query from the index. Find inspects discovery metadata; walk discovers connected knowledge find missed, including different vocabulary. Only selected full bodies enter context. Walk may add candidates; context narrowing does not require a monotonically shrinking candidate count.
 
 Runtime scripts, packaging and local viewer must support Windows, macOS and Linux. Desktop authentication stays in a user-controlled terminal; headless hosts report the pending manual login step. The landing example uses restrained background canvas animation, pauses when hidden and respects reduced motion.
+
+## Licensing
+
+Moneta-authored software and materials use unmodified PolyForm Shield 1.0.0. The required notice and license travel with each installer, repository template and native runtime. Independently created user knowledge retains its owners' rights; third-party materials retain their separate licenses. Init preserves notices while personalizing plugin identity.

@@ -99,7 +99,7 @@ export default function App() {
       </div></section>
       <section className="local-preview wrap"><div><p className="eyebrow">YOUR GRAPH, ON YOUR MACHINE</p><h2>See what your agent knows.</h2><p>Run <code>moneta-show</code> in your generated plugin. A local canvas opens your selected memory area, with node details and named connections. Custom types come from your own registry.</p></div><div className="local-command"><span>LOCALHOST · READ ONLY</span><code>moneta-show</code><p>General by default. One explicit agent slug at a time. Reads use your local clone. Moneta pulls before operations when the last successful pull is an hour old.</p></div></section><section className="closing wrap"><p className="eyebrow">LESS REPEATING. MORE BUILDING.</p><h2>The next session<br />starts with <em>what you learned.</em></h2><Button variant="contained" href="#install">Start with Moneta <span className="arrow">↗</span></Button></section>
     </main>
-    <footer className="wrap"><a className="wordmark" href="#">moneta.</a><span>A memory you own. A history you can read.</span><a href={sourceUrl} target="_blank" rel="noreferrer">Source repository ↗</a></footer>
+    <footer className="wrap"><a className="wordmark" href="#">moneta.</a><span>A memory you own. A history you can read.</span><a href="/LICENSE.txt">PolyForm Shield</a><a href="/NOTICE.txt">Copyright &amp; notices</a><a href={sourceUrl} target="_blank" rel="noreferrer">Source repository ↗</a></footer>
     <Snackbar open={Boolean(notice)} autoHideDuration={3500} onClose={() => setNotice('')} message={notice} />
   </>;
 }

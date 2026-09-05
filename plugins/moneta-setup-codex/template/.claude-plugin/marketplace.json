@@ -7,7 +7,7 @@
     {
       "name": "moneta-personal",
       "source": "./plugins/moneta-claude-code",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "description": "Personal agent guidance and reviewed learning."
     }
   ]

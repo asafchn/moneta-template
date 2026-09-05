@@ -11,3 +11,5 @@ For skip, describe a shared agent knowledge repository with Markdown nodes, inde
 State that the generated runtime works across projects/chats by default, or describe the explicitly chosen restrictions. The memory repository is its storage, not a codebase binding. Include moneta-show as the local read-only graph viewer, alongside retrieval and reviewed learning. It opens the selected area in a browser; no graph upload or separate dependency installation.
 
 Completion: the README describes this user's repository, with accurate current setup/connection state. Raw telemetry, local connection paths and secrets stay outside the repository.
+
+For a new generated repository, link its LICENSE and NOTICE.md: Moneta software uses PolyForm Shield 1.0.0; independently created knowledge retains its owners' rights. Preserve this distinction when describing ownership. Connecting to an existing brain reuses its existing notices; license changes are a separate explicit decision.

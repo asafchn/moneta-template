@@ -22,6 +22,8 @@ class PackagingTests(unittest.TestCase):
         cls.temporary = tempfile.TemporaryDirectory()
         cls.addClassCleanup(cls.temporary.cleanup)
         cls.root = Path(cls.temporary.name)
+        for name in ("LICENSE", "NOTICE.md"):
+            shutil.copy2(ROOT / name, cls.root / name)
         for directory in ("tools", "skills", "native"):
             shutil.copytree(ROOT / directory, cls.root / directory,
                             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
@@ -45,7 +47,7 @@ class PackagingTests(unittest.TestCase):
             metadata = installer / (".codex-plugin" if host == "codex" else ".claude-plugin") / "plugin.json"
             manifest = json.loads(metadata.read_text(encoding="utf-8"))
             self.assertEqual(manifest["name"], "moneta-setup")
-            self.assertEqual(manifest["version"], "0.10.1")
+            self.assertEqual(manifest["version"], "0.10.2")
             self.assertNotIn("hooks", manifest)
 
     def test_each_template_contains_both_independent_runtime_packages(self):
@@ -108,6 +110,19 @@ class PackagingTests(unittest.TestCase):
             self.assertEqual(file.read_bytes(), original + b"\n// local modification\n")
         finally:
             file.write_bytes(original)
+
+    def test_license_and_ownership_notice_travel_with_every_distribution_boundary(self):
+        roots = [self.root / "plugins" / f"moneta-setup-{host}" for host in HOSTS]
+        roots.append(self.root / "distribution/moneta-setup")
+        for installer in roots:
+            boundaries = [installer, installer / "template"]
+            boundaries.extend(installer / "template/plugins" / f"moneta-{host}" for host in HOSTS)
+            for boundary in boundaries:
+                for name in ("LICENSE", "NOTICE.md"):
+                    self.assertEqual((boundary / name).read_bytes(), (ROOT / name).read_bytes())
+        notice = (ROOT / "NOTICE.md").read_text(encoding="utf-8")
+        self.assertIn("Required Notice: Copyright (c) 2026 asafchn.", notice)
+        self.assertIn("does not by itself apply the software license to that content", notice)
 
 
 if __name__ == "__main__":

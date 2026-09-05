@@ -118,9 +118,9 @@ function createViewer(area, assets, beforeRead = () => ({status:'current'})) {
     }
     try {
       const relative = url.pathname === '/' ? 'graph.html' : decodeURIComponent(url.pathname).slice(1);
-      if (!(relative === 'graph.html' || relative === 'favicon.svg' || /^assets\/[a-zA-Z0-9_.-]+$/.test(relative))) throw new Error('Not a viewer asset.');
+      if (!(['graph.html','favicon.svg','LICENSE.txt','NOTICE.txt','THIRD-PARTY-NOTICES.txt'].includes(relative) || /^assets\/[a-zA-Z0-9_.-]+$/.test(relative))) throw new Error('Not a viewer asset.');
       const file = inside(staticRoot, path.join(staticRoot, relative));
-      const types = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.woff':'font/woff' };
+      const types = { '.txt':'text/plain; charset=utf-8', '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.woff':'font/woff' };
       response.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream');
       response.end(fs.readFileSync(file));
     } catch { response.writeHead(404); response.end('Not found.'); }

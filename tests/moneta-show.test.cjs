@@ -91,6 +91,11 @@ test('localhost server serves the viewer, rejects foreign origins and writes, an
   const url = `http://127.0.0.1:${server.address().port}`;
   assert.equal((await fetch(url + '/health')).status, 200);
   assert.match(await (await fetch(url)).text(), /Moneta/);
+  const license=await fetch(url + '/LICENSE.txt');
+  assert.match(license.headers.get('content-type'), /text\/plain/);
+  assert.match(await license.text(), /PolyForm Shield License 1.0.0/);
+  assert.match(await (await fetch(url + '/NOTICE.txt')).text(), /Required Notice: Copyright/);
+  assert.equal((await fetch(url + '/THIRD-PARTY-NOTICES.txt')).status, 200);
   const response = await fetch(url + '/graph.json');
   assert.equal((await response.json()).nodes.length, 7);
   assert.equal(response.headers.get('cache-control'), 'no-store');

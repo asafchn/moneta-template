@@ -2,6 +2,8 @@
 
 The installer bundles a complete template/ directory. Copy its contents using filesystem operations into a clean preparation directory, including hidden marketplace directories. Compare relative file names and SHA-256 hashes before personalization. Never reconstruct the template from printed tool output. Work from absolute paths inside the user's preparation directory; installed assets are read-only.
 
+Retain the template's root LICENSE and NOTICE.md and each runtime's copies unchanged. Personalization changes the user's plugin identity, not the Moneta licensor or third-party notices. Independently created user knowledge remains outside the Moneta software license as described in NOTICE.md. Completion: the generated repository and both runtimes retain their license and ownership notices.
+
 The generated repository contains .agents/plugins/marketplace.json, .claude-plugin/marketplace.json, plugins/moneta-codex/, plugins/moneta-claude-code/, README.md and memory/. It includes runtime skills, hooks, scripts and schemas. It excludes Moneta's development source tree, tests, transcript archives and the exposed installer skill. Each runtime's resources/setup/ contains supporting templates/references, not another discovered init command.
 
 Personalize with a JSON serializer:
