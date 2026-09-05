@@ -5,7 +5,8 @@ const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const source = path.resolve(__dirname, '../native/shared');
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'moneta-organization-'));
+// Node resolves script paths through macOS /var -> /private/var before setting __dirname.
+const temporary = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'moneta-organization-')));
 test.after(() => fs.rmSync(temporary, { recursive: true, force: true }));
 let sequence = 0;
 const profile = { 'repository-url':'https://gitlab.example/me/memory', hosting:'gitlab', 'base-branch':'main', targets:[{kind:'organization',host:'gitlab.example',namespace:'engineering/platform'}] };
