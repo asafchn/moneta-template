@@ -1,7 +1,7 @@
 {
   "name": "agent-evolve",
   "version": "0.1.0",
-  "description": "Retrieve scoped agent guidance and propose evidence-backed improvements from reviewed runs.",
+  "description": "Retrieve and evolve a locally cloned Markdown graph using native agent skills.",
   "author": {
     "name": "Local developer"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Agent Evolve",
     "shortDescription": "Retrieve guidance and evolve it through review.",
-    "longDescription": "Agent Evolve uses a typed Markdown knowledge graph and separate evaluation workflow to propose reviewed improvements from native sessions or captured transcripts.",
+    "longDescription": "JSON schemas, Markdown knowledge nodes and skills for local graph retrieval, separate evaluation and Git review. Uses the agent's existing tools.",
     "developerName": "Local developer",
     "category": "Productivity",
     "capabilities": [],

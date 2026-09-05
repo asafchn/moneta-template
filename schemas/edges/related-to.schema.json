@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-evolve.invalid/schemas/edges/related-to.schema.json",
+  "title": "related-to",
+  "description": "These nodes provide related context; the relation implies no dependency or authority.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "related-to"
+    },
+    "target": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  },
+  "required": [
+    "type",
+    "target"
+  ],
+  "additionalProperties": false
+}

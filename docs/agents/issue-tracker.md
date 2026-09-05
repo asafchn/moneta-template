@@ -1,3 +1,3 @@
-# Work source
+# Specification source
 
-This project is driven by the user conversation and docs/SPEC.md. No external issue tracker is configured. Track material questions and decisions in docs/DECISIONS.md.
+This local implementation originates in the user's conversation, captured in [the requirements ledger](../REQUIREMENTS.md). No external issue or remote graph repository was supplied. Review against that ledger and [the graph format](../../schema-definition.md); no tracker setup is required.

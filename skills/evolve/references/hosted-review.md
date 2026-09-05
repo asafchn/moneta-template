@@ -1,0 +1,26 @@
+# Review a local graph change through Git
+
+Use existing Git and provider CLI tools from the configured local clone. The user supplies the repository URL; preserve the selected `hosting` flag.
+
+1. Confirm the checkout's remote identifies that repository. Inspect status, current branch and base revision. Fetch current remote state when available; report if working offline. Preserve unrelated work. Create a dedicated change branch or checkout from the intended base.
+2. Apply the supported node/skill/schema changes. Maintain both edge directions and update affected index descriptions. Inspect every changed file. Schema/edge meaning changes are material and must be raised to the user.
+3. Have eval-agent review the exact candidate. Resolve supported findings. Confirm source/base/candidate revisions still match the recorded assessment. Stage only intended files; captured telemetry and local clones stay untracked/ignored.
+4. Prepare a body file outside the published tree. Explain the problem, changed behavior, scope, evidence locators, checks actually run, metrics and judgment limits. Include no raw transcript by default. Inspect the staged diff, then commit with the user's configured Git identity.
+5. Check whether an MR/PR already exists for this branch. Reuse the existing review rather than creating a duplicate. Push only the intended branch to the configured repository, without force or automatic merging.
+6. Use the detected provider's native CLI to create the review. Pass values as arguments and the multiline body as a file; never interpolate transcript content into shell syntax.
+
+GitHub:
+
+```text
+gh pr create --repo <repository-url> --head <change-branch> --base <base-branch> --title <title> --body-file <body-file>
+```
+
+GitLab:
+
+```text
+glab mr create --repo <repository-url> --source-branch <change-branch> --target-branch <base-branch> --title <title> --description-file <body-file> --yes
+```
+
+These are argument templates, not commands to paste with literal placeholders. Use platform-appropriate quoting. If a CLI/version lacks the stated flag, inspect its help and raise the compatibility gap; do not fabricate a successful publication. [GitHub CLI](https://cli.github.com/manual/gh_pr_create), [GitLab CLI](https://docs.gitlab.com/cli/mr/create/).
+
+Return the review URL, committed revision and remaining limitations. Human merge is the activation decision. Later agent runs use the reviewed base branch of their local clone, fast-forwarding only when safe; an unmerged candidate branch is not shared approved knowledge.

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Schema proposal · Agent Evolve</title>
+  <style>
+    :root { color-scheme:light; --bg:#f7f7f4; --paper:#fff; --ink:#282d29; --muted:#69716a; --line:#e2e6df; --soft:#f2f5f0; --accent:#426451; }
+    @media(prefers-color-scheme:dark) { :root { color-scheme:dark; --bg:#1b1e1b; --paper:#232723; --ink:#e5eae3; --muted:#abb5aa; --line:#394239; --soft:#2c342d; --accent:#b1cbb9; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    main { width:min(520px,calc(100% - 32px)); margin:clamp(24px,7vh,64px) auto 32px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin:0 2px 20px; font-size:12px; color:var(--muted); }
+    header strong { color:var(--ink); font-weight:600; }
+    .card { padding:25px 26px; background:var(--paper); border:1px solid var(--line); border-radius:10px; }
+    section + section { margin-top:24px; }
+    .js section + section { margin-top:0; }
+    [hidden] { display:none!important; }
+    .eyebrow { color:var(--muted); font-size:11px; margin:0 0 12px; }
+    h1 { font-size:24px; font-weight:600; letter-spacing:-.025em; line-height:1.3; margin:0 0 10px; }
+    h1:focus { outline:none; }
+    .lead { margin:0 0 21px; color:var(--muted); }
+    dl { margin:0; }
+    .row { padding:11px 0; border-top:1px solid var(--line); }
+    .row:first-child { border-top:0; padding-top:0; }
+    .row:last-child { padding-bottom:0; }
+    dt { font-size:13px; font-weight:600; overflow-wrap:anywhere; }
+    dd { margin:3px 0 0; color:var(--muted); font-size:13px; }
+    .note { border-top:1px solid var(--line); margin:21px 0 0; padding-top:13px; color:var(--muted); font-size:12px; }
+    .flow { padding:12px 14px; margin:17px 0 0; border-radius:5px; background:var(--soft); color:var(--accent); font-size:12px; }
+    code,pre { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:11px; }
+    code { overflow-wrap:anywhere; }
+    pre { margin:12px 0 0; padding:13px; border-radius:5px; background:var(--soft); white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.65; }
+    details { border-top:1px solid var(--line); padding:10px 0; }
+    details:last-child { padding-bottom:0; }
+    summary { cursor:pointer; font-size:13px; font-weight:550; }
+    details p { margin:7px 0 0; font-size:12px; color:var(--muted); }
+    .example { margin-top:18px; }
+    .example summary { font-weight:400; color:var(--muted); font-size:12px; }
+    .edge { display:grid; gap:5px; margin:13px 0; padding:13px; border:1px solid var(--line); border-radius:5px; font-size:12px; overflow-wrap:anywhere; }
+    .edge span { color:var(--accent); }
+    .edge strong { font-weight:550; }
+    .navigation { display:none; justify-content:space-between; align-items:center; gap:12px; margin-top:18px; }
+    .js .navigation { display:flex; }
+    button { font:inherit; font-size:12px; border:1px solid var(--line); border-radius:5px; background:var(--paper); color:var(--ink); padding:9px 14px; cursor:pointer; }
+    button:disabled { opacity:.35; cursor:default; }
+    #next { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+    button:focus-visible,summary:focus-visible,a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+    #progress { color:var(--muted); font-size:11px; }
+    footer { margin:18px 2px 0; font-size:11px; color:var(--muted); }
+    a { color:inherit; text-underline-offset:3px; }
+    @media(max-width:380px) { .card { padding:21px 19px; } h1 { font-size:22px; } }
+    @media print { body { background:white; color:black; } main { width:100%; margin:0; } section[hidden] { display:block!important; } .js section + section { margin-top:28px; } section { break-inside:avoid; } .navigation { display:none!important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header><strong>agent-evolve</strong><span>Schema · implemented defaults</span></header>
+    <div class="card">
+      <section id="step-1" aria-labelledby="title-1">
+        <p class="eyebrow">01 · Files</p>
+        <h1 id="title-1" tabindex="-1">Three kinds of file.</h1>
+        <p class="lead">The format, the catalog, the knowledge.</p>
+        <dl>
+          <div class="row"><dt>schema-definition.md</dt><dd>Explains fields, node types, edge schemas and both directions of each relationship.</dd></div>
+          <div class="row"><dt>node-index.md</dt><dd>Each searchable node’s slug beside its description.</dd></div>
+          <div class="row"><dt>One Markdown file per node</dt><dd>YAML frontmatter for discovery and links. Body for detail.</dd></div>
+        </dl>
+        <p class="note">Local clone. JSON schemas define the format; native skills use existing file and Git tools.</p>
+      </section>
+      <section id="step-2" aria-labelledby="title-2">
+        <p class="eyebrow">02 · One node</p>
+        <h1 id="title-2" tabindex="-1">Summary first. Detail later.</h1>
+        <p class="lead">Common fields, shared by every type.</p>
+        <dl>
+          <div class="row"><dt>slug · node-type</dt><dd>Unique identity and the schema this node follows.</dd></div>
+          <div class="row"><dt>description · tags · scope</dt><dd>What it covers and when it matters. Used for discovery.</dd></div>
+          <div class="row"><dt>data</dt><dd>Fields specific to this node type.</dd></div>
+          <div class="row"><dt>relations</dt><dd>Named edges to other node slugs.</dd></div>
+          <div class="row"><dt>Body</dt><dd>Full guidance and examples. Loaded after selection.</dd></div>
+        </dl>
+        <details class="example"><summary>See a Markdown node</summary><pre>---
+slug: follow-pagination-tokens
+node-type: coding-guidelines
+description: Guidance for paginated API clients.
+tags: [pagination, api, client]
+scope: [coding]
+data:
+  rule: Follow returned continuation tokens.
+  applies-when: Implementing a paginated client.
+relations:
+  - type: guides
+    target: fetch-next-page
+---
+Check the external API documentation.
+If tokens are opaque, pass them unchanged.</pre><p>Illustration only. Actual guidance needs the API’s source, version and scope.</p></details>
+      </section>
+      <section id="step-3" aria-labelledby="title-3">
+        <p class="eyebrow">03 · Node types</p>
+        <h1 id="title-3" tabindex="-1">Your seven types.</h1>
+        <p class="lead">Exact names retained. Expand for the fields.</p>
+        <details><summary>tool-calls</summary><p>Reusable invocation guidance. Historical calls stay in source evidence.</p><p><code>tool, purpose, input-schema, preconditions</code></p></details>
+        <details><summary>coding-guidelines</summary><p>Scoped coding practice.</p><p><code>rule, applies-when</code></p></details>
+        <details><summary>agent-responsibility</summary><p>What the agent is accountable for.</p><p><code>role, responsibilities</code></p></details>
+        <details><summary>skills</summary><p>Discover and invoke a skill.</p><p><code>invocation, purpose</code></p></details>
+        <details><summary>guard-rails</summary><p>Behavioral constraints. Storing a constraint does not enforce it.</p><p><code>constraint, applies-when</code></p></details>
+        <details><summary>agentic-flow context</summary><p>Reusable context and steps for coordinated work. Raw task state stays in source evidence.</p><p><code>trigger, steps</code></p></details>
+        <details><summary>schemas</summary><p>Reusable data or interface contracts. The supporting schema-definition file explains the graph format.</p><p><code>schema-id, definition</code></p></details>
+        <p class="note">task-cases and feedback remain proposed additions, outside the default seven.</p>
+      </section>
+      <section id="step-4" aria-labelledby="title-4">
+        <p class="eyebrow">04 · Relationships</p>
+        <h1 id="title-4" tabindex="-1">Meaning in both directions.</h1>
+        <p class="lead">Each edge schema defines names, meanings and allowed source/target types.</p>
+        <div class="edge"><strong>follow-pagination-tokens</strong><span>guides ↓</span><strong>fetch-next-page</strong></div>
+        <div class="edge"><strong>fetch-next-page</strong><span>guided-by ↓</span><strong>follow-pagination-tokens</strong></div>
+        <p class="note">The edge name explains how each endpoint relates to the other.</p>
+        <details class="example"><summary>Storage choice</summary><p>Store each direction in its node’s frontmatter. Validate that both match; update both files together.</p><p>This implementation stores mirrored entries. JSON Schema checks shape; the agent checks cross-file consistency.</p></details>
+      </section>
+      <section id="step-5" aria-labelledby="title-5">
+        <p class="eyebrow">05 · Discovery</p>
+        <h1 id="title-5" tabindex="-1">Index → query → knowledge.</h1>
+        <p class="lead">The agent predicts what it needs from the catalog.</p>
+        <dl>
+          <div class="row"><dt>Read the index</dt><dd>Slug + description. Generate a query for the intended work.</dd></div>
+          <div class="row"><dt>find</dt><dd>Tokenize the query. Search frontmatter metadata and descriptions.</dd></div>
+          <div class="row"><dt>walk</dt><dd>Inspect direct relationships. Select relevant connected nodes.</dd></div>
+          <div class="row"><dt>read</dt><dd>Load full bodies of selected nodes.</dd></div>
+        </dl>
+        <details class="example"><summary>See an index entry</summary><pre>follow-pagination-tokens
+  Guidance for paginated API clients.</pre><p>The agent updates the index alongside node changes, keeping descriptions aligned.</p></details>
+        <p class="note">Role instructions invoke this workflow. An enforced pre-action hook is not included in the declarative package.</p>
+      </section>
+      <section id="step-6" aria-labelledby="title-6">
+        <p class="eyebrow">06 · Access boundaries</p>
+        <h1 id="title-6" tabindex="-1">Three ways to reach information.</h1>
+        <p class="lead">Agreed separation.</p>
+        <dl>
+          <div class="row"><dt>Operational knowledge</dt><dd>The typed Markdown graph. Access through index, find, walk and read.</dd></div>
+          <div class="row"><dt>Domain knowledge</dt><dd>Outside source. Use that source’s access method; keep facts there.</dd></div>
+          <div class="row"><dt>Evaluation criteria + results</dt><dd>Access through a different skill. Excluded from ordinary graph search.</dd></div>
+        </dl>
+        <p class="flow">node-index covers ordinary searchable knowledge only.</p>
+        <p class="note">Connection file names the external source and separate evaluation directory. Evaluation uses evolve-evaluate.</p>
+      </section>
+      <section id="step-7" aria-labelledby="title-7">
+        <p class="eyebrow">07 · Review</p>
+        <h1 id="title-7" tabindex="-1">Review before shared learning.</h1>
+        <p class="lead">A session yields a supported proposal, not an automatic permanent rule.</p>
+        <dl>
+          <div class="row"><dt>Analyze</dt><dd>Compare the request, role intent, delivered work and human corrections.</dd></div>
+          <div class="row"><dt>Evaluate</dt><dd>Separate agent review from executed checks. Record tools, outputs and defined metrics.</dd></div>
+          <div class="row"><dt>Propose</dt><dd>Update applicable knowledge, both edge directions and the index. Open an MR/PR.</dd></div>
+          <div class="row"><dt>Activate</dt><dd>Human merge. Later agents refresh their local clone and retrieve reviewed guidance.</dd></div>
+        </dl>
+        <p class="note">Graph choices are our implementation. Stanford does not prescribe this schema or a universal admission score.</p>
+      </section>
+    </div>
+    <nav class="navigation" aria-label="Schema walkthrough">
+      <button id="back" type="button">← Back</button>
+      <span id="progress" role="status" aria-live="polite">1 / 7</span>
+      <button id="next" type="button">Next →</button>
+    </nav>
+    <footer><a href="SCHEMA-PROPOSAL.md">Schema notes</a> · One step at a time.</footer>
+  </main>
+  <script>
+    (() => {
+      const sections = [...document.querySelectorAll('section')];
+      const back = document.getElementById('back');
+      const next = document.getElementById('next');
+      const progress = document.getElementById('progress');
+      let current = 0;
+      function render(focus = false) {
+        sections.forEach((section, i) => { section.hidden = i !== current; });
+        back.disabled = current === 0;
+        next.textContent = current === sections.length - 1 ? 'Start again ↺' : 'Next →';
+        progress.textContent = `${current + 1} / ${sections.length}`;
+        if (focus) sections[current].querySelector('h1').focus({ preventScroll: true });
+      }
+      function fromHash() {
+        const position = sections.findIndex(section => `#${section.id}` === location.hash);
+        current = position < 0 ? 0 : position;
+        render();
+      }
+      function go(position) {
+        current = Math.max(0, Math.min(sections.length - 1, position));
+        history.replaceState(null, '', `#${sections[current].id}`);
+        render(true);
+      }
+      back.addEventListener('click', () => go(current - 1));
+      next.addEventListener('click', () => go(current === sections.length - 1 ? 0 : current + 1));
+      document.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault();
+          go(current + (event.key === 'ArrowRight' ? 1 : -1));
+        }
+      });
+      window.addEventListener('hashchange', fromHash);
+      document.documentElement.classList.add('js');
+      fromHash();
+    })();
+  </script>
+</body>
+</html>
